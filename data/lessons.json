@@ -1,0 +1,4118 @@
+{
+  "total_lessons": 34,
+  "biomes": [
+    {
+      "id": 0,
+      "name": "Campamento Base del Profe Pollito",
+      "subtitle": "Prólogo Imprescindible: Tablero, Piezas y Fundamentos FIDE",
+      "themeTag": "Prólogo y GPS 🧭",
+      "description": "¡El punto de partida para toda gran exploradora! Aprende a orientar el tablero, el GPS de coordenadas, los 6 héroes y su valor en esmeraldas antes de adentrarte en la Pradera de Bloques.",
+      "lessons": [
+        {
+          "id": "b0_l1",
+          "code": "0.1",
+          "title": "El Secreto del Tablero y el GPS de Coordenadas",
+          "subtitle": "Luz a la derecha, calles con letras y pisos con números",
+          "type": "lesson",
+          "icon": "🧭",
+          "rewardEmeralds": 10,
+          "durationMinutes": 3,
+          "pollitoIntro": "¡Hola Lyanna! Todo gran viaje comienza con una brújula. En esta estación aprenderás cómo orientar el tablero para no jugar al revés y cómo encontrar cualquier casilla al instante.",
+          "skillsTrained": [
+            "Orientación del tablero",
+            "Columnas a-h",
+            "Filas 1-8",
+            "Lectura de coordenadas"
+          ]
+        },
+        {
+          "id": "b0_l2",
+          "code": "0.2",
+          "title": "Conoce a tu Escuadrón y su Valor en Esmeraldas",
+          "subtitle": "Los 6 héroes del ajedrez y su poder en gemas",
+          "type": "lesson",
+          "icon": "💎",
+          "rewardEmeralds": 15,
+          "durationMinutes": 4,
+          "pollitoIntro": "¡Tu ejército tiene 6 tipos de piezas! Cada una tiene una personalidad única y un valor en esmeraldas. ¡Conócelas para saber qué intercambios te convienen en la batalla!",
+          "skillsTrained": [
+            "Valor de las piezas",
+            "Identificación visual",
+            "Movimientos básicos"
+          ]
+        },
+        {
+          "id": "b0_l3",
+          "code": "0.3",
+          "title": "¡A Formar Filas! Cómo se Arma el Tablero",
+          "subtitle": "La muralla de peones y la regla de oro de la Dama",
+          "type": "lesson",
+          "icon": "🏰",
+          "rewardEmeralds": 15,
+          "durationMinutes": 4,
+          "pollitoIntro": "¡Nadie va a la batalla desordenado! Aprende a colocar las 32 piezas en su sitio exacto y la regla mágica para no confundir jamás a la Dama con el Rey.",
+          "skillsTrained": [
+            "Posición inicial",
+            "Dama en su color",
+            "Filas de salida"
+          ]
+        },
+        {
+          "id": "b0_l4",
+          "code": "0.4",
+          "title": "Las Reglas del Combate: Capturas, Jaque y Jaque Mate",
+          "subtitle": "Cómo comer piezas, alertar el peligro y coronar la victoria",
+          "type": "minigame",
+          "icon": "⚔️",
+          "rewardEmeralds": 25,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡Es hora de la acción! Descubre cómo se capturan las piezas enemigas y la diferencia crucial entre un Jaque (¡alerta!) y el Jaque Mate definitivo (¡victoria!).",
+          "skillsTrained": [
+            "Captura de piezas",
+            "Jaque",
+            "Jaque Mate"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Bioma 1: La Pradera de Bloques",
+      "subtitle": "El Tablero Cúbico y los Peones Constructores",
+      "themeTag": "Mundo Inicial 🌱",
+      "description": "¡Bienvenida a la base! Aquí aprenderemos cómo funciona el mapa de 64 bloques y cómo los pequeños peones pueden convertirse en poderosas Reinas.",
+      "lessons": [
+        {
+          "id": "b1_l1",
+          "code": "1.1",
+          "title": "El Peón Valiente y el Tablero",
+          "subtitle": "Filas, columnas y el paso firme de los peones",
+          "type": "lesson",
+          "icon": "♟️",
+          "rewardEmeralds": 15,
+          "durationMinutes": 3,
+          "pollitoIntro": "¡Hola crack! Antes de construir jugadas épicas, necesitamos conocer el mapa y a nuestros peones constructores: dan 1 paso, ¡o 2 en su primer turno!",
+          "skillsTrained": [
+            "Coordenadas del tablero",
+            "Paso del peón",
+            "Doble paso inicial"
+          ]
+        },
+        {
+          "id": "b1_l2",
+          "code": "1.2",
+          "title": "La Captura Diagonal del Peón",
+          "subtitle": "Camina de frente, ¡pero ataca como ninja en diagonal!",
+          "type": "lesson",
+          "icon": "⚔️",
+          "rewardEmeralds": 20,
+          "durationMinutes": 4,
+          "pollitoIntro": "Los peones son constructores pacientes: avanzan recto de frente, ¡pero lanzan su pico en diagonal para capturar bloques enemigos!",
+          "skillsTrained": [
+            "Captura en diagonal",
+            "Cadenas de peones"
+          ]
+        },
+        {
+          "id": "b1_l3",
+          "code": "1.3",
+          "title": "La Coronación Mágica y Batalla",
+          "subtitle": "¡Llega al otro lado del mundo para transformarte en Dama!",
+          "type": "minigame",
+          "icon": "✨",
+          "rewardEmeralds": 30,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡El mayor secreto de los peones! Si cruzas todo el tablero y pisas la fila 8, ¡tu peón se craftea en una Mega-Dama invencible!",
+          "skillsTrained": [
+            "Coronación del peón",
+            "Carrera de peones"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Bioma 2: Caverna de las Minas",
+      "subtitle": "Autopistas y Toboganes: Torre, Alfil y Mega-Dama",
+      "themeTag": "Velocidad Turbo 💎",
+      "description": "Domina las piezas de largo alcance que cruzan todo el tablero a velocidad máxima por líneas rectas y diagonales.",
+      "lessons": [
+        {
+          "id": "b2_l1",
+          "code": "2.1",
+          "title": "La Torre Turbo",
+          "subtitle": "Viajando por filas y columnas como vagoneta en rieles",
+          "type": "lesson",
+          "icon": "♜",
+          "rewardEmeralds": 20,
+          "durationMinutes": 4,
+          "pollitoIntro": "¡La Torre es como una vagoneta sobre rieles rectos! Va hacia arriba, abajo, izquierda o derecha tantas casillas como quiera.",
+          "skillsTrained": [
+            "Movimiento de la torre",
+            "Control de columnas"
+          ]
+        },
+        {
+          "id": "b2_l2",
+          "code": "2.2",
+          "title": "El Alfil Francotirador",
+          "subtitle": "Deslizándose por toboganes diagonales de su color",
+          "type": "lesson",
+          "icon": "♝",
+          "rewardEmeralds": 20,
+          "durationMinutes": 4,
+          "pollitoIntro": "Cada jugador tiene dos alfiles: uno vive para siempre en los bloques claros y el otro en los bloques oscuros. ¡Juntos son un equipo imparable!",
+          "skillsTrained": [
+            "Movimiento del alfil",
+            "Diagonales de color"
+          ]
+        },
+        {
+          "id": "b2_l3",
+          "code": "2.3",
+          "title": "La Mega-Dama Caza-Esmeraldas",
+          "subtitle": "El poder combinado de Torre + Alfil en una sola pieza",
+          "type": "minigame",
+          "icon": "♛",
+          "rewardEmeralds": 35,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡Atención {nombre}! Si juntas los poderes de una Torre y un Alfil en la mesa de crafteo, obtienes a la Dama, ¡la pieza más fuerte de todas!",
+          "skillsTrained": [
+            "Movimiento de la dama",
+            "Caza de esmeraldas multidireccional"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Bioma 3: Templo del Salto Ninja",
+      "subtitle": "El Caballo Saltarín, el Rey y el Escudo del Jaque",
+      "themeTag": "Acrobacias en L 🥷",
+      "description": "Aprende el salto acrobático del Caballo por encima de los bloques, el valor de las piezas y protege al Rey de todas las emboscadas.",
+      "lessons": [
+        {
+          "id": "b3_l1",
+          "code": "3.1",
+          "title": "El Caballo Saltarín",
+          "subtitle": "Dos pasitos y uno al lado: ¡la L mágica que cambia de color!",
+          "type": "lesson",
+          "icon": "♞",
+          "rewardEmeralds": 25,
+          "durationMinutes": 4,
+          "pollitoIntro": "El Caballo se mueve dibujando una letra L: dos bloques hacia un lado y uno doblando la esquina. ¡Y siempre cae en un color distinto!",
+          "skillsTrained": [
+            "Salto del caballo",
+            "Mini-juego Come-Manzanas"
+          ]
+        },
+        {
+          "id": "b3_l2",
+          "code": "3.2",
+          "title": "El Rey y el Valor de las Piezas",
+          "subtitle": "La pieza más valiosa de todas y la tabla de esmeraldas",
+          "type": "lesson",
+          "icon": "♚",
+          "rewardEmeralds": 25,
+          "durationMinutes": 4,
+          "pollitoIntro": "El Rey da pasitos cortos de 1 casilla en cualquier dirección. No tiene precio porque si cae, ¡se acaba el juego! Peón=1, Caballo=3, Alfil=3, Torre=5, Dama=9.",
+          "skillsTrained": [
+            "Movimiento del rey",
+            "Valor de piezas"
+          ]
+        },
+        {
+          "id": "b3_l3",
+          "code": "3.3",
+          "title": "¿Qué es el Jaque? (El Escudo CPR)",
+          "subtitle": "¡Alerta roja! Capturar, Proteger o Retirar a tu Rey",
+          "type": "minigame",
+          "icon": "🛡️",
+          "rewardEmeralds": 35,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡Cuando atacan a tu Rey, te cantan \"JAQUE\"! Recuerda la regla ninja CPR del Profe: C de Comer la pieza atacante, P de Parar/Poner un escudo, y R de Retirar al Rey.",
+          "skillsTrained": [
+            "Defensa contra jaque",
+            "Método CPR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Bioma 4: Fortaleza de la Obsidiana",
+      "subtitle": "Enroque Muralla, Peón al Paso y ¡Rey Ahogado!",
+      "themeTag": "Reglas de Torneo 🛡️",
+      "description": "Aprende los movimientos especiales de los torneos profesionales: el búnker del Enroque, la trampa del Peón al Paso y cómo NO ahogar al rival.",
+      "lessons": [
+        {
+          "id": "b4_l1",
+          "code": "4.1",
+          "title": "El Enroque Muralla",
+          "subtitle": "El único momento donde dos piezas se mueven juntas",
+          "type": "lesson",
+          "icon": "🏰",
+          "rewardEmeralds": 30,
+          "durationMinutes": 4,
+          "pollitoIntro": "El Enroque es la jugada más inteligente: el Rey corre 2 pasos hacia la Torre y la Torre salta al otro lado. ¡El Rey queda seguro en su búnker!",
+          "skillsTrained": [
+            "Enroque corto (0-0)",
+            "Enroque largo (0-0-0)"
+          ]
+        },
+        {
+          "id": "b4_l2",
+          "code": "4.2",
+          "title": "La Captura al Paso (En Passant)",
+          "subtitle": "La trampa ninja: ¡un peón no puede esquivar el ataque!",
+          "type": "lesson",
+          "icon": "👻",
+          "rewardEmeralds": 30,
+          "durationMinutes": 4,
+          "pollitoIntro": "Si un peón enemigo intenta esquivarte saltando dos casillas a tu lado, ¡tu peón puede atraparlo por la espalda al paso! Es una jugada secreta de campeonato.",
+          "skillsTrained": [
+            "Regla en passant",
+            "Capturas al paso"
+          ]
+        },
+        {
+          "id": "b4_l3",
+          "code": "4.3",
+          "title": "¡Cuidado con el Rey Ahogado!",
+          "subtitle": "Tablas vs Jaque Mate: ¡No dejes escapar la victoria!",
+          "type": "minigame",
+          "icon": "⚠️",
+          "rewardEmeralds": 40,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡La regla más importante para no empatar partidas ganadas! Para que sea JAQUE MATE, ¡el Rey TIENE que estar en Jaque! Si lo encierras sin jaque y no tiene jugadas, ¡es AHOGADO y es empate! Aprende a dar mate limpio.",
+          "skillsTrained": [
+            "Diferencia entre Ahogado y Mate",
+            "Evitar tablas involuntarias"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Bioma 5: Castillo de la Corona",
+      "subtitle": "El Arsenal de Mates Elementales de Remate",
+      "themeTag": "Mates de Victoria 👑",
+      "description": "¡Aprende a ganar partidas como los campeones! Domina la Escalera de Torres, el Mate del Pasillo y cómo neutralizar el Jaque Pastor.",
+      "lessons": [
+        {
+          "id": "b5_l1",
+          "code": "5.1",
+          "title": "El Mate de la Escalera",
+          "subtitle": "Dos Torres rodando al Rey paso a paso hasta el abismo",
+          "type": "lesson",
+          "icon": "🪜",
+          "rewardEmeralds": 35,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡El mate favorito de todos los niños! Una Torre pone una barrera para que el Rey no baje, y la otra Torre da jaque para obligarlo a retroceder. ¡Paso a paso hasta la octava fila!",
+          "skillsTrained": [
+            "Mate de la escalera",
+            "Coordinación de dos torres"
+          ]
+        },
+        {
+          "id": "b5_l2",
+          "code": "5.2",
+          "title": "El Mate del Pasillo",
+          "subtitle": "La trampa mortal de la última fila tras el enroque",
+          "type": "lesson",
+          "icon": "🚪",
+          "rewardEmeralds": 35,
+          "durationMinutes": 5,
+          "pollitoIntro": "Cuando el Rey se enroca pero sus propios peones no lo dejan salir hacia adelante, una Torre que baje a la última fila ¡le da Jaque Mate del Pasillo! Aprende a darlo y cómo evitarlo abriendo un respiro.",
+          "skillsTrained": [
+            "Mate del pasillo",
+            "Creación de casilla de escape (luft)"
+          ]
+        },
+        {
+          "id": "b5_l3",
+          "code": "5.3",
+          "title": "El Mate Pastor y su Defensa",
+          "subtitle": "El ataque sorpresa a f7 y cómo castigarlo en torneos",
+          "type": "minigame",
+          "icon": "🎯",
+          "rewardEmeralds": 45,
+          "durationMinutes": 5,
+          "pollitoIntro": "El Mate Pastor es la trampa más famosa: Alfil + Dama apuntando al punto más débil (f7). Aprenderás a ejecutarlo en partidas rápidas y la defensa magistral con Nf6 para ganar tiempos.",
+          "skillsTrained": [
+            "Ataque sobre f7",
+            "Defensa con desarrollo Nf6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Bioma 6: Pantano de las Trampas",
+      "subtitle": "Radar Táctico, Piezas Colgantes y Doble Ataque",
+      "themeTag": "Caza de Tesoros 🕸️",
+      "description": "Desarrolla el sexto sentido del ajedrez: detecta piezas indefensas que el rival deja olvidadas y atrapa dos objetivos al mismo tiempo.",
+      "lessons": [
+        {
+          "id": "b6_l1",
+          "code": "6.1",
+          "title": "Radar de Piezas Colgantes",
+          "subtitle": "Detecta piezas rivales sin defensa y cómetelas gratis",
+          "type": "lesson",
+          "icon": "👁️",
+          "rewardEmeralds": 35,
+          "durationMinutes": 5,
+          "pollitoIntro": "Una \"pieza colgando\" es una pieza que no tiene a ningún amigo protegiéndola. Si tu radar la encuentra, ¡captúrala gratis sin pensarlo dos veces!",
+          "skillsTrained": [
+            "Detección de piezas indefensas",
+            "Aprovechamiento de descuidos"
+          ]
+        },
+        {
+          "id": "b6_l2",
+          "code": "6.2",
+          "title": "El Doble Ataque / La Horquilla",
+          "subtitle": "Ataca dos tesoros a la vez con Caballo, Peón o Dama",
+          "type": "lesson",
+          "icon": "🔱",
+          "rewardEmeralds": 40,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡El golpe ninja de la horquilla! Coloca tu Caballo o Peón donde amenace a dos piezas grandes a la vez. El rival solo puede salvar a una... ¡y tú te quedas con la otra!",
+          "skillsTrained": [
+            "Horquilla de caballo",
+            "Doble ataque de peón"
+          ]
+        },
+        {
+          "id": "b6_l3",
+          "code": "6.3",
+          "title": "La Telaraña de la Clavada",
+          "subtitle": "Inmoviliza a una pieza enemiga delante de su Rey o Dama",
+          "type": "minigame",
+          "icon": "🕸️",
+          "rewardEmeralds": 45,
+          "durationMinutes": 6,
+          "pollitoIntro": "¡Lanza tu telaraña táctica! Clava a una pieza rival con tu Alfil o Torre: si se mueve deja expuesta a una pieza aún más valiosa, ¡así que queda congelada!",
+          "skillsTrained": [
+            "Clavada absoluta",
+            "Clavada relativa",
+            "Explotar piezas inmóviles"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Bioma 7: El Nether Táctico",
+      "subtitle": "Ataque a la Descubierta, Jaque Doble y Enfilada",
+      "themeTag": "Táctica de Fuego 🔥",
+      "description": "Descubre los golpes tácticos de los grandes maestros: abre baterías de piezas destructoras y atraviesa al enemigo con rayos X.",
+      "lessons": [
+        {
+          "id": "b7_l1",
+          "code": "7.1",
+          "title": "Ataque a la Descubierta",
+          "subtitle": "Mueve una pieza al frente y destapa el rayo láser de atrás",
+          "type": "lesson",
+          "icon": "💥",
+          "rewardEmeralds": 40,
+          "durationMinutes": 5,
+          "pollitoIntro": "Escondes tu Torre o Alfil detrás de un Caballo o Peón. Cuando mueves la pieza de adelante... ¡BOOM! La de atrás ataca por sorpresa al objetivo.",
+          "skillsTrained": [
+            "Ataque a la descubierta",
+            "Baterías de piezas"
+          ]
+        },
+        {
+          "id": "b7_l2",
+          "code": "7.2",
+          "title": "El Terrible Jaque Doble",
+          "subtitle": "¡Dos jaques a la vez! La única salvación es mover el Rey",
+          "type": "lesson",
+          "icon": "⚡",
+          "rewardEmeralds": 40,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡El arma más letal del ajedrez! Das jaque con la pieza que se mueve y con la que destapas a la vez. No se puede tapar ni comer a dos atacantes: ¡el Rey está obligado a huir!",
+          "skillsTrained": [
+            "Jaque doble",
+            "Fuerza forzosa del rey"
+          ]
+        },
+        {
+          "id": "b7_l3",
+          "code": "7.3",
+          "title": "La Enfilada o Brocheta (Skewer)",
+          "subtitle": "Atraviesa al Rey o Dama para comerte la pieza de atrás",
+          "type": "minigame",
+          "icon": "🍢",
+          "rewardEmeralds": 50,
+          "durationMinutes": 6,
+          "pollitoIntro": "Es como hacer una brocheta: atacas primero a la pieza más valiosa (el Rey o Dama). Cuando tiene que huir por obligación... ¡zas! Te comes la pieza que estaba escondida detrás.",
+          "skillsTrained": [
+            "Enfilada (Skewer)",
+            "Ataques de rayos X"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Bioma 8: Laboratorio de Redstone",
+      "subtitle": "Eliminación del Defensor, Desviación y Mate en 2",
+      "themeTag": "Ingeniería Táctica ⚙️",
+      "description": "Aprende a desarmar la maquinaria defensiva del enemigo: destruye guardianes, usa cebos de esmeralda y calcula combinaciones de 2 pasos.",
+      "lessons": [
+        {
+          "id": "b8_l1",
+          "code": "8.1",
+          "title": "Eliminación del Defensor",
+          "subtitle": "Destruye al guardia para llevarte el tesoro",
+          "type": "lesson",
+          "icon": "🛡️",
+          "rewardEmeralds": 45,
+          "durationMinutes": 5,
+          "pollitoIntro": "Si una pieza rival defiende a otra o cuida una casilla de mate, ¡elimina primero al defensor! Al caer la guardia, toda la defensa enemiga se derrumba.",
+          "skillsTrained": [
+            "Eliminación del defensor",
+            "Destrucción de la guardia"
+          ]
+        },
+        {
+          "id": "b8_l2",
+          "code": "8.2",
+          "title": "La Desviación y Atracción",
+          "subtitle": "El cebo irresistible: obliga al rival a abandonar su puesto",
+          "type": "lesson",
+          "icon": "🎣",
+          "rewardEmeralds": 45,
+          "durationMinutes": 5,
+          "pollitoIntro": "Pon un cebo que obligue a la Dama o al Rey rival a moverse a una casilla trampa donde recibirán el castigo táctico definitivo.",
+          "skillsTrained": [
+            "Desviación",
+            "Atracción a casillas fatales"
+          ]
+        },
+        {
+          "id": "b8_l3",
+          "code": "8.3",
+          "title": "Mini-Juego: Jaque Mate en 2 Jugadas",
+          "subtitle": "Calcula 2 pasos adelante como toda una Gran Maestra",
+          "type": "minigame",
+          "icon": "🧠",
+          "rewardEmeralds": 55,
+          "durationMinutes": 6,
+          "pollitoIntro": "¡Hora de pensar como los campeones mundiales! Primer paso: una jugada forzada que arrincona al rival. Segundo paso: ¡JAQUE MATE!",
+          "skillsTrained": [
+            "Cálculo a 2 jugadas",
+            "Redes de mate forzadas"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Bioma 9: Cumbre de los Maestros",
+      "subtitle": "Apertura Profesional, Puestos de Avanzada y Peones",
+      "themeTag": "Estrategia Posicional ⛰️",
+      "description": "Descubre cómo juegan los torneos reales: domina los 3 Mandamientos de la Apertura, clava tus caballos en casillas fuertes y gestiona la estructura.",
+      "lessons": [
+        {
+          "id": "b9_l1",
+          "code": "9.1",
+          "title": "Los 3 Mandamientos de la Apertura",
+          "subtitle": "Centro, Desarrollo activo y Seguridad del Rey (Apertura Italiana)",
+          "type": "lesson",
+          "icon": "📜",
+          "rewardEmeralds": 50,
+          "durationMinutes": 5,
+          "pollitoIntro": "Las 3 reglas de oro: 1) Conquista el centro con e4/d4, 2) Desarrolla Caballos y Alfiles, 3) ¡Enrócate para cuidar al Rey y no pasees la Dama temprano!",
+          "skillsTrained": [
+            "Apertura Italiana",
+            "Control del centro",
+            "Desarrollo armónico"
+          ]
+        },
+        {
+          "id": "b9_l2",
+          "code": "9.2",
+          "title": "El Caballo en Casilla Fuerte (Outpost)",
+          "subtitle": "Instala un pulpo ninja en el centro que nadie pueda expulsar",
+          "type": "lesson",
+          "icon": "🐙",
+          "rewardEmeralds": 50,
+          "durationMinutes": 5,
+          "pollitoIntro": "Un \"Puesto de Avanzada\" o casilla fuerte es un bloque protegido por tu peón donde ningún peón rival puede echar a tu Caballo. ¡Desde ahí domina medio mapa!",
+          "skillsTrained": [
+            "Puesto de avanzada (Outpost)",
+            "Piezas dominantes"
+          ]
+        },
+        {
+          "id": "b9_l3",
+          "code": "9.3",
+          "title": "La Salud de tus Peones: Fuertes vs. Débiles",
+          "subtitle": "Crea peones pasados protegidos y ataca los peones aislados",
+          "type": "minigame",
+          "icon": "🛡️",
+          "rewardEmeralds": 60,
+          "durationMinutes": 6,
+          "pollitoIntro": "Los peones son el alma del ajedrez. Aprende a crear peones pasados protegidos y a cazar los peones aislados que el enemigo no puede defender.",
+          "skillsTrained": [
+            "Estructuras de peones",
+            "Peón pasado protegido",
+            "Debilidades"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Bioma 10: La Dimensión del End",
+      "subtitle": "Finales de Reyes, Regla del Cuadrado y Oposición",
+      "themeTag": "Finales de Gran Maestro 🔮",
+      "description": "El final del juego donde cada paso del Rey decide la corona: la regla geométrica del cuadrado, la oposición de reyes y la coronación triunfal.",
+      "lessons": [
+        {
+          "id": "b10_l1",
+          "code": "10.1",
+          "title": "La Regla Geométrica del Cuadrado",
+          "subtitle": "Calcula mentalmente si el Rey rival alcanza a tu peón fugitivo",
+          "type": "lesson",
+          "icon": "📐",
+          "rewardEmeralds": 55,
+          "durationMinutes": 5,
+          "pollitoIntro": "¡El truco matemático más genial del ajedrez! Dibuja un cuadrado imaginario desde tu peón hasta la fila de coronación: si el Rey rival no entra en el cuadrado, ¡tu peón corona solo!",
+          "skillsTrained": [
+            "Regla del cuadrado",
+            "Carrera de peones pasados"
+          ]
+        },
+        {
+          "id": "b10_l2",
+          "code": "10.2",
+          "title": "El Secreto de la Oposición de Reyes",
+          "subtitle": "Ponte cara a cara con el Rey rival y gánale el paso",
+          "type": "lesson",
+          "icon": "🤺",
+          "rewardEmeralds": 55,
+          "durationMinutes": 5,
+          "pollitoIntro": "En los finales de peones, tener la Oposición significa poner a tu Rey frente al Rey enemigo con una casilla libre entre ambos: ¡el que está obligado a mover tiene que dar paso!",
+          "skillsTrained": [
+            "Oposición directa",
+            "Triangulación",
+            "Conquista de casillas clave"
+          ]
+        },
+        {
+          "id": "b10_l3",
+          "code": "10.3",
+          "title": "Coronación Escoltada y Mate Definitivo",
+          "subtitle": "¡Llega a la fila 8, corona tu Dama y gradúate como Gran Maestra!",
+          "type": "minigame",
+          "icon": "🏆",
+          "rewardEmeralds": 75,
+          "durationMinutes": 6,
+          "pollitoIntro": "¡La última prueba de toda tu aventura! Escolta a tu peón hasta convertirlo en Dama y ejecuta el Jaque Mate definitivo para graduarte en el Mundo de Ajedrez.",
+          "skillsTrained": [
+            "Coronación con rey escolta",
+            "Mate de dama final",
+            "Graduación de campeona"
+          ]
+        }
+      ]
+    }
+  ],
+  "lessons": {
+    "b0_l1": {
+      "lessonId": "b0_l1",
+      "stages": [
+        {
+          "id": "b0_l1_s1",
+          "title": "Regla de Oro: ¡Luz a la Derecha!",
+          "instruction": "Toca la casilla h1 en la esquina inferior derecha para verificar la orientación del mapa.",
+          "pollitoSpeech": "¡Atenta, {nombre}! Antes de poner una sola pieza, mira tu esquina inferior derecha. ¡Siempre debe haber una casilla blanca/clara! Los maestros dicen: \"¡Luz a la derecha!\". Toca la casilla h1.",
+          "pollitoSuccess": "¡Perfecto! La casilla h1 es de color claro. Tu tablero está bien orientado.",
+          "initialFen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+          "freeMoveMode": true,
+          "goalType": "click_square",
+          "targetSquare": "h1",
+          "highlightSquares": {
+            "h1": "emerald",
+            "a1": "amber"
+          },
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e1",
+                  "to": "h1",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "h1": "emerald"
+              },
+              "pollitoText": "¡La regla sagrada de todos los torneos! La esquina derecha más cercana a ti (h1) SIEMPRE debe ser blanca o de color claro.",
+              "pollitoMood": "happy"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla h1 (esquina derecha) y luego la casilla a1 (esquina izquierda).",
+            "targetSquares": [
+              "h1",
+              "a1"
+            ],
+            "successFeedback": "¡Excelente! h1 es blanca (luz a la derecha) y a1 es oscura.",
+            "errorHint": "Busca las esquinas inferiores del tablero."
+          },
+          "detectiveRule": {
+            "question": "¿Qué casilla debe estar a mi mano derecha en la primera fila?",
+            "ruleSummary": "¡Luz a la derecha! La casilla h1 siempre es de color claro.",
+            "pollitoExplanation": "Si empiezas una partida y h1 es oscura, ¡el tablero está chueco! Gíralo un cuarto de vuelta."
+          }
+        },
+        {
+          "id": "b0_l1_s2",
+          "title": "Calles con Letras (Columnas) y Pisos con Números (Filas)",
+          "instruction": "Toca la casilla e4, donde se cruzan la Calle \"e\" con el Piso \"4\".",
+          "pollitoSpeech": "¡Cada casilla tiene nombre y apellido! Las columnas verticales son calles con letras (de la \"a\" a la \"h\"). Las filas horizontales son pisos de un edificio con números (del 1 al 8). ¡Toca la casilla e4 en el centro!",
+          "pollitoSuccess": "¡Bingo! Calle e + Piso 4 = Casilla e4.",
+          "initialFen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+          "freeMoveMode": true,
+          "goalType": "click_square",
+          "targetSquare": "e4",
+          "highlightSquares": {
+            "e4": "emerald",
+            "e1": "cyan",
+            "a4": "cyan"
+          },
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e1",
+                  "to": "e8",
+                  "color": "cyan"
+                },
+                {
+                  "from": "a4",
+                  "to": "h4",
+                  "color": "amber"
+                }
+              ],
+              "highlightedSquares": {
+                "e4": "emerald"
+              },
+              "pollitoText": "La columna \"e\" sube como una gran avenida. La fila \"4\" cruza como un piso. ¡En su cruce vive la casilla e4!",
+              "pollitoMood": "thinking"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Encuentra las 4 casillas centrales del tablero: e4, d4, e5 y d5.",
+            "targetSquares": [
+              "e4",
+              "d4",
+              "e5",
+              "d5"
+            ],
+            "successFeedback": "¡Dominio central total! Esas cuatro casillas son el corazón de la batalla.",
+            "errorHint": "Toca las 4 casillas del centro exacto del tablero."
+          },
+          "detectiveRule": {
+            "question": "¿Cómo se lee una casilla en ajedrez?",
+            "ruleSummary": "Primero la letra de la columna, luego el número de la fila (ej. e4, c6, g7).",
+            "pollitoExplanation": "¡Igual que en la batalla naval! Letra primero, número después."
+          }
+        },
+        {
+          "id": "b0_l1_s3",
+          "title": "El GPS Ninja: Encuentra las Coordenadas",
+          "instruction": "Toca la casilla c4 en el tablero.",
+          "pollitoSpeech": "¡Momento de demostrar tu radar GPS, {nombre}! El Alfil blanco ama la casilla c4 para vigilar al rey enemigo. ¡Búscala y tócala!",
+          "pollitoSuccess": "¡Excelente puntería! Calle c, piso 4: ¡c4 encontrada!",
+          "initialFen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+          "freeMoveMode": true,
+          "goalType": "click_square",
+          "targetSquare": "c4",
+          "highlightSquares": {
+            "c4": "emerald"
+          },
+          "observationTask": {
+            "prompt": "Toca las casillas clave: b5, c4 y f7.",
+            "targetSquares": [
+              "b5",
+              "c4",
+              "f7"
+            ],
+            "successFeedback": "¡Ojo de águila! Encontraste todas las coordenadas pedidas.",
+            "errorHint": "Recuerda: columna b, c o f, y luego sube hasta el número correspondiente."
+          },
+          "detectiveRule": {
+            "question": "¿Por qué son tan importantes las coordenadas?",
+            "ruleSummary": "Nos permiten anotar jugadas, leer libros de maestros y comunicar planes.",
+            "pollitoExplanation": "Cuando juegues en torneos, anotarás cada jugada con estas mismas coordenadas."
+          }
+        }
+      ]
+    },
+    "b0_l2": {
+      "lessonId": "b0_l2",
+      "stages": [
+        {
+          "id": "b0_l2_s1",
+          "title": "El Peón Soldado (Valor: 1 💎)",
+          "instruction": "Avanza tu peón de e2 a e4 con su turbo de 2 pasos.",
+          "pollitoSpeech": "El Peón vale 1 Esmeralda 💎. Es el soldado más humilde pero el alma del juego. Avanza siempre hacia adelante y no puede retroceder. ¡Haz su salto doble a e4!",
+          "pollitoSuccess": "¡Paso firme del peón! 1 esmeralda de valor pero con corazón de Dama.",
+          "initialFen": "4k3/8/8/8/8/8/4P3/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e2",
+              "to": "e4",
+              "reason": "Avanza el peón dos pasos hacia el centro."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/4P3/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e2",
+                  "to": "e4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e4": "emerald"
+              },
+              "pollitoText": "El Peón vale 1 Esmeralda 💎. Camina de frente, captura en diagonal y si llega al final, ¡se corona en Dama!",
+              "pollitoMood": "happy",
+              "demoMove": {
+                "from": "e2",
+                "to": "e4"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Cuánto vale un peón?",
+            "ruleSummary": "1 Esmeralda 💎. Avanza de frente y nunca puede retroceder.",
+            "pollitoExplanation": "No subestimes a tus peones: ¡un peón pasado en el final vale más que el oro!"
+          }
+        },
+        {
+          "id": "b0_l2_s2",
+          "title": "El Caballo (3 💎) y el Alfil (3 💎): Piezas Menores",
+          "instruction": "Salta con tu Caballo ninja de b1 a c3 por encima de tus peones imaginarios.",
+          "pollitoSpeech": "El Caballo (3 💎) salta en forma de \"L\" y es el único que puede saltar sobre otras piezas. El Alfil (3 💎) es el francotirador que corre en diagonal sin cambiar nunca de color de casilla. ¡Mueve tu Caballo a c3!",
+          "pollitoSuccess": "¡Salto ninja completado! Caballo y Alfil valen 3 Esmeraldas cada uno.",
+          "initialFen": "4k3/8/8/8/8/8/8/1NB1K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "b1",
+              "to": "c3",
+              "reason": "El Caballo salta en L a c3."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/8/1NB1K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "b1",
+                  "to": "c3",
+                  "color": "cyan"
+                },
+                {
+                  "from": "c1",
+                  "to": "g5",
+                  "color": "amber"
+                }
+              ],
+              "highlightedSquares": {
+                "c3": "cyan",
+                "g5": "amber"
+              },
+              "pollitoText": "Caballo = 3 💎 (salta muros en L). Alfil = 3 💎 (corre en diagonal sobre su color). ¡Juntos forman las piezas menores!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "b1",
+                "to": "c3"
+              }
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca el Caballo en b1 y luego el Alfil en c1.",
+            "targetSquares": [
+              "b1",
+              "c1"
+            ],
+            "successFeedback": "¡Identificados! Ambos valen 3 Esmeraldas de poder.",
+            "errorHint": "Busca el caballo y el alfil en la primera fila."
+          },
+          "detectiveRule": {
+            "question": "¿Cuánto valen el Caballo y el Alfil?",
+            "ruleSummary": "3 Esmeraldas 💎 cada uno. Se llaman piezas menores.",
+            "pollitoExplanation": "Cambiar un caballo por un alfil suele ser parejo, pero cambiar un caballo por una torre te hace ganar material."
+          }
+        },
+        {
+          "id": "b0_l2_s3",
+          "title": "La Torre (5 💎) y la Dama (9 💎): Piezas Mayores",
+          "instruction": "Desliza tu Torre por la columna abierta desde a1 hasta a4.",
+          "pollitoSpeech": "La Torre (5 💎) viaja en líneas rectas (filas y columnas) como un tren blindado. La Dama (9 💎) es la reina todopoderosa: ¡combina los poderes de la Torre y del Alfil! ¡Avanza tu Torre a a4!",
+          "pollitoSuccess": "¡Tren blindado en marcha! La Torre vale 5 gemas y la Dama vale 9.",
+          "initialFen": "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "a1",
+              "to": "a4",
+              "reason": "Avanza la Torre en línea recta."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+              "arrows": [
+                {
+                  "from": "a1",
+                  "to": "a4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "a4": "emerald"
+              },
+              "pollitoText": "Torre = 5 💎. Dama = 9 💎. ¡Son las piezas mayores del ejército y deciden los mates finales!",
+              "pollitoMood": "hero",
+              "demoMove": {
+                "from": "a1",
+                "to": "a4"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Cuánto vale la Dama?",
+            "ruleSummary": "9 Esmeraldas 💎. Es la pieza más valiosa de todas; protégela y no la saques temprano.",
+            "pollitoExplanation": "Perder tu Dama gratis casi siempre cuesta la partida. ¡Cuídala como un tesoro!"
+          }
+        },
+        {
+          "id": "b0_l2_s4",
+          "title": "El Rey (Valor Infinito 👑)",
+          "instruction": "Da un paso con tu Rey de e1 a e2.",
+          "pollitoSpeech": "El Rey da un paso en cualquier dirección. No tiene precio en esmeraldas: ¡su valor es INFINITO! Si atrapan a tu Rey con Jaque Mate, la partida termina al instante. ¡Mueve tu Rey a e2!",
+          "pollitoSuccess": "¡Paso real! Tu Rey está vivo y listo para ser protegido con el enroque.",
+          "initialFen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e1",
+              "to": "e2",
+              "reason": "El Rey da un paso a e2."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e1",
+                  "to": "e2",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e2": "emerald"
+              },
+              "pollitoText": "El Rey nunca puede ser capturado ni salir del tablero: ¡se le da Jaque Mate! Por eso su valor es infinito 👑.",
+              "pollitoMood": "proud",
+              "demoMove": {
+                "from": "e1",
+                "to": "e2"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Cuánto vale el Rey?",
+            "ruleSummary": "Valor Infinito 👑. ¡Todo el juego gira en torno a protegerlo y cazar al rey rival!",
+            "pollitoExplanation": "Puedes tener todas tus piezas, pero si tu Rey recibe mate, pierdes. ¡Seguridad primero!"
+          }
+        }
+      ]
+    },
+    "b0_l3": {
+      "lessonId": "b0_l3",
+      "stages": [
+        {
+          "id": "b0_l3_s1",
+          "title": "Fila 2: La Muralla de los 8 Peones",
+          "instruction": "Mueve tu peón central de e2 a e4 para abrir la muralla.",
+          "pollitoSpeech": "Al comenzar la partida, los 8 peones blancos se colocan en fila india cubriendo toda la Fila 2 (y los negros en la Fila 7). Son el escudo que defiende a los oficiales. ¡Abre camino avanzando a e4!",
+          "pollitoSuccess": "¡Muralla activada! Los peones al frente defienden a los oficiales.",
+          "initialFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e2",
+              "to": "e4",
+              "reason": "Abre el centro avanzando a e4."
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca los peones de e2 y d2 (los peones centrales que deben avanzar primero).",
+            "targetSquares": [
+              "e2",
+              "d2"
+            ],
+            "successFeedback": "¡Exacto! Los peones de e2 y d2 abren paso a la Dama y a los Alfiles.",
+            "errorHint": "Toca las casillas e2 y d2 en la fila de peones."
+          },
+          "detectiveRule": {
+            "question": "¿Dónde van los peones al empezar?",
+            "ruleSummary": "En la Fila 2 para las blancas y en la Fila 7 para las negras.",
+            "pollitoExplanation": "Forman una línea defensiva que controla el avance enemigo."
+          }
+        },
+        {
+          "id": "b0_l3_s2",
+          "title": "Regla de Oro: ¡La Dama viste a la moda de su color!",
+          "instruction": "Toca la Dama blanca en d1 y la Dama negra en d8 para comprobar la regla.",
+          "pollitoSpeech": "¡El error más común en el ajedrez es confundir al Rey y la Dama! Recuerda siempre esta frase del Profe Pollito: \"¡La Dama siempre viste a la moda de su color!\". La Dama blanca en casilla blanca (d1); la Dama negra en casilla negra (d8). Toca ambas damas.",
+          "pollitoSuccess": "¡Damas en su color! Blancas en casilla blanca d1, negras en casilla negra d8.",
+          "initialFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "freeMoveMode": true,
+          "goalType": "click_square",
+          "targetSquare": "d1",
+          "highlightSquares": {
+            "d1": "emerald",
+            "d8": "emerald",
+            "e1": "amber",
+            "e8": "amber"
+          },
+          "observationTask": {
+            "prompt": "Toca la Dama blanca en d1 y luego la Dama negra en d8.",
+            "targetSquares": [
+              "d1",
+              "d8"
+            ],
+            "successFeedback": "¡Perfecto! Dama blanca en d1 (blanca), Dama negra en d8 (negra).",
+            "errorHint": "Las damas están en la columna d."
+          },
+          "detectiveRule": {
+            "question": "¿En qué casilla va la Dama al iniciar la partida?",
+            "ruleSummary": "¡La Dama en su propio color! Dama blanca en d1 (clara), Dama negra en d8 (oscura).",
+            "pollitoExplanation": "El Rey siempre va a su lado, en la columna e."
+          }
+        },
+        {
+          "id": "b0_l3_s3",
+          "title": "De Afuera hacia Adentro: Torres, Caballos y Alfiles",
+          "instruction": "Desarrolla tu Caballo del flanco de rey de g1 a f3 hacia el centro.",
+          "pollitoSpeech": "En la primera fila, colocamos las piezas de afuera hacia adentro: Torres en las esquinas (a1 y h1), Caballos al lado (b1 y g1), Alfiles escoltas (c1 y f1) y en el centro Dama y Rey. ¡Desarrolla tu Caballo a f3!",
+          "pollitoSuccess": "¡Caballo desplegado hacia el centro! Tu ejército está perfectamente colocado.",
+          "initialFen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "g1",
+              "to": "f3",
+              "reason": "Desarrolla el Caballo a f3."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+              "arrows": [
+                {
+                  "from": "a1",
+                  "to": "h1",
+                  "color": "cyan"
+                },
+                {
+                  "from": "b1",
+                  "to": "g1",
+                  "color": "amber"
+                },
+                {
+                  "from": "c1",
+                  "to": "f1",
+                  "color": "emerald"
+                }
+              ],
+              "pollitoText": "Esquinas: Torres. Al lado: Caballos. Escoltas del rey y dama: Alfiles.",
+              "pollitoMood": "thinking"
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Cuál es el orden de la primera fila desde las esquinas?",
+            "ruleSummary": "Torre, Caballo, Alfil, y en el centro Dama y Rey.",
+            "pollitoExplanation": "Armar el tablero rápido y sin errores te da confianza antes de cualquier partida."
+          }
+        }
+      ]
+    },
+    "b0_l4": {
+      "lessonId": "b0_l4",
+      "stages": [
+        {
+          "id": "b0_l4_s1",
+          "title": "La Captura: ¡Ocupar la Casilla Enemiga!",
+          "instruction": "Captura el peón negro invasor de d5 con tu peón en e4 (e4xd5).",
+          "pollitoSpeech": "En el ajedrez no se salta por encima de las piezas como en las damas. Para capturar, tu pieza viaja a la casilla del rival, saca la pieza enemiga del tablero y se queda en su lugar. ¡Captura en d5!",
+          "pollitoSuccess": "¡Captura limpia! Tu peón ocupa la casilla d5 y la pieza rival sale del juego.",
+          "initialFen": "4k3/8/8/3p4/4P3/8/8/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e4",
+              "to": "d5",
+              "reason": "Captura el peón en d5."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/3p4/4P3/8/8/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e4",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d5": "red"
+              },
+              "pollitoText": "¡Observa cómo se captura! La pieza enemiga es retirada del tablero y la pieza capturadora se planta victoriosa en su casilla.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e4",
+                "to": "d5"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Cómo se captura en ajedrez?",
+            "ruleSummary": "Mueves a la casilla de la pieza enemiga y tomas su lugar en el tablero.",
+            "pollitoExplanation": "No hay saltos sobre piezas al capturar. ¡Te quedas con su casilla!"
+          }
+        },
+        {
+          "id": "b0_l4_s2",
+          "title": "¡Jaque! ¡Alerta Roja para el Rey!",
+          "instruction": "Da jaque al Rey negro con tu Torre desde d1 hasta d8.",
+          "pollitoSpeech": "¡Jaque significa que una pieza enemiga está apuntando directamente al Rey! Cuando te dan jaque, estás obligada a salvar a tu Rey (comiendo a la pieza atacante, tapando con otra pieza o escapando con el Rey). ¡Lanza tu Torre a d8 para dar Jaque!",
+          "pollitoSuccess": "¡JAQUE! El Rey negro está bajo ataque directo y debe reaccionar.",
+          "initialFen": "4k3/8/8/8/8/8/8/3R2K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d1",
+              "to": "d8",
+              "reason": "Da jaque con la Torre en d8."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/8/8/8/8/3R2K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d1",
+                  "to": "d8",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "d8": "red"
+              },
+              "pollitoText": "¡Jaque! La Torre apunta al Rey. ¡El Rey negro debe defenderse obligatoriamente!",
+              "pollitoMood": "spidey",
+              "demoMove": {
+                "from": "d1",
+                "to": "d8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Qué debes hacer cuando te dan jaque?",
+            "ruleSummary": "Salvar al Rey: 1) Capturar al atacante, 2) Bloquear el ataque, o 3) Escapar a casilla segura.",
+            "pollitoExplanation": "¡Nunca puedes ignorar un jaque! Es ilegal hacer otra jugada si tu Rey está en peligro."
+          }
+        },
+        {
+          "id": "b0_l4_s3",
+          "title": "¡Jaque Mate! ¡La Victoria Definitiva!",
+          "instruction": "Ejecuta el Jaque Mate del Pasillo llevando tu Torre a d8.",
+          "pollitoSpeech": "¡El Jaque Mate es el golpe maestro! Es cuando el Rey rival está en jaque y NO puede comer al atacante, NO puede tapar con ninguna pieza y NO tiene ninguna casilla libre para escapar. ¡Lleva tu Torre a d8 y sella la victoria!",
+          "pollitoSuccess": "¡KIKIRIKÍ! ¡JAQUE MATE! El Rey negro no tiene escape tras sus peones. ¡Has ganado la partida y completado el Campamento Base!",
+          "initialFen": "6k1/5ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d1",
+              "to": "d8",
+              "reason": "Jaque Mate del Pasillo con la Torre en d8."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "6k1/5ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d1",
+                  "to": "d8",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d8": "emerald"
+              },
+              "pollitoText": "¡Jaque Mate del Pasillo! La Torre ataca al Rey y sus propios peones le bloquean la huida.",
+              "pollitoMood": "hero",
+              "demoMove": {
+                "from": "d1",
+                "to": "d8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Cuál es la diferencia entre Jaque y Jaque Mate?",
+            "ruleSummary": "En el Jaque el Rey puede salvarse; en el Jaque Mate no hay salvación posible y el juego termina.",
+            "pollitoExplanation": "¡Has conquistado el Campamento Base, Lyanna! Recibes tu insignia \"Brújula de Exploradora\" y +25 Esmeraldas."
+          }
+        }
+      ]
+    },
+    "b1_l1": {
+      "lessonId": "b1_l1",
+      "stages": [
+        {
+          "id": "b1_l1_s1",
+          "title": "El Peón Valiente y el Tablero",
+          "instruction": "¡Ahora te toca a ti, campeona! Toma tu peón de e2 y muévelo con doble paso a e4.",
+          "pollitoSpeech": "¡Bienvenida a la Pradera de Bloques, {nombre}! En su casilla de salida, los peones tienen un turbo para avanzar 2 pasos hacia el centro. ¡Haz el salto a e4!",
+          "pollitoSuccess": "¡Excelente control del centro! Dominaste el mapa con la regla de oro.",
+          "initialFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e2",
+              "to": "e4",
+              "reason": "Mueve tu peón de e2 a e4 con su doble paso inicial para conquistar el centro."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+              "arrows": [
+                {
+                  "from": "e2",
+                  "to": "e4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e4": "emerald",
+                "e2": "cyan"
+              },
+              "pollitoText": "¡Bienvenida a la Pradera de Bloques, {nombre}! En su casilla de salida, los peones tienen un turbo para avanzar 2 pasos hacia el centro. ¡Mira el gran salto del peón blanco de e2 a e4! Con este doble paso conquista el centro del tablero.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e2",
+                "to": "e4"
+              }
+            },
+            {
+              "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+              "arrows": [
+                {
+                  "from": "d2",
+                  "to": "d4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d4": "emerald",
+                "d2": "cyan",
+                "e4": "emerald"
+              },
+              "pollitoText": "¡Observa cómo el hermano peón de d2 también despierta y avanza con paso doble a d4 para conquistar y dominar el centro junto a su compañero!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d2",
+                "to": "d4"
+              }
+            }
+          ],
+          "observationTask": {
+            "prompt": "Encuentra la casilla h1 (la esquina blanca de la derecha) y la casilla e4 (donde salta tu peón al centro).",
+            "targetSquares": [
+              "h1",
+              "e4"
+            ],
+            "successFeedback": "¡Excelente! \"Blanca a la derecha\" en h1 y peón dominante en e4.",
+            "errorHint": "Busca la esquina inferior derecha (h1) y el centro del mapa en e4."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e2e3",
+              "label": "Mover el peón solo 1 paso a e3",
+              "opponentRefutationUci": "e7e5",
+              "explanation": "Si solo juegas e3, las negras juegan e5 y dominan más casillas en el centro. ¡Aprovecha el salto doble a e4!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "¡Ahora te toca a ti, campeona! Toma tu peón de e2 y muévelo con doble paso a e4.",
+              "playerMove": {
+                "from": "e2",
+                "to": "e4"
+              },
+              "botDefenseReply": {
+                "from": "e7",
+                "to": "e5",
+                "comment": "¡El peón negro frena tu avance cara a cara! ¡Ahora despierta al hermano peón de d2 y muévelo con paso doble a d4!"
+              }
+            },
+            {
+              "instruction": "¡Ahora despierta al hermano peón de d2 y muévelo con paso doble a d4!",
+              "playerMove": {
+                "from": "d2",
+                "to": "d4"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi peón está en su casilla inicial para dar el salto doble?",
+            "ruleSummary": "En su primer movimiento, el peón puede correr 2 casillas para ganar el centro.",
+            "pollitoExplanation": "¡Recuerda siempre, {nombre}! Los peones en la fila 2 tienen el turbo activado. ¡Úsalo para conquistar el centro!"
+          }
+        }
+      ]
+    },
+    "b1_l2": {
+      "lessonId": "b1_l2",
+      "stages": [
+        {
+          "id": "b1_l2_s1",
+          "title": "La Captura Diagonal del Peón",
+          "instruction": "Captura el peón negro de d5 con tu peón de e4 lanzando tu estocada diagonal.",
+          "pollitoSpeech": "¡Los peones caminan recto pero comen en diagonal, {nombre}! Captura en d5 para abrirte paso.",
+          "pollitoSuccess": "¡Captura ninja perfecta! Tu peón avanza imparable por la columna d.",
+          "initialFen": "4k3/8/8/3p4/4P3/8/8/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e4",
+              "to": "d5",
+              "reason": "Captura el peón negro de d5 con tu peón de e4 lanzando tu estocada diagonal."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/8/3p4/4P3/8/8/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e4",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d5": "emerald",
+                "e4": "cyan"
+              },
+              "pollitoText": "¡Los peones son ninjas pacientes! Caminan recto, pero cuando ven un objetivo en diagonal de un paso, ¡sacan su pico y capturan!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e4",
+                "to": "d5"
+              }
+            },
+            {
+              "fen": "4k3/8/8/3P4/8/8/8/4K3 b - - 0 1",
+              "highlightedSquares": {
+                "d5": "emerald"
+              },
+              "pollitoText": "Al capturar en d5, el peón blanco pasa a la columna d y queda con el camino libre hacia la coronación.",
+              "pollitoMood": "happy"
+            }
+          ],
+          "observationTask": {
+            "prompt": "¿Qué peón negro está en la diagonal de ataque de nuestro peón blanco de e4? ¡Tócalo!",
+            "targetSquares": [
+              "d5"
+            ],
+            "successFeedback": "¡Exacto! El peón de d5 está a tiro de espada diagonal.",
+            "errorHint": "Mira un paso en diagonal hacia adelante y a la izquierda de tu peón en e4."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e4e5",
+              "label": "Avanzar de frente a e5 sin capturar",
+              "opponentRefutationUci": "d5d4",
+              "explanation": "¡Si avanzas a e5, el peón negro se te escapa a d4 y te quedas sin la captura! Los peones comen en diagonal."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Captura el peón negro de d5 con tu peón de e4 lanzando tu estocada diagonal.",
+              "playerMove": {
+                "from": "e4",
+                "to": "d5"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "d7",
+                "comment": "¡El Rey negro intenta acercarse para bloquear a tu peón! ¡Avanza a d6!"
+              }
+            },
+            {
+              "instruction": "¡Avanza tu peón a d6 para mantenerlo imparable rumbo a la coronación!",
+              "playerMove": {
+                "from": "d5",
+                "to": "d6"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Hay alguna pieza enemiga en mi diagonal de un paso adelante?",
+            "ruleSummary": "Los peones avanzan recto pero capturan en diagonal hacia adelante.",
+            "pollitoExplanation": "¡Ojo de lince, {nombre}! El peón nunca come hacia adelante; solo ataca hacia las esquinas delanteras."
+          }
+        }
+      ]
+    },
+    "b1_l3": {
+      "lessonId": "b1_l3",
+      "stages": [
+        {
+          "id": "b1_l3_s1",
+          "title": "La Coronación Mágica",
+          "instruction": "Avanza tu peón hasta la casilla e8 para coronar en Dama con jaque al Rey.",
+          "pollitoSpeech": "¡La meta está a un solo paso, {nombre}! Empuja tu peón a e8 y transfórmalo en una poderosa Dama.",
+          "pollitoSuccess": "¡CORONACIÓN MAGISTRAL! Convertiste el peón en Reina y el Rey negro tiembla.",
+          "initialFen": "8/3kPK2/8/8/8/8/8/8 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e7",
+              "to": "e8",
+              "reason": "Avanza tu peón hasta la casilla e8 para coronar en Dama con jaque al Rey."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "8/3kPK2/8/8/8/8/8/8 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e7",
+                  "to": "e8",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e8": "emerald",
+                "e7": "cyan"
+              },
+              "pollitoText": "¡El gran viaje del peón! Si logra pisar la última fila (fila 8), ¡mira cómo se transforma en una poderosa Dama!",
+              "pollitoMood": "hero",
+              "demoMove": {
+                "from": "e7",
+                "to": "e8",
+                "promotion": "q"
+              }
+            },
+            {
+              "fen": "4Q3/3k1K2/8/8/8/8/8/8 b - - 0 1",
+              "highlightedSquares": {
+                "e8": "emerald",
+                "d7": "red"
+              },
+              "pollitoText": "¡Nace la Reina con 9 puntos de poder! Además, su sola aparición le da jaque al Rey negro.",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "¿Cuál es la casilla mágica en la fila 8 donde nacerá tu nueva Dama? ¡Tócala!",
+            "targetSquares": [
+              "e8"
+            ],
+            "successFeedback": "¡Brillante! En e8 el peón craftea su corona de Dama.",
+            "errorHint": "Mira la fila 8 justo enfrente de tu peón: la casilla e8."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "f7f8",
+              "label": "Mover el Rey a f8 en vez de coronar",
+              "opponentRefutationUci": "d7d6",
+              "explanation": "¡Pierdes la iniciativa! Si mueves el Rey sin coronar, el Rey negro escapa hacia d6. ¡Corona primero tu Dama con jaque!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Avanza tu peón hasta la casilla e8 para coronar en Dama con jaque al Rey.",
+              "playerMove": {
+                "from": "e7",
+                "to": "e8",
+                "promotion": "q"
+              },
+              "botDefenseReply": {
+                "from": "d7",
+                "to": "d6",
+                "comment": "¡El Rey negro huye de tu nueva Dama! ¡Ahora da Jaque Mate jugando tu Dama a e6!"
+              }
+            },
+            {
+              "instruction": "¡Lleva tu nueva Dama a e6 para dar el Jaque Mate definitivo!",
+              "playerMove": {
+                "from": "e8",
+                "to": "e6"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo pisar la fila 8 para coronar mi peón en Dama?",
+            "ruleSummary": "Cuando un peón llega a la última fila, ¡transfórmalo de inmediato en Dama!",
+            "pollitoExplanation": "¡Coronar es el mayor premio del ajedrez! Elige siempre la Dama porque es la pieza más fuerte de todo el reino."
+          }
+        }
+      ]
+    },
+    "b2_l1": {
+      "lessonId": "b2_l1",
+      "stages": [
+        {
+          "id": "b2_l1_s1",
+          "title": "La Torre Turbo",
+          "instruction": "Lleva tu Torre por la columna abierta hasta la casilla a8 para dar Jaque Mate del Pasillo.",
+          "pollitoSpeech": "¡La Torre viaja en línea recta a toda velocidad, {nombre}! Sube hasta a8 y encierra al Rey rival.",
+          "pollitoSuccess": "¡JAQUE MATE DEL PASILLO! Tu Torre barrió toda la última fila.",
+          "initialFen": "6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "checkmate_in_1",
+          "acceptedMoves": [
+            {
+              "from": "a1",
+              "to": "a8",
+              "reason": "Lleva tu Torre por la columna abierta hasta la casilla a8 para dar Jaque Mate del Pasillo."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "a1",
+                  "to": "a8",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "a8": "emerald",
+                "g8": "red"
+              },
+              "pollitoText": "¡La Torre viaja por autopistas rectas! Fíjate en los peones de f7, g7 y h7: forman un muro que encierra a su propio Rey.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "a1",
+                "to": "a8"
+              }
+            },
+            {
+              "fen": "R5k1/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1",
+              "highlightedSquares": {
+                "a8": "emerald",
+                "g8": "red"
+              },
+              "pollitoText": "¡Jaque Mate del Pasillo! La Torre barre la fila 8 y el Rey negro no tiene casillas para escapar.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca al Rey negro atrapado en g8 y la casilla a8 al final de la columna abierta donde la Torre da mate.",
+            "targetSquares": [
+              "g8",
+              "a8"
+            ],
+            "successFeedback": "¡Ojo clínico! Rey atrapado en g8 y pasillo mortal en a8.",
+            "errorHint": "Toca el Rey negro en g8 y la casilla a8 en la esquina del fondo."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "a1b1",
+              "label": "Mover la Torre de lado a b1",
+              "opponentRefutationUci": "h7h6",
+              "explanation": "Si juegas a b1, las negras juegan h6 abriendo una ventanita de escape (luft) y se esfuma el mate."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Lleva tu Torre por la columna abierta hasta la casilla a8 para dar Jaque Mate del Pasillo.",
+              "playerMove": {
+                "from": "a1",
+                "to": "a8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿El Rey enemigo tiene una casilla de escape o está encerrado en el pasillo?",
+            "ruleSummary": "Si el Rey rival está atrapado tras sus peones, la Torre en la última fila da Jaque Mate del Pasillo.",
+            "pollitoExplanation": "¡Nunca te olvides del pasillo! En tus partidas, acuérdate de darle aire a tu Rey con h3 o g3 para no sufrir este mate."
+          }
+        }
+      ]
+    },
+    "b2_l2": {
+      "lessonId": "b2_l2",
+      "stages": [
+        {
+          "id": "b2_l2_s1",
+          "title": "El Alfil Francotirador",
+          "instruction": "Desliza tu Alfil por la gran diagonal blanca para capturar el peón indefenso en g7.",
+          "pollitoSpeech": "¡El Alfil domina las diagonales de su color, {nombre}! Dispara desde b2 hasta el peón de g7.",
+          "pollitoSuccess": "¡Diana perfecta! El Alfil barrió el flanco de rey enemigo.",
+          "initialFen": "r3k3/5ppp/8/8/8/8/1B3PPP/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "b2",
+              "to": "g7",
+              "reason": "Desliza tu Alfil por la gran diagonal blanca para capturar el peón indefenso en g7."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r3k3/5ppp/8/8/8/8/1B3PPP/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "b2",
+                  "to": "g7",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "g7": "emerald",
+                "b2": "cyan"
+              },
+              "pollitoText": "¡El Alfil es un francotirador de diagonales! El Alfil de b2 viaja por casillas blancas hasta el peón indefenso de g7.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "b2",
+                "to": "g7"
+              }
+            },
+            {
+              "fen": "r3k3/5pBp/8/8/8/8/5PPP/4K3 b - - 0 1",
+              "highlightedSquares": {
+                "g7": "emerald"
+              },
+              "pollitoText": "Al comer en g7, el Alfil no solo gana material sino que además destruye el escudo de peones rival.",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "¿Qué peón negro desprotegido puede capturar nuestro Alfil de b2 por su larga diagonal? ¡Tócalo!",
+            "targetSquares": [
+              "g7"
+            ],
+            "successFeedback": "¡Diana! El peón de g7 está desprotegido al final de la diagonal.",
+            "errorHint": "Sigue la diagonal blanca desde b2 hasta el peón negro en g7."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "b2a3",
+              "label": "Mover el Alfil a a3 sin ganar nada",
+              "opponentRefutationUci": "e8d7",
+              "explanation": "En a3 el Alfil no ataca nada útil. ¡Por la gran diagonal en g7 te comías un peón gratis!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Desliza tu Alfil por la gran diagonal blanca para capturar el peón indefenso en g7.",
+              "playerMove": {
+                "from": "b2",
+                "to": "g7"
+              },
+              "botDefenseReply": {
+                "from": "a8",
+                "to": "a2",
+                "comment": "¡La Torre negra contraataca buscando tu peón de a2! Retira tu Alfil a la casilla segura e5."
+              }
+            },
+            {
+              "instruction": "¡Retira tu Alfil a la casilla segura e5 para mantenerlo protegido!",
+              "playerMove": {
+                "from": "g7",
+                "to": "e5"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Qué piezas rivales están al final de la diagonal abierta de mi Alfil?",
+            "ruleSummary": "Los Alfiles dominan a distancia; busca piezas o peones indefensos en sus diagonales largas.",
+            "pollitoExplanation": "¡Mantén despejados los toboganes de tus Alfiles! Cuantas más casillas libres tengan, más daño harán."
+          }
+        }
+      ]
+    },
+    "b2_l3": {
+      "lessonId": "b2_l3",
+      "stages": [
+        {
+          "id": "b2_l3_s1",
+          "title": "La Batería de Torre y Alfil",
+          "instruction": "Da jaque con tu Alfil en b5 para descolocar al Rey enemigo y capturar su Torre en d8.",
+          "pollitoSpeech": "¡Trabajo en equipo, {nombre}! Primero descoloca al Rey con jaque de Alfil en b5, y luego la Torre se come el botín.",
+          "pollitoSuccess": "¡BATERÍA COMBINADA MAESTRA! Ganaste la Torre con una jugada intermedia perfecta.",
+          "initialFen": "3rk3/4bppp/8/8/2B5/8/5PPP/3R2K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "c4",
+              "to": "b5",
+              "reason": "Da jaque con tu Alfil en b5 para descolocar al Rey enemigo y capturar su Torre en d8."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "3rk3/4bppp/8/8/2B5/8/5PPP/3R2K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "c4",
+                  "to": "b5",
+                  "color": "emerald"
+                },
+                {
+                  "from": "d1",
+                  "to": "d8",
+                  "color": "cyan"
+                }
+              ],
+              "highlightedSquares": {
+                "b5": "emerald",
+                "d8": "cyan"
+              },
+              "pollitoText": "¡Torre y Alfil coordinados! El Alfil da un jaque intermedio en b5 para descolocar al Rey y dejar a la Torre de d8 sin defensa.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "c4",
+                "to": "b5"
+              }
+            },
+            {
+              "fen": "3r1k2/4bppp/8/1B6/8/8/5PPP/3R2K1 w - - 1 2",
+              "highlightedSquares": {
+                "d8": "red"
+              },
+              "pollitoText": "Al huir el Rey a f8, la Torre de d8 queda solitaria e indefensa.",
+              "pollitoMood": "thinking"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla b5 donde tu Alfil da jaque y la Torre enemiga indefensa en d8.",
+            "targetSquares": [
+              "b5",
+              "d8"
+            ],
+            "successFeedback": "¡Coordinación total! Jaque en b5 y captura mortal en d8.",
+            "errorHint": "Toca la casilla b5 en la diagonal de tu Alfil y la Torre negra en d8."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d1d8",
+              "label": "Cambiar torres directamente en d8",
+              "opponentRefutationUci": "e7d8",
+              "explanation": "Si cambias torres primero, el Alfil de e7 retoma en d8 y quedan iguales. ¡Dando jaque primero con tu Alfil en b5 ganas la Torre limpia!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Da jaque con tu Alfil en b5 para descolocar al Rey enemigo y capturar su Torre en d8.",
+              "playerMove": {
+                "from": "c4",
+                "to": "b5"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "f8",
+                "comment": "¡El Rey negro tuvo que huir a f8! Ahora captura la Torre indefensa en d8 con tu Torre."
+              }
+            },
+            {
+              "instruction": "¡Captura la Torre indefensa en d8 con tu Torre blanca!",
+              "playerMove": {
+                "from": "d1",
+                "to": "d8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo dar un jaque intermedio para descolocar al defensor?",
+            "ruleSummary": "Un jaque intermedio obliga al rival a responder y te deja capturar la pieza indefensa.",
+            "pollitoExplanation": "¡El orden de las jugadas lo cambia todo! Un jaque intermedio sorpresa te hace ganar piezas enteras."
+          }
+        }
+      ]
+    },
+    "b3_l1": {
+      "lessonId": "b3_l1",
+      "stages": [
+        {
+          "id": "b3_l1_s1",
+          "title": "El Salto Ninja del Caballo",
+          "instruction": "Salta con tu Caballo a c7 para dar Jaque al Rey en e8 y atacar a la Torre en a8 a la vez.",
+          "pollitoSpeech": "¡El salto en L no se puede bloquear, {nombre}! Salta a c7 y clava tu doble golpe mortal.",
+          "pollitoSuccess": "¡HORQUILLA REAL PERFECTA! El Rey huye y la Torre enemiga está en tu bolsillo.",
+          "initialFen": "r3k3/pp4pp/8/3N4/8/8/PP3PPP/6K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d5",
+              "to": "c7",
+              "reason": "Salta con tu Caballo a c7 para dar Jaque al Rey en e8 y atacar a la Torre en a8 a la vez."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r3k3/pp4pp/8/3N4/8/8/PP3PPP/6K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d5",
+                  "to": "c7",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "c7": "emerald",
+                "e8": "red",
+                "a8": "amber"
+              },
+              "pollitoText": "¡El Caballo salta en forma de L! 2 casillas al frente y 1 al costado, saltando por encima de cualquier obstáculo.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d5",
+                "to": "c7"
+              }
+            },
+            {
+              "fen": "r3k3/ppN3pp/8/8/8/8/PP3PPP/6K1 b - - 0 1",
+              "arrows": [
+                {
+                  "from": "c7",
+                  "to": "e8",
+                  "color": "red"
+                },
+                {
+                  "from": "c7",
+                  "to": "a8",
+                  "color": "amber"
+                }
+              ],
+              "highlightedSquares": {
+                "e8": "red",
+                "a8": "amber"
+              },
+              "pollitoText": "¡Horquilla Real! En c7 ataca al Rey y a la Torre a la vez. El Rey está obligado a huir y la Torre cae.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "¿A qué casilla puede saltar nuestro Caballo de d5 para dar Jaque al Rey en e8 y atacar la Torre de a8 a la vez? ¡Tócala!",
+            "targetSquares": [
+              "c7"
+            ],
+            "successFeedback": "¡Encontraste la casilla del tenedor! c7 ataca a Rey y Torre.",
+            "errorHint": "Cuenta 2 casillas hacia arriba (fila 7) y 1 a la izquierda: la casilla c7."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d5e3",
+              "label": "Retirar el Caballo hacia atrás a e3",
+              "opponentRefutationUci": "e8d7",
+              "explanation": "En e3 el Caballo no ataca nada. ¡En c7 dabas un salto ninja haciendo horquilla al Rey y a la Torre a la vez!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Salta con tu Caballo a c7 para dar Jaque al Rey en e8 y atacar a la Torre en a8 a la vez.",
+              "playerMove": {
+                "from": "d5",
+                "to": "c7"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "d7",
+                "comment": "¡El Rey negro huye del jaque! Ahora cómete la Torre indefensa en a8 con tu Caballo."
+              }
+            },
+            {
+              "instruction": "¡Cómete la Torre indefensa en a8 con tu Caballo!",
+              "playerMove": {
+                "from": "c7",
+                "to": "a8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi Caballo puede saltar a una casilla donde ataque a dos piezas a la vez?",
+            "ruleSummary": "El Caballo es el rey de las horquillas porque ataca a dos piezas sin que puedan tapar su salto.",
+            "pollitoExplanation": "¡El salto en L no se puede bloquear! Si das jaque con el Caballo, el Rey rival tiene que huir sí o sí."
+          }
+        }
+      ]
+    },
+    "b3_l2": {
+      "lessonId": "b3_l2",
+      "stages": [
+        {
+          "id": "b3_l2_s1",
+          "title": "El Poder de la Mega-Dama",
+          "instruction": "Captura la Torre indefensa en a8 con tu Dama dando jaque al Rey negro por la fila 8.",
+          "pollitoSpeech": "¡La Dama vale 9 puntos y vuela en 8 direcciones, {nombre}! Cruza la diagonal hasta a8.",
+          "pollitoSuccess": "¡Ataque doble majestuoso! La Dama demostró todo su poder.",
+          "initialFen": "r3k3/5ppp/8/8/4Q3/8/5PPP/6K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e4",
+              "to": "a8",
+              "reason": "Captura la Torre indefensa en a8 con tu Dama dando jaque al Rey negro por la fila 8."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r3k3/5ppp/8/8/4Q3/8/5PPP/6K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e4",
+                  "to": "a8",
+                  "color": "emerald"
+                },
+                {
+                  "from": "e4",
+                  "to": "e8",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "a8": "emerald",
+                "e8": "red"
+              },
+              "pollitoText": "¡La Dama vale 9 puntos y vuela en 8 direcciones! En e4 domina el centro y apunta a la Torre indefensa en a8.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e4",
+                "to": "a8"
+              }
+            },
+            {
+              "fen": "Q3k3/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1",
+              "highlightedSquares": {
+                "a8": "emerald",
+                "e8": "red"
+              },
+              "pollitoText": "Al capturar en a8, ¡la Dama da jaque al Rey negro al mismo tiempo!",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la Torre negra indefensa en a8 que está en la mira diagonal de nuestra Dama de e4.",
+            "targetSquares": [
+              "a8"
+            ],
+            "successFeedback": "¡Objetivo localizado! La Torre de a8 no tiene nadie que la defienda.",
+            "errorHint": "Sigue la diagonal de tu Dama hasta la esquina superior izquierda en a8."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e4e2",
+              "label": "Retirar la Dama hacia atrás a e2",
+              "opponentRefutationUci": "e8d8",
+              "explanation": "¡No seas tímida! La Torre de a8 estaba totalmente indefensa. ¡Podías comértela con jaque de Dama!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Lanza tu Dama por la diagonal hasta a8 para capturar la Torre indefensa del rincón.",
+              "playerMove": {
+                "from": "e4",
+                "to": "a8"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "d7",
+                "comment": "¡El Rey negro huye a d7! Ahora lleva tu Dama a a7 para seguir dominando con jaque."
+              }
+            },
+            {
+              "instruction": "¡Lleva tu Dama a a7 para seguir dominando con jaque!",
+              "playerMove": {
+                "from": "a8",
+                "to": "a7"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Qué piezas rivales están en las filas, columnas o diagonales de mi Dama?",
+            "ruleSummary": "La Dama ataca en 8 direcciones a la vez; centralízala para dominar todo el mapa.",
+            "pollitoExplanation": "¡Una Dama centralizada es imparable! Pero no la saques en las primeras jugadas si los peones rivales pueden atacarla."
+          }
+        }
+      ]
+    },
+    "b3_l3": {
+      "lessonId": "b3_l3",
+      "stages": [
+        {
+          "id": "b3_l3_s1",
+          "title": "El Beso de la Muerte",
+          "instruction": "Lleva tu Dama a f7 con la protección de tu Alfil en c4 para dar el Jaque Mate del Beso de la Muerte.",
+          "pollitoSpeech": "¡El mate más famoso del ajedrez, {nombre}! Pega tu Dama a la cara del Rey en f7 con la espalda cuidada por tu Alfil.",
+          "pollitoSuccess": "¡BESO DE LA MUERTE! Jaque Mate impecable cara a cara.",
+          "initialFen": "r1bqkb1r/pppp1ppp/2n5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 4",
+          "freeMoveMode": false,
+          "goalType": "checkmate_in_1",
+          "acceptedMoves": [
+            {
+              "from": "f3",
+              "to": "f7",
+              "reason": "Lleva tu Dama a f7 con la protección de tu Alfil en c4 para dar el Jaque Mate del Beso de la Muerte."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqkb1r/pppp1ppp/2n5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 4",
+              "arrows": [
+                {
+                  "from": "f3",
+                  "to": "f7",
+                  "color": "emerald"
+                },
+                {
+                  "from": "c4",
+                  "to": "f7",
+                  "color": "cyan"
+                }
+              ],
+              "highlightedSquares": {
+                "f7": "red",
+                "c4": "cyan",
+                "f3": "emerald"
+              },
+              "pollitoText": "¡El Beso de la Muerte! La Dama de f3 y el Alfil de c4 apuntan juntos al punto más débil del rival: el peón de f7.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "f3",
+                "to": "f7"
+              }
+            },
+            {
+              "fen": "r1bqkb1r/pppp1Qpp/2n5/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4",
+              "highlightedSquares": {
+                "f7": "emerald",
+                "e8": "red"
+              },
+              "pollitoText": "¡Jaque Mate! La Dama se pega al Rey. El Rey no puede capturarla porque el Alfil en c4 la cuida desde atrás.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla f7 donde el Alfil de c4 y la Dama de f3 se unen para dar el Beso de la Muerte.",
+            "targetSquares": [
+              "f7"
+            ],
+            "successFeedback": "¡Casilla mortal encontrada! En f7 la Dama da el mate definitivo.",
+            "errorHint": "Busca la casilla f7, justo enfrente del Rey negro."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "f3b3",
+              "label": "Mover la Dama a b3",
+              "opponentRefutationUci": "d8e7",
+              "explanation": "Si mueves a b3, las negras defienden f7 con su Dama en e7. ¡Tenías el Beso de la Muerte directo en f7!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Lleva tu Dama a f7 con el apoyo del Alfil de c4 para dar el Beso de la Muerte.",
+              "playerMove": {
+                "from": "f3",
+                "to": "f7"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi Dama tiene un guardaespaldas para colocarse cara a cara con el Rey enemigo?",
+            "ruleSummary": "La Dama protegida pegada al Rey enemigo da Jaque Mate porque el Rey no puede capturarla.",
+            "pollitoExplanation": "¡La Reina nunca besa sola! Siempre necesita un Alfil, Caballo o Peón que le cuide la espalda."
+          }
+        }
+      ]
+    },
+    "b4_l1": {
+      "lessonId": "b4_l1",
+      "stages": [
+        {
+          "id": "b4_l1_s1",
+          "title": "El Rey Valioso y la Seguridad",
+          "instruction": "Interpón tu Alfil en e2 para bloquear el jaque de la Torre como un escudo protector.",
+          "pollitoSpeech": "¡Alerta de jaque, {nombre}! Usa la regla CPR: interpon tu Alfil en e2 para proteger a tu Rey.",
+          "pollitoSuccess": "¡Escudo inquebrantable! El Rey quedó a salvo y la pieza protegida.",
+          "initialFen": "4r1k1/5ppp/8/8/2B5/8/5PPP/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "c4",
+              "to": "e2",
+              "reason": "Interpón tu Alfil en e2 para bloquear el jaque de la Torre como un escudo protector."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4r1k1/5ppp/8/8/2B5/8/5PPP/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e8",
+                  "to": "e1",
+                  "color": "red"
+                },
+                {
+                  "from": "c4",
+                  "to": "e2",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e1": "red",
+                "e2": "emerald"
+              },
+              "pollitoText": "¡Alerta de Jaque! Cuando el Rey está bajo ataque existen 3 defensas (CPR): Capturar al agresor, Proteger con escudo (interponer), o Retirar al Rey.",
+              "pollitoMood": "spidey",
+              "demoMove": {
+                "from": "c4",
+                "to": "e2"
+              }
+            },
+            {
+              "fen": "4r1k1/5ppp/8/8/8/8/4BPPP/4K3 b - - 1 1",
+              "highlightedSquares": {
+                "e2": "emerald",
+                "e1": "cyan"
+              },
+              "pollitoText": "¡Interponer es la mejor defensa aquí! El Alfil se pone en e2 de escudo y el jaque queda totalmente anulado.",
+              "pollitoMood": "happy"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla e2 donde nuestro Alfil puede colocarse como un escudo para bloquear el jaque de la Torre.",
+            "targetSquares": [
+              "e2"
+            ],
+            "successFeedback": "¡Escudo perfecto! En e2 el Alfil frena el jaque en seco.",
+            "errorHint": "Toca la casilla e2, justo entre la Torre atacante y tu Rey."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e1d1",
+              "label": "Huir con el Rey a d1 en el centro",
+              "opponentRefutationUci": "e8e2",
+              "explanation": "¡Si huyes a d1 dejas a tu Alfil de c4 totalmente solo y te lo comen! Bloquear con tu Alfil en e2 protege al Rey y a la pieza."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Interpón tu Alfil en e2 para bloquear el jaque de la Torre como un escudo protector.",
+              "playerMove": {
+                "from": "c4",
+                "to": "e2"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "e7",
+                "comment": "¡El rival intenta presionar! Ahora pon a tu Rey a salvo refugiándolo en la casilla f1."
+              }
+            },
+            {
+              "instruction": "¡Pon a tu Rey a salvo refugiándolo en la casilla f1!",
+              "playerMove": {
+                "from": "e1",
+                "to": "f1"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "Cuando me dan jaque: ¿puedo Capturar, Proteger con escudo o Retirar a mi Rey?",
+            "ruleSummary": "Ante un jaque, usa la regla CPR: Capturar la pieza atacante, Proteger con escudo o Retirar al Rey a salvo.",
+            "pollitoExplanation": "¡Regla CPR! Primero mira si puedes comer la pieza atacante, luego si puedes tapar el jaque, y si no, corre a una casilla segura."
+          }
+        }
+      ]
+    },
+    "b4_l2": {
+      "lessonId": "b4_l2",
+      "stages": [
+        {
+          "id": "b4_l2_s1",
+          "title": "El Enroque Corto y Largo",
+          "instruction": "Realiza el enroque corto moviendo tu Rey dos pasos hacia g1 para meterlo en su búnker.",
+          "pollitoSpeech": "¡El refugio del monarca, {nombre}! Haz el enroque corto con O-O para activar tu Torre y asegurar a tu Rey.",
+          "pollitoSuccess": "¡ENROQUE IMPECABLE! El Rey está seguro y la Torre lista para la batalla.",
+          "initialFen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e1",
+              "to": "g1",
+              "reason": "Realiza el enroque corto moviendo tu Rey dos pasos hacia g1 para meterlo en su búnker."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+              "arrows": [
+                {
+                  "from": "e1",
+                  "to": "g1",
+                  "color": "emerald"
+                },
+                {
+                  "from": "h1",
+                  "to": "f1",
+                  "color": "cyan"
+                }
+              ],
+              "highlightedSquares": {
+                "g1": "emerald",
+                "f1": "cyan"
+              },
+              "pollitoText": "¡El Enroque es la única jugada donde se mueven dos piezas a la vez! Mira cómo el Rey corre 2 pasos hacia la Torre y la Torre salta por encima.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e1",
+                "to": "g1"
+              }
+            },
+            {
+              "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQ1RK1 b kq - 1 5",
+              "highlightedSquares": {
+                "g1": "emerald",
+                "f1": "cyan"
+              },
+              "pollitoText": "¡Mira qué seguro queda el Rey en g1 dentro de su búnker de peones mientras la Torre entra al centro!",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla g1 donde aterrizará tu Rey al hacer el enroque corto de 2 pasos.",
+            "targetSquares": [
+              "g1"
+            ],
+            "successFeedback": "¡Búnker localizado! En g1 tu Rey duerme tranquilo.",
+            "errorHint": "Cuenta 2 pasos a la derecha desde el Rey en e1: la casilla g1."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e1e2",
+              "label": "Mover el Rey a e2 en vez de enrocar",
+              "opponentRefutationUci": "c6d4",
+              "explanation": "¡No expongas al Rey en el centro! Si mueves a e2 pierdes el derecho al enroque para siempre. ¡Enroca con O-O!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Realiza el enroque corto moviendo tu Rey dos pasos hacia g1 para meterlo en su búnker.",
+              "playerMove": {
+                "from": "e1",
+                "to": "g1"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "g8",
+                "comment": "¡Ambos Reyes están a salvo en sus castillos! Ahora conecta tus piezas llevando el Alfil de c1 a g5."
+              }
+            },
+            {
+              "instruction": "¡Desarrolla tu Alfil de casillas negras de c1 a g5 para conectar tus piezas!",
+              "playerMove": {
+                "from": "c1",
+                "to": "g5"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Tengo el camino despejado para meter a mi Rey en su búnker de enroque?",
+            "ruleSummary": "Enroca temprano para proteger a tu Rey en una esquina y activar tu Torre hacia el centro.",
+            "pollitoExplanation": "¡Un Rey en el centro es un blanco fácil! Enroca en las primeras 10 jugadas para tener una fortaleza segura."
+          }
+        }
+      ]
+    },
+    "b4_l3": {
+      "lessonId": "b4_l3",
+      "stages": [
+        {
+          "id": "b4_l3_s1",
+          "title": "Jaque, Jaque Mate y el Tabú del Ahogado",
+          "instruction": "Lleva tu Dama a g7 con el apoyo de tu Rey en f6 para dar Jaque Mate directo y evitar el ahogado.",
+          "pollitoSpeech": "¡Cuidado con ahogar al Rey rival, {nombre}! Canta Jaque Mate directo en g7 y no dejes escapar la victoria.",
+          "pollitoSuccess": "¡JAQUE MATE LIMPIO! Ganaste sin caer en la trampa del Rey Ahogado.",
+          "initialFen": "7k/8/5K2/8/8/8/6Q1/8 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "checkmate_in_1",
+          "acceptedMoves": [
+            {
+              "from": "g2",
+              "to": "g7",
+              "reason": "Lleva tu Dama a g7 con el apoyo de tu Rey en f6 para dar Jaque Mate directo y evitar el ahogado."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "7k/8/5K2/8/8/8/6Q1/8 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "g2",
+                  "to": "g7",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "g7": "emerald",
+                "h8": "red"
+              },
+              "pollitoText": "¡El mayor susto de todo ajedrecista: el Rey Ahogado! Si el rival no está en jaque pero no puede mover nada, ¡es empate!",
+              "pollitoMood": "spidey",
+              "demoMove": {
+                "from": "g2",
+                "to": "g7"
+              }
+            },
+            {
+              "fen": "7k/8/5KQ1/8/8/8/8/8 b - - 0 1",
+              "highlightedSquares": {
+                "h8": "amber"
+              },
+              "pollitoText": "¡Esto ocurre si la Dama blanca se coloca en g6 apresuradamente! El Rey en h8 no está en jaque y no tiene jugadas legales. ¡Empate accidental por ahogado!",
+              "pollitoMood": "thinking"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla g7 donde la Dama canta Jaque Mate protegida por el Rey de f6.",
+            "targetSquares": [
+              "g7"
+            ],
+            "successFeedback": "¡Casilla de Jaque Mate! En g7 es mate directo y cero ahogado.",
+            "errorHint": "Toca la casilla g7, justo al lado del Rey negro en la columna g."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "g2g6",
+              "label": "Mover la Dama a g6 para arrinconar al Rey",
+              "explanation": "¡ALERTA MÁXIMA DE AHOGADO! Si juegas tu Dama a g6, el Rey negro no está en jaque y no tiene jugadas legales. ¡Es tablas (empate) habiendo tenido mate en 1!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Lleva tu Dama a g7 con el apoyo de tu Rey en f6 para dar Jaque Mate directo y evitar el ahogado.",
+              "playerMove": {
+                "from": "g2",
+                "to": "g7"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi jugada da Jaque, o deja al Rey enemigo con al menos una casilla libre para no ahogarlo?",
+            "ruleSummary": "Para ganar sin ahogar: o das Jaque Mate directo, o dejas al Rey rival una casilla legal para respirar.",
+            "pollitoExplanation": "¡Regla anti-ahogados! Cuando arrincones al Rey enemigo, asegúrate de que tu jugada dé JAQUE. ¡Sin jaque, puedes regalar un empate!"
+          }
+        }
+      ]
+    },
+    "b5_l1": {
+      "lessonId": "b5_l1",
+      "stages": [
+        {
+          "id": "b5_l1_s1",
+          "title": "Las 3 Reglas de Oro de la Apertura",
+          "instruction": "Avanza tu peón central a e4 para abrir paso a tus piezas y dominar el centro.",
+          "pollitoSpeech": "¡Las 3 Reglas de Oro, {nombre}! Comienza dominando el centro con tu peón de e4.",
+          "pollitoSuccess": "¡Centro conquistado! Camino despejado para Alfiles y Dama.",
+          "initialFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e2",
+              "to": "e4",
+              "reason": "Avanza tu peón central a e4 para abrir paso a tus piezas y dominar el centro."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+              "arrows": [
+                {
+                  "from": "e2",
+                  "to": "e4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e4": "emerald",
+                "d4": "emerald",
+                "e5": "cyan",
+                "d5": "cyan"
+              },
+              "pollitoText": "¡Las 3 Reglas de Oro de la Apertura! Regla 1: Ocupar el centro del mapa con los peones en e4 y d4. ¡Mira el salto inicial del peón blanco!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e2",
+                "to": "e4"
+              }
+            },
+            {
+              "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+              "arrows": [
+                {
+                  "from": "g1",
+                  "to": "f3",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "f3": "emerald"
+              },
+              "pollitoText": "Regla 2: Desarrollar Caballos y Alfiles hacia casillas activas controlando el centro antes de mover la Dama.",
+              "pollitoMood": "happy"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca las 4 casillas centrales del mapa (e4, d4, e5, d5) que debemos controlar.",
+            "targetSquares": [
+              "e4",
+              "d4",
+              "e5",
+              "d5"
+            ],
+            "successFeedback": "¡Corazón del mapa asegurado! e4, d4, e5 y d5 dominadas.",
+            "errorHint": "Toca los 4 bloques del medio del tablero: d4, e4, d5 y e5."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "h2h4",
+              "label": "Mover el peón de la orilla a h4",
+              "opponentRefutationUci": "d7d5",
+              "explanation": "Los peones de los bordes no controlan el centro. Las 3 Reglas de Oro dicen: 1) Dominar el centro, 2) Desarrollar piezas menores, 3) Enrocar."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Avanza tu peón central a e4 para abrir paso a tus piezas y dominar el centro.",
+              "playerMove": {
+                "from": "e2",
+                "to": "e4"
+              },
+              "botDefenseReply": {
+                "from": "e7",
+                "to": "e5",
+                "comment": "¡Excelente control central! Ahora aplica la Regla 2: desarrolla tu Caballo a f3 atacando e5."
+              }
+            },
+            {
+              "instruction": "¡Desarrolla tu Caballo a f3 atacando el peón central enemigo!",
+              "playerMove": {
+                "from": "g1",
+                "to": "f3"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Estoy controlando el centro y sacando mis piezas menores antes de mover la Dama?",
+            "ruleSummary": "En la apertura: domina el centro con peones, desarrolla Caballos y Alfiles, y pon a tu Rey a salvo.",
+            "pollitoExplanation": "¡No muevas la misma pieza dos veces al principio ni saques la Dama a pasear! Desarrolla a todo tu equipo primero."
+          }
+        }
+      ]
+    },
+    "b5_l2": {
+      "lessonId": "b5_l2",
+      "stages": [
+        {
+          "id": "b5_l2_s1",
+          "title": "La Construcción de la Italiana",
+          "instruction": "Desarrolla tu Alfil a c4 apuntando directo a la casilla vulnerable f7 del rival.",
+          "pollitoSpeech": "¡La bella Apertura Italiana, {nombre}! Lleva el Alfil a c4 apuntando al punto débil del enemigo.",
+          "pollitoSuccess": "¡Apertura Italiana construida con éxito! Armonía y ataque total.",
+          "initialFen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "f1",
+              "to": "c4",
+              "reason": "Desarrolla tu Alfil a c4 apuntando directo a la casilla vulnerable f7 del rival."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+              "arrows": [
+                {
+                  "from": "f1",
+                  "to": "c4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "c4": "emerald",
+                "f7": "red"
+              },
+              "pollitoText": "¡La Apertura Italiana es pura armonía! El Alfil blanco se desarrolla a c4 apuntando directo a la casilla vulnerable f7.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "f1",
+                "to": "c4"
+              }
+            },
+            {
+              "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 4",
+              "arrows": [
+                {
+                  "from": "c4",
+                  "to": "f7",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "f7": "red"
+              },
+              "pollitoText": "¿Por qué f7 es débil? Porque al principio de la partida solo la cuida el Rey. ¡Toda la artillería apunta allí!",
+              "pollitoMood": "thinking"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla c4 a donde viaja tu Alfil y la casilla f7 del rival a donde apunta su mira.",
+            "targetSquares": [
+              "c4",
+              "f7"
+            ],
+            "successFeedback": "¡Mira italiana activada! Alfil en c4 apuntando a f7.",
+            "errorHint": "Toca la casilla c4 en la diagonal de tu Alfil y la casilla f7 del rival."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "f1b5",
+              "label": "Mover el Alfil a b5 (Apertura Española)",
+              "opponentRefutationUci": "a7a6",
+              "explanation": "En b5 juegas la Española. ¡En la Italiana llevamos el Alfil a c4 apuntando directo al peón indefenso de f7!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Desarrolla tu Alfil a c4 apuntando directo a la casilla vulnerable f7 del rival.",
+              "playerMove": {
+                "from": "f1",
+                "to": "c4"
+              },
+              "botDefenseReply": {
+                "from": "f8",
+                "to": "c5",
+                "comment": "¡Las negras responden sacando su Alfil a c5! Ahora apoya tu centro jugando d2 a d3 para abrirle paso a tu otro Alfil."
+              }
+            },
+            {
+              "instruction": "¡Apoya tu centro jugando tu peón de d2 a d3 para abrirle paso a tu otro Alfil!",
+              "playerMove": {
+                "from": "d2",
+                "to": "d3"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi Alfil de c4 está apuntando a la casilla más vulnerable del rival (f7)?",
+            "ruleSummary": "En la Italiana, el Alfil en c4 presiona la casilla débil f7 mientras preparas el enroque.",
+            "pollitoExplanation": "¡La Italiana es una obra de arte! Coloca tu Alfil en c4, tu Caballo en f3, y prepárate para enrocar corto en la siguiente jugada."
+          }
+        }
+      ]
+    },
+    "b5_l3": {
+      "lessonId": "b5_l3",
+      "stages": [
+        {
+          "id": "b5_l3_s1",
+          "title": "La Trampa del Pastor y cómo Defenderla",
+          "instruction": "Captura en f7 con tu Dama apoyada por el Alfil en c4 para ejecutar el Jaque Mate Pastor.",
+          "pollitoSpeech": "¡La trampa del Pastor en acción, {nombre}! Como las negras no defendieron sacando su Caballo a f6, remata en f7 con tu Dama.",
+          "pollitoSuccess": "¡JAQUE MATE PASTOR! Demostraste por qué f7 es la casilla más peligrosa de la apertura.",
+          "initialFen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 4",
+          "freeMoveMode": false,
+          "goalType": "checkmate_in_1",
+          "acceptedMoves": [
+            {
+              "from": "f3",
+              "to": "f7",
+              "reason": "Captura en f7 con tu Dama apoyada por el Alfil en c4 para ejecutar el Jaque Mate Pastor."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 4",
+              "arrows": [
+                {
+                  "from": "f3",
+                  "to": "f7",
+                  "color": "emerald"
+                },
+                {
+                  "from": "c4",
+                  "to": "f7",
+                  "color": "cyan"
+                }
+              ],
+              "highlightedSquares": {
+                "f7": "red"
+              },
+              "pollitoText": "¡El Mate Pastor es la trampa más famosa! La Dama y el Alfil se combinan contra f7 para ganar en 4 jugadas.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "f3",
+                "to": "f7"
+              }
+            },
+            {
+              "fen": "r1bqkbnr/pppp1Qpp/2n5/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4",
+              "highlightedSquares": {
+                "f7": "emerald",
+                "e8": "red"
+              },
+              "pollitoText": "¡Jaque Mate! La Dama entra protegida por el Alfil de c4 y el Rey negro no tiene escapatoria.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla f7 donde se cruzan la Dama y el Alfil para dar el Jaque Mate Pastor.",
+            "targetSquares": [
+              "f7"
+            ],
+            "successFeedback": "¡Casilla mortal encontrada! En f7 se cruzan el Alfil y la Reina.",
+            "errorHint": "Busca la casilla f7, justo enfrente del Rey negro."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "f3b3",
+              "label": "Retirar la Dama a b3",
+              "opponentRefutationUci": "g8f6",
+              "explanation": "Si vas a b3, las negras juegan su Caballo a f6 desarrollando y cierran la diagonal. ¡Tenías el Mate Pastor directo capturando en f7 con tu Dama!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Captura en f7 con tu Dama apoyada por el Alfil en c4 para ejecutar el Jaque Mate Pastor.",
+              "playerMove": {
+                "from": "f3",
+                "to": "f7"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Alguien está amenazando la casilla f7 con Dama y Alfil?",
+            "ruleSummary": "Vigila siempre la casilla f7: si te atacan con Dama y Alfil, defiéndela de inmediato sacando tu Caballo a f6 o tu Dama a e7.",
+            "pollitoExplanation": "¡Nunca te dejes dar el Pastor! En cuanto veas a la Dama rival salir en jugada 2 o 3, enciende tu Sentido Arácnido y defiende f7 con tu Caballo."
+          }
+        }
+      ]
+    },
+    "b6_l1": {
+      "lessonId": "b6_l1",
+      "stages": [
+        {
+          "id": "b6_l1_s1",
+          "title": "El Radar de Piezas Colgadas",
+          "instruction": "Captura el Alfil negro indefenso en d4 con tu Torre blanca.",
+          "pollitoSpeech": "¡Enciende tu Radar de Piezas Colgadas, {nombre}! El Alfil en d4 no tiene ningún defensor: ¡captúralo con tu Torre en d4!",
+          "pollitoSuccess": "¡Pieza colgada devorada! Ganaste material limpio sin arriesgar nada.",
+          "initialFen": "4k3/5ppp/8/8/3b4/8/5PPP/3R2K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d1",
+              "to": "d4",
+              "reason": "Captura el Alfil negro indefenso en d4 con tu Torre blanca."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/5ppp/8/8/3b4/8/5PPP/3R2K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d1",
+                  "to": "d4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d4": "red",
+                "d1": "cyan"
+              },
+              "pollitoText": "¡Radar de Piezas Colgadas activado! Una pieza colgada es aquella que no tiene ningún defensor que la cuide.",
+              "pollitoMood": "spidey",
+              "demoMove": {
+                "from": "d1",
+                "to": "d4"
+              }
+            },
+            {
+              "fen": "4k3/5ppp/8/8/3R4/8/5PPP/6K1 b - - 0 1",
+              "highlightedSquares": {
+                "d4": "emerald"
+              },
+              "pollitoText": "¡Mira cómo la Torre devora el Alfil indefenso! Las blancas ganan 3 puntos limpios sin arriesgar nada.",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "¿Qué pieza negra en el centro no tiene ningún defensor que la cuide? ¡Tócala!",
+            "targetSquares": [
+              "d4"
+            ],
+            "successFeedback": "¡Pieza colgada detectada! El Alfil de d4 está completamente desamparado.",
+            "errorHint": "Busca el Alfil negro en la casilla central d4."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d1e1",
+              "label": "Dar jaque en e1 sin capturar la pieza",
+              "opponentRefutationUci": "e8d8",
+              "explanation": "¡No des jaques al aire! El Alfil negro de d4 estaba completamente colgado (sin defensor). ¡Cómetelo con tu Torre en d4!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Captura el Alfil negro indefenso en d4 con tu Torre blanca.",
+              "playerMove": {
+                "from": "d1",
+                "to": "d4"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "e7",
+                "comment": "¡El Rey negro avanza! Ahora retira tu Torre a d3 para mantenerla protegida."
+              }
+            },
+            {
+              "instruction": "¡Retira tu Torre a la casilla segura d3 para mantenerla protegida!",
+              "playerMove": {
+                "from": "d4",
+                "to": "d3"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Qué pieza de mi rival está colgada (sin ningún defensor)?",
+            "ruleSummary": "Las piezas sin defensor son regalos tácticos; búscalas en cada turno y captúralas.",
+            "pollitoExplanation": "¡Enciende tu Radar de Piezas Colgadas en cada jugada! Si una pieza enemiga no tiene un amigo que la defienda, es tuya."
+          }
+        }
+      ]
+    },
+    "b6_l2": {
+      "lessonId": "b6_l2",
+      "stages": [
+        {
+          "id": "b6_l2_s1",
+          "title": "La Horquilla del Caballo Ninja",
+          "instruction": "Salta con tu Caballo a e7 para dar Jaque al Rey en g8 y atacar a la Dama de c8 a la vez.",
+          "pollitoSpeech": "¡Horquilla relámpago, {nombre}! En e7 das jaque al Rey y la Dama enemiga no tiene salvación.",
+          "pollitoSuccess": "¡HORQUILLA REAL MORTAL! El Rey tuvo que huir y te llevaste la Dama.",
+          "initialFen": "2q3k1/5ppp/8/3N4/8/8/5PPP/6K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d5",
+              "to": "e7",
+              "reason": "Salta con tu Caballo a e7 para dar Jaque al Rey en g8 y atacar a la Dama de c8 a la vez."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "2q3k1/5ppp/8/3N4/8/8/5PPP/6K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d5",
+                  "to": "e7",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "e7": "emerald",
+                "g8": "red",
+                "c8": "amber"
+              },
+              "pollitoText": "¡Horquilla Ninja del Caballo! Observa el salto a e7 dando jaque al Rey y amenazando a la Dama enemiga al mismo tiempo.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d5",
+                "to": "e7"
+              }
+            },
+            {
+              "fen": "2q2rk1/4Nppp/8/8/8/8/5PPP/6K1 b - - 1 1",
+              "arrows": [
+                {
+                  "from": "e7",
+                  "to": "c8",
+                  "color": "amber"
+                }
+              ],
+              "highlightedSquares": {
+                "c8": "amber",
+                "g8": "red"
+              },
+              "pollitoText": "¡El Rey negro tiene que huir del jaque y la Dama de c8 queda sentenciada a muerte!",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "¿A qué casilla puede saltar tu Caballo de d5 para dar Jaque al Rey en g8 y atacar a la Dama de c8 a la vez? ¡Tócala!",
+            "targetSquares": [
+              "e7"
+            ],
+            "successFeedback": "¡Casilla del tenedor localizada! e7 es el salto mortal.",
+            "errorHint": "Busca la casilla e7, a tiro de L del Caballo y del Rey negro."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d5c7",
+              "label": "Mover el Caballo a c7",
+              "opponentRefutationUci": "c8c7",
+              "explanation": "¡Cuidado! En c7 no das jaque y la Dama negra se come a tu Caballo. ¡La casilla mágica era e7 con jaque y ataque doble!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Salta con tu Caballo a e7 dando Jaque al Rey en g8 y amenazando a la Dama de c8.",
+              "playerMove": {
+                "from": "d5",
+                "to": "e7"
+              },
+              "botDefenseReply": {
+                "from": "g8",
+                "to": "h8",
+                "comment": "¡El Rey negro tuvo que huir al rincón! Ahora cómete la Dama enemiga en c8."
+              }
+            },
+            {
+              "instruction": "¡Captura la Dama enemiga en c8 con tu Caballo!",
+              "playerMove": {
+                "from": "e7",
+                "to": "c8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi Caballo puede saltar con jaque para atacar a otra pieza grande al mismo tiempo?",
+            "ruleSummary": "Una horquilla con jaque es imparable porque el rival está obligado a mover su Rey primero.",
+            "pollitoExplanation": "¡El Rey no puede ignorar el jaque! Por eso las horquillas con jaque son las armas más destructivas del ajedrez."
+          }
+        }
+      ]
+    },
+    "b6_l3": {
+      "lessonId": "b6_l3",
+      "stages": [
+        {
+          "id": "b6_l3_s1",
+          "title": "La Horquilla de Peón",
+          "instruction": "Avanza tu peón central a d5 atacando simultáneamente al Caballo de c6 y al Alfil de e6.",
+          "pollitoSpeech": "¡El poder del pequeño peón, {nombre}! Empuja a d5 y divide al ejército rival.",
+          "pollitoSuccess": "¡HORQUILLA DE PEÓN MAESTRA! Ganaste una pieza a cambio de un modesto peón.",
+          "initialFen": "4k3/pppp1ppp/2n1b3/8/3P4/8/PPP2PPP/3RK3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d4",
+              "to": "d5",
+              "reason": "Avanza tu peón central a d5 atacando simultáneamente al Caballo de c6 y al Alfil de e6."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/pppp1ppp/2n1b3/8/3P4/8/PPP2PPP/3RK3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d4",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d5": "emerald",
+                "c6": "red",
+                "e6": "red"
+              },
+              "pollitoText": "¡La Horquilla de Peón! Un simple peón de 1 punto avanza a d5 y ataca a dos piezas mayores (Caballo y Alfil) al mismo tiempo.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d4",
+                "to": "d5"
+              }
+            },
+            {
+              "fen": "4k3/pppp1ppp/2n1b3/3P4/8/8/PPP2PPP/3RK3 b - - 0 1",
+              "arrows": [
+                {
+                  "from": "d5",
+                  "to": "c6",
+                  "color": "red"
+                },
+                {
+                  "from": "d5",
+                  "to": "e6",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "c6": "red",
+                "e6": "red"
+              },
+              "pollitoText": "¡El peón está respaldado por la Torre de d1! Una de las dos piezas negras caerá inevitablemente.",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla d5 a donde avanzará tu peón para lanzar su doble ataque a Caballo y Alfil.",
+            "targetSquares": [
+              "d5"
+            ],
+            "successFeedback": "¡Casilla de horquilla encontrada! En d5 el peón divide y vencerá.",
+            "errorHint": "Toca la casilla d5, un paso adelante de tu peón central."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d4d5",
+              "label": "Avanzar a d5 (¡Es la jugada correcta!)",
+              "explanation": "¡d5 es la jugada ganadora! Ataca a dos piezas a la vez con respaldo de tu Torre."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Empuja tu peón a d5 atacando a la vez al Alfil de e6 y al Caballo de c6 con un doblete de peón.",
+              "playerMove": {
+                "from": "d4",
+                "to": "d5"
+              },
+              "botDefenseReply": {
+                "from": "e6",
+                "to": "f5",
+                "comment": "¡El Alfil huye a f5! Ahora cómete el Caballo indefenso en c6 con tu peón."
+              }
+            },
+            {
+              "instruction": "¡Cómete el Caballo indefenso en c6 con tu peón de d5!",
+              "playerMove": {
+                "from": "d5",
+                "to": "c6"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo empujar un peón para atacar a dos piezas enemigas a la vez?",
+            "ruleSummary": "La horquilla de peón gana material porque el peón vale menos que las piezas que ataca.",
+            "pollitoExplanation": "¡Un pequeño peón puede derribar gigantes! Si ves dos piezas enemigas separadas por una casilla, busca avanzar tu peón en medio."
+          }
+        }
+      ]
+    },
+    "b7_l1": {
+      "lessonId": "b7_l1",
+      "stages": [
+        {
+          "id": "b7_l1_s1",
+          "title": "La Clavada Absoluta",
+          "instruction": "Avanza tu peón a d5 atacando al Caballo negro que está clavado frente a su Rey.",
+          "pollitoSpeech": "¡La regla de oro de la clavada, {nombre}! Como el Caballo en c6 no puede moverse sin exponer a su Rey, atácalo con d5.",
+          "pollitoSuccess": "¡CLAVADA ABSOLUTA APROVECHADA! El Caballo quedó paralizado y fue capturado.",
+          "initialFen": "r1bqk2r/pppp1ppp/2n5/1B6/3PP3/5N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d4",
+              "to": "d5",
+              "reason": "Avanza tu peón a d5 atacando al Caballo negro que está clavado frente a su Rey."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqk2r/pppp1ppp/2n5/1B6/3PP3/5N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+              "arrows": [
+                {
+                  "from": "b5",
+                  "to": "e8",
+                  "color": "red"
+                },
+                {
+                  "from": "d4",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "c6": "amber",
+                "e8": "red"
+              },
+              "pollitoText": "¡La Clavada Absoluta! El Alfil de b5 clava al Caballo de c6 contra el Rey de e8. ¡Mover ese Caballo es ILEGAL!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d4",
+                "to": "d5"
+              }
+            },
+            {
+              "fen": "r1bqk2r/pppp1ppp/2n5/1B1P4/4P3/5N2/PP3PPP/RNBQK2R b KQkq - 0 6",
+              "highlightedSquares": {
+                "c6": "red"
+              },
+              "pollitoText": "¡Regla de Oro: Atacar la pieza clavada! Observa cómo el peón blanco avanza de d4 a d5 y el Caballo no tiene escapatoria.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca el Caballo negro de c6 que está totalmente clavado e inmovilizado frente a su Rey.",
+            "targetSquares": [
+              "c6"
+            ],
+            "successFeedback": "¡Pieza inmovilizada identificada! El Caballo de c6 no puede dar ni un paso.",
+            "errorHint": "Toca el Caballo negro en c6, en la línea entre tu Alfil y el Rey negro."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "b5c6",
+              "label": "Cambiar Alfil por Caballo de inmediato",
+              "opponentRefutationUci": "b7c6",
+              "explanation": "¡No cambies tan rápido! Si juegas d4-d5, ganas el Caballo a cambio de un simple peón gracias a la clavada."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Empuja tu peón a d5 atacando al Caballo clavado en c6 que no puede escapar.",
+              "playerMove": {
+                "from": "d4",
+                "to": "d5"
+              },
+              "botDefenseReply": {
+                "from": "a7",
+                "to": "a6",
+                "comment": "¡Las negras intentan asustar a tu Alfil! Pero su Caballo sigue clavado: cómetelo con tu peón en c6."
+              }
+            },
+            {
+              "instruction": "¡Captura el Caballo clavado en c6 con tu peón en d5!",
+              "playerMove": {
+                "from": "d5",
+                "to": "c6"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Hay alguna pieza enemiga que no pueda moverse porque dejaría a su Rey en jaque?",
+            "ruleSummary": "Una pieza clavada está paralizada; atácala con peones o piezas de menor valor para ganarla.",
+            "pollitoExplanation": "¡Clavar es paralizar! Cuando claves una pieza rival, no la cambies de inmediato: ¡empújale un peón para comértela casi gratis!"
+          }
+        }
+      ]
+    },
+    "b7_l2": {
+      "lessonId": "b7_l2",
+      "stages": [
+        {
+          "id": "b7_l2_s1",
+          "title": "La Clavada Relativa",
+          "instruction": "Lleva tu Caballo a d5 para sumar un segundo atacante sobre el Caballo clavado en f6.",
+          "pollitoSpeech": "¡Aumenta la presión, {nombre}! El Caballo de f6 protege a su Reina: llévale más atacantes.",
+          "pollitoSuccess": "¡CLAVADA RELATIVA EXPLOTADA! Quebraste la defensa del rival.",
+          "initialFen": "r1bqkb1r/pppp1ppp/2n2n2/4p1B1/4P3/2NP1N2/PPP2PPP/R2QKB1R w KQkq - 1 6",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "c3",
+              "to": "d5",
+              "reason": "Lleva tu Caballo a d5 para sumar un segundo atacante sobre el Caballo clavado en f6."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p1B1/4P3/2NP1N2/PPP2PPP/R2QKB1R w KQkq - 1 6",
+              "arrows": [
+                {
+                  "from": "g5",
+                  "to": "d8",
+                  "color": "red"
+                },
+                {
+                  "from": "c3",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "f6": "amber",
+                "d8": "red"
+              },
+              "pollitoText": "¡La Clavada Relativa! El Caballo de f6 está clavado contra su Dama de d8. Si se mueve, ¡pierden la Dama!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "c3",
+                "to": "d5"
+              }
+            },
+            {
+              "fen": "r1bqkb1r/pppp1ppp/2n2n2/3Np1B1/4P3/3P1N2/PPP2PPP/R2QKB1R b KQkq - 2 6",
+              "highlightedSquares": {
+                "f6": "red"
+              },
+              "pollitoText": "¡Aumentando la presión! Observa cómo el Caballo blanco salta a d5 para sumar un nuevo atacante sobre f6.",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca el Alfil de g5 que lanza la clavada y el Caballo de f6 atrapado delante de su Dama.",
+            "targetSquares": [
+              "g5",
+              "f6"
+            ],
+            "successFeedback": "¡Clavada relativa detectada! Si el Caballo salta, la Dama de d8 desaparece.",
+            "errorHint": "Toca tu Alfil en g5 y el Caballo negro en f6."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "g5h4",
+              "label": "Retirar el Alfil a h4",
+              "opponentRefutationUci": "h7h6",
+              "explanation": "¡No aflojes la presión! El Caballo de f6 está clavado contra su Dama: debes atacarlo con tu Caballo en d5 para doblegarlo."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Lleva tu Caballo a d5 para sumar un segundo atacante sobre el Caballo clavado en f6.",
+              "playerMove": {
+                "from": "c3",
+                "to": "d5"
+              },
+              "botDefenseReply": {
+                "from": "f8",
+                "to": "e7",
+                "comment": "¡Las negras intentan desclavarse con su Alfil a e7! Ahora captura el Caballo de f6 con tu Alfil."
+              }
+            },
+            {
+              "instruction": "¡Captura el Caballo de f6 con tu Alfil para romper la defensa rival!",
+              "playerMove": {
+                "from": "g5",
+                "to": "f6"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Qué pieza enemiga protege a su Dama y no puede moverse sin perderla?",
+            "ruleSummary": "En la clavada relativa, ataca la pieza clavada para obligar al rival a ceder material valioso.",
+            "pollitoExplanation": "¡Mover una pieza clavada contra la Reina duele casi tanto como el jaque mate! Aprovecha esa inmovilidad para sumar atacantes."
+          }
+        }
+      ]
+    },
+    "b7_l3": {
+      "lessonId": "b7_l3",
+      "stages": [
+        {
+          "id": "b7_l3_s1",
+          "title": "El Rayo X",
+          "instruction": "Desliza tu Alfil a f4 para atravesar con rayos X a la Dama de c7 y capturar la Torre de b8 detrás.",
+          "pollitoSpeech": "¡Ataque de Rayos X, {nombre}! En f4 tu Alfil ensarta a la Dama y a la Torre en una sola línea.",
+          "pollitoSuccess": "¡RAYOS X DEVASTADORES! La Dama huyó y la Torre cayó en tus manos.",
+          "initialFen": "1r2k3/2q2ppp/8/8/8/8/3B1PPP/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d2",
+              "to": "f4",
+              "reason": "Desliza tu Alfil a f4 para atravesar con rayos X a la Dama de c7 y capturar la Torre de b8 detrás."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "1r2k3/2q2ppp/8/8/8/8/3B1PPP/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d2",
+                  "to": "f4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "f4": "emerald",
+                "c7": "red",
+                "b8": "amber"
+              },
+              "pollitoText": "¡El Rayo X / Enfilada! El Alfil viaja a f4 apuntando a la Dama de c7 y atravesándola para amenazar la Torre de b8 detrás.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d2",
+                "to": "f4"
+              }
+            },
+            {
+              "fen": "1r2k3/2q2ppp/8/8/5B2/8/5PPP/4K3 b - - 1 1",
+              "arrows": [
+                {
+                  "from": "f4",
+                  "to": "b8",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "c7": "red",
+                "b8": "amber"
+              },
+              "pollitoText": "¡La Dama tiene que apartarse del ataque y la Torre de b8 queda a merced de nuestro Alfil!",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla f4 donde tu Alfil atravesará con rayos X a la Dama de c7 y a la Torre de b8.",
+            "targetSquares": [
+              "f4"
+            ],
+            "successFeedback": "¡Punto de Rayos X fijado! Desde f4 tu Alfil ensarta a Dama y Torre.",
+            "errorHint": "Toca la casilla f4 en la diagonal de tu Alfil blanco."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d2e3",
+              "label": "Mover el Alfil a e3",
+              "opponentRefutationUci": "e8f8",
+              "explanation": "En e3 no amenazas nada. ¡En f4 tus Rayos X atravesaban a la Dama y cazaban a la Torre en b8!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Desliza tu Alfil a f4 para atravesar con rayos X a la Dama de c7 y capturar la Torre de b8 detrás.",
+              "playerMove": {
+                "from": "d2",
+                "to": "f4"
+              },
+              "botDefenseReply": {
+                "from": "c7",
+                "to": "b7",
+                "comment": "¡La Dama huyó! Ahora cómete la Torre indefensa en b8 con tu Alfil."
+              }
+            },
+            {
+              "instruction": "¡Cómete la Torre indefensa en b8 con tu Alfil!",
+              "playerMove": {
+                "from": "f4",
+                "to": "b8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo atravesar una pieza valiosa para atacar a otra que se esconde detrás?",
+            "ruleSummary": "El ataque de Rayos X ensarta dos piezas en la misma línea: al huir la primera, capturas la segunda.",
+            "pollitoExplanation": "¡Es como una brocheta de ajedrez! La pieza más valiosa tiene que quitarse y te deja la pieza de atrás en bandeja de plata."
+          }
+        }
+      ]
+    },
+    "b8_l1": {
+      "lessonId": "b8_l1",
+      "stages": [
+        {
+          "id": "b8_l1_s1",
+          "title": "El Ataque a la Descubierta",
+          "instruction": "Mueve tu Caballo a c6 dando jaque a la descubierta con la Torre y atacando a la Dama rival.",
+          "pollitoSpeech": "¡Doble amenaza sorpresa, {nombre}! Salta con el Caballo a c6 destapando a tu Torre y atacando a su Reina.",
+          "pollitoSuccess": "¡ATAQUE A LA DESCUBIERTA MAGISTRAL! Doble golpe y Dama capturada.",
+          "initialFen": "3qk3/8/8/4N3/8/8/5PPP/4R1K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "e5",
+              "to": "c6",
+              "reason": "Mueve tu Caballo a c6 dando jaque a la descubierta con la Torre y atacando a la Dama rival."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "3qk3/8/8/4N3/8/8/5PPP/4R1K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "e5",
+                  "to": "c6",
+                  "color": "emerald"
+                },
+                {
+                  "from": "e1",
+                  "to": "e8",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "c6": "emerald",
+                "e8": "red",
+                "d8": "amber"
+              },
+              "pollitoText": "¡El Ataque a la Descubierta! Al moverse el Caballo blanco a c6, se destapa el jaque de la Torre en e1 y se amenaza a la Dama enemiga al mismo tiempo.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "e5",
+                "to": "c6"
+              }
+            },
+            {
+              "fen": "3qk3/8/2N5/8/8/8/5PPP/4R1K1 b - - 1 1",
+              "arrows": [
+                {
+                  "from": "c6",
+                  "to": "d8",
+                  "color": "amber"
+                }
+              ],
+              "highlightedSquares": {
+                "e8": "red",
+                "d8": "amber"
+              },
+              "pollitoText": "¡El Rey negro está en jaque y obligado a responder! La Dama en d8 está sentenciada.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla c6 donde tu Caballo destapará el jaque de tu Torre y atacará a la Dama rival a la vez.",
+            "targetSquares": [
+              "c6"
+            ],
+            "successFeedback": "¡Casilla descubierta encontrada! En c6 destapas el jaque y cazas a la Dama.",
+            "errorHint": "Busca la casilla c6, a salto de L del Caballo y de la Dama negra."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e5f3",
+              "label": "Mover el Caballo hacia atrás a f3",
+              "opponentRefutationUci": "d8e7",
+              "explanation": "Si mueves a f3 das jaque pero no atacas a la Dama. ¡En c6 dabas jaque a la descubierta y atacabas a la Dama a la vez!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Mueve tu Caballo a c6 dando jaque a la descubierta con la Torre y atacando a la Dama rival.",
+              "playerMove": {
+                "from": "e5",
+                "to": "c6"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "f7",
+                "comment": "¡El Rey negro tuvo que huir del jaque a la descubierta! Ahora cómete su Dama en d8."
+              }
+            },
+            {
+              "instruction": "¡Cómete la Dama rival en d8 con tu Caballo!",
+              "playerMove": {
+                "from": "c6",
+                "to": "d8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo mover una pieza creando una amenaza y destapando el ataque de otra detrás?",
+            "ruleSummary": "El ataque a la descubierta genera dos amenazas simultáneas que el rival rara vez puede frenar.",
+            "pollitoExplanation": "¡Es una emboscada perfecta! Una pieza salta dando la sorpresa y la otra dispara desde la retaguardia."
+          }
+        }
+      ]
+    },
+    "b8_l2": {
+      "lessonId": "b8_l2",
+      "stages": [
+        {
+          "id": "b8_l2_s1",
+          "title": "El Jaque Doble Demoledor",
+          "instruction": "Salta con tu Caballo a c7 dando jaque a la vez que tu Torre en e1 da jaque al destaparse.",
+          "pollitoSpeech": "¡El golpe más temido del ajedrez, {nombre}! Da jaque doble en c7: ¡el Rey rival está forzado a huir!",
+          "pollitoSuccess": "¡JAQUE DOBLE DEMOLEDOR! Forzaste la huida del Rey y sellaste el mate.",
+          "initialFen": "r1b1k2r/pppp1ppp/8/3N2B1/8/8/5PPP/4R1K1 w kq - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d5",
+              "to": "c7",
+              "reason": "Salta con tu Caballo a c7 dando jaque a la vez que tu Torre en e1 da jaque al destaparse."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1b1k2r/pppp1ppp/8/3N2B1/8/8/5PPP/4R1K1 w kq - 0 1",
+              "arrows": [
+                {
+                  "from": "d5",
+                  "to": "c7",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "c7": "emerald",
+                "e8": "red"
+              },
+              "pollitoText": "¡El Jaque Doble Demoledor! El Caballo salta a c7 dando jaque, ¡y la Torre en e1 TAMBIÉN da jaque al destaparse la columna!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d5",
+                "to": "c7"
+              }
+            },
+            {
+              "fen": "r1b1k2r/ppNp1ppp/8/6B1/8/8/5PPP/4R1K1 b kq - 1 1",
+              "highlightedSquares": {
+                "e8": "red"
+              },
+              "pollitoText": "¡Regla Suprema de Jaque Doble! No se puede tapar ni comer dos piezas a la vez: ¡el Rey negro está OBLIGADO a mover!",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla c7 donde tu Caballo lanzará el Jaque Doble junto con la Torre de e1.",
+            "targetSquares": [
+              "c7"
+            ],
+            "successFeedback": "¡Casilla demoledora! c7 activa el jaque doble de Caballo y Torre.",
+            "errorHint": "Toca la casilla c7, en la fila 7 a tiro de salto de tu Caballo."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d5f6",
+              "label": "Mover el Caballo a f6",
+              "opponentRefutationUci": "e8f8",
+              "explanation": "En f6 bloqueas la diagonal de tu propio Alfil. ¡En c7 das el Jaque Doble supremo que prepara el jaque mate!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Salta con tu Caballo a c7 dando jaque a la vez que tu Torre en e1 da jaque al destaparse.",
+              "playerMove": {
+                "from": "d5",
+                "to": "c7"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "f8",
+                "comment": "¡El Rey negro huyó al fondo! Ahora dale Jaque Mate jugando tu Torre a e8."
+              }
+            },
+            {
+              "instruction": "¡Lleva tu Torre de e1 a e8 para cantar Jaque Mate!",
+              "playerMove": {
+                "from": "e1",
+                "to": "e8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo dar jaque con la pieza que muevo Y con la pieza que destapo?",
+            "ruleSummary": "Ante un jaque doble, el rival no puede bloquear ni capturar; su Rey está forzado a huir.",
+            "pollitoExplanation": "¡El jaque doble es la jugada más temida del ajedrez! Si das dos jaques a la vez, el rival no tiene defensas."
+          }
+        }
+      ]
+    },
+    "b8_l3": {
+      "lessonId": "b8_l3",
+      "stages": [
+        {
+          "id": "b8_l3_s1",
+          "title": "La Desviación y Atracción",
+          "instruction": "Captura en d8 con tu Dama para desviar a la Torre de f8 y dar Jaque Mate del Pasillo.",
+          "pollitoSpeech": "¡Sacrificio brillante de desviación, {nombre}! Elimina al guardián en d8 para que abandone la casilla e8.",
+          "pollitoSuccess": "¡DESVIACIÓN MAGISTRAL! La Torre cayó en la trampa y diste Jaque Mate.",
+          "initialFen": "3r1rk1/5ppp/8/8/8/8/5PPP/3QR1K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d1",
+              "to": "d8",
+              "reason": "Captura en d8 con tu Dama para desviar a la Torre de f8 y dar Jaque Mate del Pasillo."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "3r1rk1/5ppp/8/8/8/8/5PPP/3QR1K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d1",
+                  "to": "d8",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d8": "emerald",
+                "f8": "amber"
+              },
+              "pollitoText": "¡La Desviación Táctica! La Torre negra de f8 vigila el pasillo. Mira este sacrificio: la Dama blanca en d8 desvía a la Torre de su defensa.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d1",
+                "to": "d8"
+              }
+            },
+            {
+              "fen": "3r1rk1/5ppp/8/8/8/8/5PPP/4R1K1 b - - 0 1",
+              "highlightedSquares": {
+                "e8": "emerald"
+              },
+              "pollitoText": "¡Al capturar en d8, la Torre negra abandona la defensa de e8 y la Torre blanca entra a dar Jaque Mate limpio!",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la Torre enemiga de d8 que vamos a capturar para desviar al guardián del pasillo.",
+            "targetSquares": [
+              "d8"
+            ],
+            "successFeedback": "¡Pieza clave detectada! Al capturar en d8 forzamos la desviación.",
+            "errorHint": "Toca la Torre negra en la casilla d8."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d1c2",
+              "label": "Retirar la Dama a c2",
+              "opponentRefutationUci": "d8e8",
+              "explanation": "¡No juegues pasivo! En d8 tenías un sacrificio brillante de desviación que gana la partida en 2 jugadas."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Captura en d8 con tu Dama para desviar a la Torre de f8 y dar Jaque Mate del Pasillo.",
+              "playerMove": {
+                "from": "d1",
+                "to": "d8"
+              },
+              "botDefenseReply": {
+                "from": "f8",
+                "to": "d8",
+                "comment": "¡La Torre negra tuvo que abandonar la defensa de su última fila! Ahora entra con tu Torre a e8 con Jaque Mate."
+              }
+            },
+            {
+              "instruction": "¡Entra con tu Torre a e8 para ejecutar el Jaque Mate del Pasillo!",
+              "playerMove": {
+                "from": "e1",
+                "to": "e8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo desviar a la pieza guardiana para que abandone su casilla clave?",
+            "ruleSummary": "La desviación aleja a una pieza defensora de su puesto crítico para asestar el golpe definitivo.",
+            "pollitoExplanation": "¡Engaña al guardia! Si una pieza enemiga defiende algo vital, atráela o desvíala para que deje la puerta abierta."
+          }
+        }
+      ]
+    },
+    "b9_l1": {
+      "lessonId": "b9_l1",
+      "stages": [
+        {
+          "id": "b9_l1_s1",
+          "title": "Cadenas e Islas de Peones",
+          "instruction": "Avanza tu peón a b4 para afianzar tu cadena de peones y dominar el flanco.",
+          "pollitoSpeech": "¡La fuerza de la armadura, {nombre}! Avanza en b4 manteniendo tus peones defendidos en cadena.",
+          "pollitoSuccess": "¡CADENA IMPENETRABLE! Tus peones dominan el territorio.",
+          "initialFen": "4k3/pp3ppp/2p5/3pP3/3P4/2P5/PP3PPP/4K3 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "b2",
+              "to": "b4",
+              "reason": "Avanza tu peón a b4 para afianzar tu cadena de peones y dominar el flanco."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/pp3ppp/2p5/3pP3/3P4/2P5/PP3PPP/4K3 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "b2",
+                  "to": "b4",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "b4": "emerald",
+                "c3": "cyan",
+                "d4": "cyan",
+                "e5": "cyan"
+              },
+              "pollitoText": "¡Cadenas de Peones! Los peones en diagonal se protegen mutuamente como eslabones de una cota de malla indestructible.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "b2",
+                "to": "b4"
+              }
+            },
+            {
+              "fen": "4k3/pp3ppp/2p5/3pP3/1P1P4/2P5/P4PPP/4K3 b - - 0 1",
+              "highlightedSquares": {
+                "b4": "emerald"
+              },
+              "pollitoText": "¡Mira cómo el avance del peón blanco a b4 frena cualquier intento de ruptura del rival en el flanco de dama!",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca el peón de e5 que encabeza tu cadena y domina el territorio enemigo.",
+            "targetSquares": [
+              "e5"
+            ],
+            "successFeedback": "¡Punta de lanza encontrada! El peón de e5 domina el mapa.",
+            "errorHint": "Toca tu peón blanco más avanzado en la casilla e5."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "c3c4",
+              "label": "Romper tu propia cadena en c4",
+              "opponentRefutationUci": "d5c4",
+              "explanation": "¡No rompas tu propia armadura! Si juegas c4 debilitas la base de tu cadena y regalas un peón. ¡Mantén la cadena unida!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Avanza tu peón a b4 para afianzar tu cadena de peones y dominar el flanco.",
+              "playerMove": {
+                "from": "b2",
+                "to": "b4"
+              },
+              "botDefenseReply": {
+                "from": "b7",
+                "to": "b5",
+                "comment": "¡Las negras intentan bloquear! Ahora apoya la base de tu cadena jugando f2 a f4."
+              }
+            },
+            {
+              "instruction": "¡Apoya la base de tu cadena jugando tu peón de f2 a f4!",
+              "playerMove": {
+                "from": "f2",
+                "to": "f4"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mis peones están encadenados protegiéndose entre sí o tengo peones aislados?",
+            "ruleSummary": "Una cadena de peones es una fortaleza; no rompas sus eslabones sin una buena razón.",
+            "pollitoExplanation": "¡Los peones unidos jamás serán vencidos! Si se defienden en diagonal, ningún rival podrá penetrar tu muralla."
+          }
+        }
+      ]
+    },
+    "b9_l2": {
+      "lessonId": "b9_l2",
+      "stages": [
+        {
+          "id": "b9_l2_s1",
+          "title": "El Puesto Avanzado del Caballo",
+          "instruction": "Instala tu Caballo en el puesto avanzado de d5 donde ningún peón rival podrá expulsarlo.",
+          "pollitoSpeech": "¡El Caballo pulpo, {nombre}! Ocupa la casilla fuerte d5 protegido por tu peón de e4.",
+          "pollitoSuccess": "¡PUESTO AVANZADO CONQUISTADO! Tu Caballo es el amo y señor del tablero.",
+          "initialFen": "r1bqkbnr/pppp1ppp/8/4p3/4P3/2N5/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "c3",
+              "to": "d5",
+              "reason": "Instala tu Caballo en el puesto avanzado de d5 donde ningún peón rival podrá expulsarlo."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "r1bqkbnr/pppp1ppp/8/4p3/4P3/2N5/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+              "arrows": [
+                {
+                  "from": "c3",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d5": "emerald",
+                "e4": "cyan"
+              },
+              "pollitoText": "¡El Puesto Avanzado! La casilla d5 está protegida por nuestro peón de e4 y ningún peón rival puede expulsar al Caballo.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "c3",
+                "to": "d5"
+              }
+            },
+            {
+              "fen": "r1bqkbnr/pppp1ppp/8/3Np3/4P3/8/PPPP1PPP/R1BQK2R b KQkq - 1 5",
+              "highlightedSquares": {
+                "d5": "emerald"
+              },
+              "pollitoText": "¡El Caballo en d5 es un pulpo! Controla casillas vitales en territorio rival y nadie puede sacarlo de allí.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla dorada d5 donde tu Caballo se convertirá en un pulpo gigante inexpugnable.",
+            "targetSquares": [
+              "d5"
+            ],
+            "successFeedback": "¡Puesto avanzado asegurado! En d5 tu Caballo manda en la partida.",
+            "errorHint": "Toca la casilla d5 en el centro del tablero."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "c3a4",
+              "label": "Mover el Caballo a la orilla en a4",
+              "opponentRefutationUci": "f8c5",
+              "explanation": "¡\"Caballo en la banda, derrota segura\"! En a4 no hace nada. ¡En d5 se instala en el centro como un pulpo gigante!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Instala tu Caballo en el puesto avanzado de d5 donde ningún peón rival podrá expulsarlo.",
+              "playerMove": {
+                "from": "c3",
+                "to": "d5"
+              },
+              "botDefenseReply": {
+                "from": "g8",
+                "to": "f6",
+                "comment": "¡Las negras intentan contraatacar con su Caballo! Ahora defiende tu puesto avanzado con c2 a c4."
+              }
+            },
+            {
+              "instruction": "¡Defiende tu puesto avanzado avanzando tu peón de c2 a c4!",
+              "playerMove": {
+                "from": "c2",
+                "to": "c4"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Tengo un puesto avanzado en el centro defendido por un peón para mi Caballo?",
+            "ruleSummary": "Un Caballo en un puesto avanzado central domina el tablero como un pulpo gigante.",
+            "pollitoExplanation": "¡Instala a tus Caballos en casillas fuertes donde los peones rivales no puedan molestarlos!"
+          }
+        }
+      ]
+    },
+    "b9_l3": {
+      "lessonId": "b9_l3",
+      "stages": [
+        {
+          "id": "b9_l3_s1",
+          "title": "La Séptima Fila Invasora",
+          "instruction": "Invade la séptima fila jugando tu Torre a d7 para paralizar los peones de la base rival.",
+          "pollitoSpeech": "¡La Torre glotona, {nombre}! Entra a la séptima fila en d7 y devora todos los peones.",
+          "pollitoSuccess": "¡SÉPTIMA FILA CONQUISTADA! La Torre paralizó por completo al enemigo.",
+          "initialFen": "4r1k1/pp3ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d1",
+              "to": "d7",
+              "reason": "Invade la séptima fila jugando tu Torre a d7 para paralizar los peones de la base rival."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4r1k1/pp3ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d1",
+                  "to": "d7",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d7": "emerald",
+                "b7": "red",
+                "f7": "red"
+              },
+              "pollitoText": "¡La Séptima Fila Invasora! Una Torre en la fila 7 encierra al Rey enemigo y ataca todos los peones de su base.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d1",
+                "to": "d7"
+              }
+            },
+            {
+              "fen": "4r1k1/pp1R1ppp/8/8/8/8/5PPP/6K1 b - - 1 1",
+              "arrows": [
+                {
+                  "from": "d7",
+                  "to": "b7",
+                  "color": "red"
+                }
+              ],
+              "highlightedSquares": {
+                "b7": "red"
+              },
+              "pollitoText": "¡La Torre es como un cerdito en un maizal! Devora peones y paraliza las piezas del rival.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla d7 en la séptima fila donde tu Torre atacará a todos los peones rivales.",
+            "targetSquares": [
+              "d7"
+            ],
+            "successFeedback": "¡Séptima fila conquistada! En d7 tu Torre es la reina del tablero.",
+            "errorHint": "Toca la casilla d7, en la séptima fila del tablero."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "d1c1",
+              "label": "Mover la Torre de lado a c1",
+              "opponentRefutationUci": "e8e2",
+              "explanation": "¡Quien controla la 7ª fila controla la partida! Si no entras a d7, el rival entrará a tu 2ª fila con su Torre en e2. ¡Invade la séptima fila!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Invade la séptima fila jugando tu Torre a d7 para paralizar los peones de la base rival.",
+              "playerMove": {
+                "from": "d1",
+                "to": "d7"
+              },
+              "botDefenseReply": {
+                "from": "e8",
+                "to": "b8",
+                "comment": "¡La Torre negra tuvo que encerrarse a defender b7! Ahora avanza tu peón h2 a h4 para darle aire a tu Rey."
+              }
+            },
+            {
+              "instruction": "¡Avanza tu peón de h2 a h4 para darle una casilla de escape y aire a tu Rey!",
+              "playerMove": {
+                "from": "h2",
+                "to": "h4"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Puedo colocar mi Torre en la séptima fila para atacar los peones del rival?",
+            "ruleSummary": "Las Torres en 7ª fila son devastadoras: encierran al Rey y barren todos los peones.",
+            "pollitoExplanation": "¡Acuérdate de los cerditos glotones! Una Torre en 7ª fila come todo lo que encuentra a su paso."
+          }
+        }
+      ]
+    },
+    "b10_l1": {
+      "lessonId": "b10_l1",
+      "stages": [
+        {
+          "id": "b10_l1_s1",
+          "title": "La Oposición de Reyes",
+          "instruction": "Mueve tu Rey a d5 para tomar la oposición frente al Rey negro y abrir paso a tu peón.",
+          "pollitoSpeech": "¡La batalla de los Reyes, {nombre}! Gana la oposición en d5 colocándote cara a cara.",
+          "pollitoSuccess": "¡OPOSICIÓN MAESTRA GANADA! El Rey rival tuvo que cederte el paso hacia la corona.",
+          "initialFen": "8/3k4/8/8/3KP3/8/8/8 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "d4",
+              "to": "d5",
+              "reason": "Mueve tu Rey a d5 para tomar la oposición frente al Rey negro y abrir paso a tu peón."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "8/3k4/8/8/3KP3/8/8/8 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "d4",
+                  "to": "d5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "d5": "emerald",
+                "d7": "red"
+              },
+              "pollitoText": "¡La Oposición de Reyes! Los dos Reyes frente a frente separados por 1 sola casilla. El Rey que gana la oposición obliga al otro a ceder el paso.",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "d4",
+                "to": "d5"
+              }
+            },
+            {
+              "fen": "8/3k4/8/3K4/4P3/8/8/8 b - - 1 1",
+              "highlightedSquares": {
+                "d5": "emerald",
+                "d7": "red"
+              },
+              "pollitoText": "¡Le toca mover al negro! Como no puede avanzar hacia adelante, tiene que hacerse a un lado y dejarnos pasar.",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla d5 donde tu Rey toma la oposición cara a cara frente al Rey negro.",
+            "targetSquares": [
+              "d5"
+            ],
+            "successFeedback": "¡Oposición ganada! En d5 tu Rey domina el paso.",
+            "errorHint": "Toca la casilla d5, justo enfrente del Rey negro."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "e4e5",
+              "label": "Empujar el peón antes de tiempo",
+              "opponentRefutationUci": "d7e6",
+              "explanation": "¡Regla de oro de finales! El Rey debe ir DELANTE del peón para abrirle paso. Si empujas el peón antes de tiempo, el rival te bloquea."
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Mueve tu Rey a d5 para tomar la oposición frente al Rey negro y abrir paso a tu peón.",
+              "playerMove": {
+                "from": "d4",
+                "to": "d5"
+              },
+              "botDefenseReply": {
+                "from": "d7",
+                "to": "e7",
+                "comment": "¡El Rey negro cedió el paso! Ahora avanza con tu Rey a e5 dominando el centro."
+              }
+            },
+            {
+              "instruction": "¡Avanza con tu Rey a e5 dominando el centro para abrir paso a tu peón!",
+              "playerMove": {
+                "from": "d5",
+                "to": "e5"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Mi Rey está delante de mi peón ganando la oposición al Rey enemigo?",
+            "ruleSummary": "En finales de peones, el Rey debe ir delante del peón ganando la oposición para abrirle el camino hacia la corona.",
+            "pollitoExplanation": "¡El Rey es el escolta del peón! No empujes el peón a lo loco: primero mete a tu Rey para apartar al Rey rival."
+          }
+        }
+      ]
+    },
+    "b10_l2": {
+      "lessonId": "b10_l2",
+      "stages": [
+        {
+          "id": "b10_l2_s1",
+          "title": "La Regla del Cuadrado del Peón",
+          "instruction": "Avanza tu peón a a5 para achicar el cuadrado mágico antes de que el Rey negro pueda entrar.",
+          "pollitoSpeech": "¡Carrera de peones, {nombre}! El Rey rival está fuera del cuadrado: ¡corre hacia la meta!",
+          "pollitoSuccess": "¡CUADRADO IMBATIBLE! Tu peón coronó sin que nadie pudiera frenarlo.",
+          "initialFen": "8/8/8/5k2/P7/8/8/7K w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "specific_move",
+          "acceptedMoves": [
+            {
+              "from": "a4",
+              "to": "a5",
+              "reason": "Avanza tu peón a a5 para achicar el cuadrado mágico antes de que el Rey negro pueda entrar."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "8/8/8/5k2/P7/8/8/7K w - - 0 1",
+              "arrows": [
+                {
+                  "from": "a4",
+                  "to": "a5",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "a5": "emerald",
+                "a8": "cyan"
+              },
+              "pollitoText": "¡La Regla del Cuadrado! Se traza mentalmente un cuadrado desde el peón hasta la casilla de coronación a8. Si el Rey rival está fuera de él, ¡el peón corona sin ayuda!",
+              "pollitoMood": "excited",
+              "demoMove": {
+                "from": "a4",
+                "to": "a5"
+              }
+            },
+            {
+              "fen": "8/8/8/P4k2/8/8/8/7K b - - 0 1",
+              "highlightedSquares": {
+                "a8": "emerald",
+                "f5": "amber"
+              },
+              "pollitoText": "¡El cuadrado se achicó a 4x4 (a5 a a8)! El Rey negro en f5 está demasiado lejos y no puede alcanzarlo.",
+              "pollitoMood": "hero"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla a8 de coronación que define el cuadrado mágico de tu peón.",
+            "targetSquares": [
+              "a8"
+            ],
+            "successFeedback": "¡Meta localizada! a8 define el cuadrado que el Rey rival no puede pisar.",
+            "errorHint": "Toca la esquina superior izquierda en a8."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "h1g2",
+              "label": "Mover el Rey en vez de empujar el peón",
+              "opponentRefutationUci": "f5e6",
+              "explanation": "¡No pierdas tiempo con el Rey! El peón está corriendo solo y el Rey negro no llega a su cuadrado. ¡Empuja el peón a a5!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Avanza tu peón a a5 para achicar el cuadrado mágico antes de que el Rey negro pueda entrar.",
+              "playerMove": {
+                "from": "a4",
+                "to": "a5"
+              },
+              "botDefenseReply": {
+                "from": "f5",
+                "to": "e5",
+                "comment": "¡El Rey negro intenta correr pero está fuera del cuadrado! Avanza tu peón a a6."
+              }
+            },
+            {
+              "instruction": "¡Avanza tu peón a a6 a toda velocidad hacia la coronación!",
+              "playerMove": {
+                "from": "a5",
+                "to": "a6"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿El Rey rival está fuera del cuadrado de mi peón pasado?",
+            "ruleSummary": "Si el Rey enemigo está fuera del cuadrado del peón, ¡el peón coronará sin necesidad de ayuda de tu propio Rey!",
+            "pollitoExplanation": "¡Aprende a medir el cuadrado en tu mente! Si el rival no alcanza a meterse dentro, tu peón corre libre como el viento hacia la Dama."
+          }
+        }
+      ]
+    },
+    "b10_l3": {
+      "lessonId": "b10_l3",
+      "stages": [
+        {
+          "id": "b10_l3_s1",
+          "title": "El Mate de Dama y Rey",
+          "instruction": "Lleva tu Dama a g8 con el apoyo de tu Rey en e6 para coronarte Gran Maestra de Ajedrez.",
+          "pollitoSpeech": "¡Último movimiento de toda tu aventura, {nombre}! Sella la victoria con tu Dama en g8.",
+          "pollitoSuccess": "¡🏆 ¡TE GRADUASTE COMO GRAN MAESTRA DE AJEDREZ, {nombre}! 👑 Dominaste los 10 Biomas del Profe Pollito!",
+          "initialFen": "4k3/8/4K3/8/8/8/8/6Q1 w - - 0 1",
+          "freeMoveMode": false,
+          "goalType": "checkmate_in_1",
+          "acceptedMoves": [
+            {
+              "from": "g1",
+              "to": "g8",
+              "reason": "Lleva tu Dama a g8 con el apoyo de tu Rey en e6 para coronarte Gran Maestra de Ajedrez."
+            }
+          ],
+          "conceptBreakdown": [
+            {
+              "fen": "4k3/8/4K3/8/8/8/8/6Q1 w - - 0 1",
+              "arrows": [
+                {
+                  "from": "g1",
+                  "to": "g8",
+                  "color": "emerald"
+                }
+              ],
+              "highlightedSquares": {
+                "g8": "emerald",
+                "e8": "red",
+                "e6": "cyan"
+              },
+              "pollitoText": "¡El Gran Remate de Gran Maestra! El Rey blanco en e6 vigila todas las casillas de escape: d7, e7 y f7. ¡Mira cómo la Dama blanca sella la victoria en g8!",
+              "pollitoMood": "hero",
+              "demoMove": {
+                "from": "g1",
+                "to": "g8"
+              }
+            },
+            {
+              "fen": "4k1Q1/8/4K3/8/8/8/8/8 b - - 1 1",
+              "highlightedSquares": {
+                "g8": "emerald",
+                "e8": "red"
+              },
+              "pollitoText": "¡🏆 JAQUE MATE FINAL DE GRADUACIÓN! ¡Completaste todos los biomas del Profe Pollito!",
+              "pollitoMood": "proud"
+            }
+          ],
+          "observationTask": {
+            "prompt": "Toca la casilla g8 donde tu Dama sella el Jaque Mate definitivo de tu graduación.",
+            "targetSquares": [
+              "g8"
+            ],
+            "successFeedback": "¡Casilla de la gloria! En g8 cantas Jaque Mate definitivo.",
+            "errorHint": "Toca la casilla g8 en la última fila."
+          },
+          "commonMistakes": [
+            {
+              "moveUci": "g1g6",
+              "label": "Mover la Dama a g6",
+              "opponentRefutationUci": "e8f8",
+              "explanation": "En g6 dejas escapar al Rey hacia f8. ¡En g8 cantabas el Jaque Mate final de toda tu aventura!"
+            }
+          ],
+          "multiTurnLine": [
+            {
+              "instruction": "Lleva tu Dama a g8 con el apoyo de tu Rey en e6 para coronarte Gran Maestra de Ajedrez.",
+              "playerMove": {
+                "from": "g1",
+                "to": "g8"
+              }
+            }
+          ],
+          "detectiveRule": {
+            "question": "¿Tengo al Rey rival arrinconado con mi Rey y mi Dama listos para dar el mate final?",
+            "ruleSummary": "Para dar mate de Rey y Dama: arrincona al Rey enemigo en el borde, acércalo con tu Rey, ¡y remata en la última fila!",
+            "pollitoExplanation": "¡Eres una campeona total, {nombre}! Dominaste los 10 Biomas de Ajedrez. ¡Ahora juega tus partidas reales con la fuerza de una Gran Maestra!"
+          }
+        }
+      ]
+    }
+  }
+}

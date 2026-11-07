@@ -1,0 +1,244 @@
+[gd_scene format=3 uid="uid://c6xk5t8wamq4w"]
+
+[ext_resource type="Script" path="res://scripts/AcademyMap.gd" id="1_map"]
+[ext_resource type="FontFile" uid="uid://co7yneq2l3ayg" path="res://assets/fonts/CherryBombOne-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://cx1ywv2f46y85" path="res://assets/ui/pollito_animando.png" id="3_pollito"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.988235, 0.960784, 0.972549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_back"]
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.85, 0.85, 0.9, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_card"]
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grade_info"]
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_advice_bubble"]
+bg_color = Color(1, 1, 1, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="AcademyMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_map")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="MainVBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderHBox" type="HBoxContainer" parent="Margin/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BtnBackToMenu" type="Button" parent="Margin/MainVBox/HeaderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.35, 0.4, 0.5, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_back")
+text = "⬅️ Menú Principal"
+
+[node name="TitleVBox" type="VBoxContainer" parent="Margin/MainVBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="MainTitle" type="Label" parent="Margin/MainVBox/HeaderHBox/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "🎓 La Gran Academia de Ajedrez"
+
+[node name="SubTitle" type="Label" parent="Margin/MainVBox/HeaderHBox/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.55, 0.65, 1)
+theme_override_font_sizes/font_size = 13
+text = "Formación de Maestras y Maestros con el Profe Pollito"
+
+[node name="ProfileCard" type="PanelContainer" parent="Margin/MainVBox/HeaderHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_card")
+
+[node name="ProfileMargin" type="MarginContainer" parent="Margin/MainVBox/HeaderHBox/ProfileCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 6
+
+[node name="HBox" type="HBoxContainer" parent="Margin/MainVBox/HeaderHBox/ProfileCard/ProfileMargin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LblPlayerInfo" type="Label" parent="Margin/MainVBox/HeaderHBox/ProfileCard/ProfileMargin/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 15
+text = "👧 Lyanna"
+
+[node name="LblTotalStars" type="Label" parent="Margin/MainVBox/HeaderHBox/ProfileCard/ProfileMargin/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.65, 0.1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 15
+text = "⭐ 0 Estrellas"
+
+[node name="ModeSelectorBar" type="HBoxContainer" parent="Margin/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14
+
+[node name="GradesScroll" type="ScrollContainer" parent="Margin/MainVBox"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+horizontal_scroll_mode = 1
+vertical_scroll_mode = 0
+
+[node name="GradesTabContainer" type="HBoxContainer" parent="Margin/MainVBox/GradesScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="GradeInfoCard" type="PanelContainer" parent="Margin/MainVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_grade_info")
+
+[node name="GIMargin" type="MarginContainer" parent="Margin/MainVBox/GradeInfoCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 10
+
+[node name="GIVBox" type="VBoxContainer" parent="Margin/MainVBox/GradeInfoCard/GIMargin"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="LblSelectedGradeTitle" type="Label" parent="Margin/MainVBox/GradeInfoCard/GIMargin/GIVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "🥉 Grado 1: El Despertar del Tablero"
+
+[node name="LblSelectedGradeSource" type="Label" parent="Margin/MainVBox/GradeInfoCard/GIMargin/GIVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "📚 Fuente pedagógica: Murray Chandler & De Stappenmethode"
+
+[node name="LessonsScroll" type="ScrollContainer" parent="Margin/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
+
+[node name="LessonsVBox" type="VBoxContainer" parent="Margin/MainVBox/LessonsScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="BottomAdviceHBox" type="HBoxContainer" parent="Margin/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PollitoThumb" type="TextureRect" parent="Margin/MainVBox/BottomAdviceHBox"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("3_pollito")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AdviceBubble" type="PanelContainer" parent="Margin/MainVBox/BottomAdviceHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_advice_bubble")
+
+[node name="AdviceMargin" type="MarginContainer" parent="Margin/MainVBox/BottomAdviceHBox/AdviceBubble"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="LblPollitoAdvice" type="Label" parent="Margin/MainVBox/BottomAdviceHBox/AdviceBubble/AdviceMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "¡Hola! Cada lección que completas fortalece tu visión táctica."

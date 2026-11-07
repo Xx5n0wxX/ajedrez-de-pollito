@@ -1,0 +1,378 @@
+[gd_scene format=3 uid="uid://df7w8y1qk4nao"]
+
+[ext_resource type="Script" path="res://scripts/AulaAcademia.gd" id="1_aula"]
+[ext_resource type="Script" path="res://scripts/ChessBoard.gd" id="2_board"]
+[ext_resource type="FontFile" uid="uid://co7yneq2l3ayg" path="res://assets/fonts/CherryBombOne-Regular.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://cx1ywv2f46y85" path="res://assets/ui/pollito_explicando.png" id="4_pollito"]
+[ext_resource type="Script" path="res://scripts/PollitoAvatar.gd" id="5_avatar"]
+[ext_resource type="Texture2D" path="res://assets/icons/swap_layout.svg" id="6_swap_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.988235, 0.960784, 0.972549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_comic_panel"]
+bg_color = Color(1, 1, 1, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.85, 0.15, 0.45, 0.1)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble"]
+bg_color = Color(0.992157, 0.94902, 0.972549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_objective"]
+bg_color = Color(0.94, 0.98, 0.95, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.85, 0.65, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feedback"]
+bg_color = Color(1, 0.93, 0.93, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.95, 0.45, 0.45, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+bg_color = Color(0.858824, 0.152941, 0.466667, 1)
+border_width_bottom = 4
+border_color = Color(0.686275, 0.0823529, 0.352941, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_rewind"]
+bg_color = Color(0.92, 0.35, 0.2, 1)
+border_width_bottom = 4
+border_color = Color(0.72, 0.22, 0.1, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action"]
+bg_color = Color(0.12, 0.65, 0.52, 1)
+border_width_bottom = 3
+border_color = Color(0.08, 0.48, 0.38, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_secondary"]
+bg_color = Color(0.95, 0.95, 0.97, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.85, 0.85, 0.9, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="AulaAcademia" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aula")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="MainLayout" type="BoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="LeftColumn" type="VBoxContainer" parent="MainLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.15
+theme_override_constants/separation = 8
+
+[node name="TopBar" type="HBoxContainer" parent="MainLayout/LeftColumn"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnBackToMap" type="Button" parent="MainLayout/LeftColumn/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 38)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+text = "⬅️ Volver a Grados"
+
+[node name="VBoxTitles" type="VBoxContainer" parent="MainLayout/LeftColumn/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="LblGradeTitle" type="Label" parent="MainLayout/LeftColumn/TopBar/VBoxTitles"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+text = "🥉 Grado 1: El Despertar del Tablero"
+
+[node name="LblLessonTitle" type="Label" parent="MainLayout/LeftColumn/TopBar/VBoxTitles"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "Lección 1: El Mapa del Tesoro"
+
+[node name="StarsContainer" type="HBoxContainer" parent="MainLayout/LeftColumn/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Star1" type="Label" parent="MainLayout/LeftColumn/TopBar/StarsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.75, 0.18, 1)
+theme_override_font_sizes/font_size = 20
+text = "⭐"
+
+[node name="Star2" type="Label" parent="MainLayout/LeftColumn/TopBar/StarsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.75, 0.18, 1)
+theme_override_font_sizes/font_size = 20
+text = "⭐"
+
+[node name="Star3" type="Label" parent="MainLayout/LeftColumn/TopBar/StarsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.75, 0.18, 1)
+theme_override_font_sizes/font_size = 20
+text = "⭐"
+
+[node name="BtnSwapLayoutAula" type="Button" parent="MainLayout/LeftColumn/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Intercambiar posición del tablero y el panel"
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+icon = ExtResource("6_swap_icon")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ContenedorTablero" type="MarginContainer" parent="MainLayout/LeftColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChessBoard" type="Control" parent="MainLayout/LeftColumn/ContenedorTablero"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_board")
+
+[node name="RightColumn" type="PanelContainer" parent="MainLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.85
+theme_override_styles/panel = SubResource("StyleBoxFlat_comic_panel")
+
+[node name="RightMargin" type="MarginContainer" parent="MainLayout/RightColumn"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContent" type="VBoxContainer" parent="MainLayout/RightColumn/RightMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderHBox" type="HBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PollitoAvatar" type="TextureRect" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+texture = ExtResource("4_pollito")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("5_avatar")
+
+[node name="BubblePanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
+
+[node name="BubbleMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox/BubblePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="LblDialogue" type="RichTextLabel" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox/BubblePanel/BubbleMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/default_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "¡Hola! ¡Te doy la bienvenida oficial a la Academia de Ajedrez!"
+fit_content = true
+
+[node name="ObjectivePanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_objective")
+
+[node name="ObjMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ObjectivePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="LblObjective" type="Label" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ObjectivePanel/ObjMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.45, 0.2, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+text = "🎯 OBJETIVO: Mueve tu pieza al lugar correcto."
+autowrap_mode = 2
+
+[node name="FeedbackPanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_feedback")
+
+[node name="FeedbackMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="FeedbackVBox" type="VBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel/FeedbackMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LblFeedback" type="Label" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel/FeedbackMargin/FeedbackVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.15, 0.15, 1)
+theme_override_font_sizes/font_size = 13
+text = "⚠️ ¡Cuidado con el contraataque!"
+autowrap_mode = 2
+
+[node name="BtnRewind" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel/FeedbackMargin/FeedbackVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_rewind")
+text = "⏪ Rebobinar Jugada"
+
+[node name="Spacer" type="Control" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionsHBox" type="HBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnHint" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ActionsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+text = "💡 Pedir Pista"
+
+[node name="BtnReset" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ActionsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 42)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.35, 0.4, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+text = "🔄 Reiniciar"
+
+[node name="BtnNextLesson" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "➡️ Siguiente Lección 🎉"

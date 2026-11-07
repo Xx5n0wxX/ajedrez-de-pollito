@@ -1,0 +1,1234 @@
+[gd_scene format=3 uid="uid://dhxb48so71kn3"]
+
+[ext_resource type="Script" uid="uid://w0dwrvdfenm1" path="res://scripts/MainMenu.gd" id="1_menu"]
+[ext_resource type="FontFile" uid="uid://co7yneq2l3ayg" path="res://assets/fonts/CherryBombOne-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://cuhnxs08bbtqr" path="res://assets/ui/pollito_celebrando.png" id="3_pollito"]
+[ext_resource type="Texture2D" uid="uid://dvdlnfevq31k5" path="res://assets/pieces/w_k.svg" id="4_wk"]
+[ext_resource type="Texture2D" uid="uid://blyuduoh05dgb" path="res://assets/pieces/b_q.svg" id="5_bq"]
+[ext_resource type="Texture2D" uid="uid://c5a22g1g8jd41" path="res://assets/pieces/w_n.svg" id="6_wn"]
+[ext_resource type="Texture2D" uid="uid://cpqja4hq8gq0a" path="res://assets/pieces/b_r.svg" id="7_br"]
+[ext_resource type="Script" path="res://scripts/PollitoAvatar.gd" id="8_avatar_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0.85, 0.15, 0.45, 0.12)
+shadow_size = 16
+shadow_offset = Vector2(0, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_play_normal"]
+bg_color = Color(0.858824, 0.152941, 0.466667, 1)
+border_width_bottom = 4
+border_color = Color(0.686275, 0.0823529, 0.352941, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.858824, 0.152941, 0.466667, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_play_pressed"]
+content_margin_top = 4.0
+bg_color = Color(0.745098, 0.0941176, 0.364706, 1)
+border_width_bottom = 1
+border_color = Color(0.55, 0.05, 0.25, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_play_hover"]
+bg_color = Color(0.92549, 0.282353, 0.6, 1)
+border_width_bottom = 4
+border_color = Color(0.745098, 0.0941176, 0.364706, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.92549, 0.282353, 0.6, 0.35)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_profile_card"]
+bg_color = Color(0.992157, 0.960784, 0.980392, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.85, 0.15, 0.45, 0.08)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_card"]
+bg_color = Color(1, 1, 1, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.85, 0.15, 0.45, 0.25)
+shadow_size = 20
+shadow_offset = Vector2(0, 8)
+
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_academy_normal"]
+content_margin_top = 4.0
+content_margin_bottom = 6.0
+bg_color = Color(0.92, 0.45, 0.12, 1)
+border_width_bottom = 4
+border_color = Color(0.72, 0.32, 0.08, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.92, 0.45, 0.12, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_academy_pressed"]
+content_margin_top = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.8, 0.38, 0.1, 1)
+border_width_bottom = 1
+border_color = Color(0.6, 0.25, 0.05, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_academy_hover"]
+content_margin_top = 4.0
+content_margin_bottom = 6.0
+bg_color = Color(0.98, 0.52, 0.18, 1)
+border_width_bottom = 4
+border_color = Color(0.8, 0.38, 0.1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.98, 0.52, 0.18, 0.35)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_online_normal"]
+content_margin_top = 4.0
+content_margin_bottom = 6.0
+bg_color = Color(0.06, 0.65, 0.52, 1)
+border_width_bottom = 4
+border_color = Color(0.03, 0.48, 0.38, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.06, 0.65, 0.52, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_online_hover"]
+content_margin_top = 4.0
+content_margin_bottom = 6.0
+bg_color = Color(0.1, 0.72, 0.58, 1)
+border_width_bottom = 4
+border_color = Color(0.03, 0.48, 0.38, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.1, 0.72, 0.58, 0.35)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_online_pressed"]
+content_margin_top = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.04, 0.55, 0.44, 1)
+border_width_bottom = 2
+border_color = Color(0.03, 0.48, 0.38, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_active"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.858824, 0.152941, 0.466667, 1)
+border_width_bottom = 3
+border_color = Color(0.686275, 0.0823529, 0.352941, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_inactive"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.94, 0.95, 0.97, 1)
+border_width_bottom = 2
+border_color = Color(0.8, 0.83, 0.88, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_btn_selected"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.06, 0.65, 0.52, 1)
+border_width_bottom = 2
+border_color = Color(0.03, 0.48, 0.38, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pill_btn_unselected"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.95, 0.96, 0.98, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.85, 0.88, 0.92, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_code_box"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.98, 0.94, 0.97, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.858824, 0.152941, 0.466667, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_history_normal"]
+content_margin_top = 4.0
+content_margin_bottom = 6.0
+bg_color = Color(0.388235, 0.4, 0.945098, 1)
+border_width_bottom = 4
+border_color = Color(0.270588, 0.25098, 0.764706, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.388235, 0.4, 0.945098, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_history_hover"]
+content_margin_top = 4.0
+content_margin_bottom = 6.0
+bg_color = Color(0.482353, 0.486275, 0.980392, 1)
+border_width_bottom = 4
+border_color = Color(0.270588, 0.25098, 0.764706, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.482353, 0.486275, 0.980392, 0.35)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_history_pressed"]
+content_margin_top = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.313726, 0.301961, 0.847059, 1)
+border_width_bottom = 2
+border_color = Color(0.270588, 0.25098, 0.764706, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="MainMenu" type="Control" unique_id=1450220421]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=92461949]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.992157, 0.94902, 0.972549, 1)
+
+[node name="DecorativeDeco" type="Control" parent="." unique_id=1386651236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PieceTopLeft" type="TextureRect" parent="DecorativeDeco" unique_id=1802722626]
+modulate = Color(1, 1, 1, 0.18)
+layout_mode = 1
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 160.0
+offset_bottom = 160.0
+texture = ExtResource("4_wk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PieceBottomLeft" type="TextureRect" parent="DecorativeDeco" unique_id=850838751]
+modulate = Color(1, 1, 1, 0.18)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = -180.0
+offset_right = 180.0
+offset_bottom = -80.0
+grow_vertical = 0
+texture = ExtResource("6_wn")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PieceTopRight" type="TextureRect" parent="DecorativeDeco" unique_id=472116755]
+modulate = Color(1, 1, 1, 0.18)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 60.0
+offset_right = -80.0
+offset_bottom = 160.0
+grow_horizontal = 0
+texture = ExtResource("5_bq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PieceBottomRight" type="TextureRect" parent="DecorativeDeco" unique_id=800689067]
+modulate = Color(1, 1, 1, 0.18)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -180.0
+offset_right = -80.0
+offset_bottom = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("7_br")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Center" type="CenterContainer" parent="." unique_id=388300469]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuCard" type="PanelContainer" parent="Center" unique_id=1556287504]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 620)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="Margin" type="MarginContainer" parent="Center/MenuCard" unique_id=541837336]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="Center/MenuCard/Margin" unique_id=2013471196]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="PollitoAvatar" type="TextureRect" parent="Center/MenuCard/Margin/VBox" unique_id=2013815020]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_pollito")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("8_avatar_script")
+
+[node name="TitlesVBox" type="VBoxContainer" parent="Center/MenuCard/Margin/VBox" unique_id=983627800]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="SubHeader" type="Label" parent="Center/MenuCard/Margin/VBox/TitlesVBox" unique_id=1318728892]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.745098, 0.0941176, 0.364706, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "El Mundo de Ajedrez"
+horizontal_alignment = 1
+
+[node name="MainHeader" type="Label" parent="Center/MenuCard/Margin/VBox/TitlesVBox" unique_id=1937616661]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 36
+text = "del Profe Pollito 👑"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Center/MenuCard/Margin/VBox" unique_id=1263604439]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "¡Aprende y diviértete jugando ajedrez! 🐣♟️"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Center/MenuCard/Margin/VBox" unique_id=2085250569]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+
+[node name="ProfileCard" type="PanelContainer" parent="Center/MenuCard/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_profile_card")
+
+[node name="ProfileMargin" type="MarginContainer" parent="Center/MenuCard/Margin/VBox/ProfileCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="ProfileVBox" type="VBoxContainer" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="HeaderHBox" type="HBoxContainer" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Label" type="Label" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "👤 Jugador Activo:"
+
+[node name="ActiveProfileName" type="Label" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox/HeaderHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "👧 Lyanna (Niña)"
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="BtnChangeProfile" type="Button" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox/ButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 32)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "🔁 Cambiar"
+
+[node name="BtnEditProfile" type="Button" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox/ButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "✏️ Editar"
+
+[node name="BtnNewProfile" type="Button" parent="Center/MenuCard/Margin/VBox/ProfileCard/ProfileMargin/ProfileVBox/ButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "➕ Nuevo"
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="Center/MenuCard/Margin/VBox" unique_id=990619158]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnAcademy" type="Button" parent="Center/MenuCard/Margin/VBox/ButtonsVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_academy_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_academy_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_academy_hover")
+text = "🎓 La Gran Academia de Ajedrez"
+
+[node name="BtnPracticeBot" type="Button" parent="Center/MenuCard/Margin/VBox/ButtonsVBox" unique_id=1884521664]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 54)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_play_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_play_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_play_hover")
+text = "🎮 Práctica Contra BOT"
+
+[node name="BtnOnlineVersus" type="Button" parent="Center/MenuCard/Margin/VBox/ButtonsVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 54)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_online_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_online_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_online_hover")
+text = "🌐 Partida Versus con Amigos"
+
+[node name="BtnMatchHistory" type="Button" parent="Center/MenuCard/Margin/VBox/ButtonsVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 54)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_history_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_history_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_history_hover")
+text = "📜 Historial de Partidas"
+
+[node name="FooterSpacer" type="Control" parent="Center/MenuCard/Margin/VBox" unique_id=1984351636]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="Footer" type="Label" parent="Center/MenuCard/Margin/VBox" unique_id=807576981]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.68, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "Versión Alfa 0.3 • Creado para Lyanna ❤️"
+horizontal_alignment = 1
+
+[node name="ProfileSelectOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="ProfileSelectOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.08, 0.04, 0.08, 0.65)
+
+[node name="Center" type="CenterContainer" parent="ProfileSelectOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="SelectCard" type="PanelContainer" parent="ProfileSelectOverlay/Center"]
+custom_minimum_size = Vector2(440, 380)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="Margin" type="MarginContainer" parent="ProfileSelectOverlay/Center/SelectCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="Label" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "👥 Perfiles de Jugador"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "Elige con qué perfil jugarás para que Pollito te salude:"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProfilesListVBox" type="VBoxContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="SelectButtonsHBox" type="HBoxContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnModalNewProfile" type="Button" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox/SelectButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "➕ Crear Nuevo"
+
+[node name="BtnCloseSelectModal" type="Button" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox/SelectButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "Cerrar"
+
+[node name="ProfileEditOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="ProfileEditOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.08, 0.04, 0.08, 0.65)
+
+[node name="Center" type="CenterContainer" parent="ProfileEditOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="EditCard" type="PanelContainer" parent="ProfileEditOverlay/Center"]
+custom_minimum_size = Vector2(430, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="Margin" type="MarginContainer" parent="ProfileEditOverlay/Center/EditCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 22
+
+[node name="VBox" type="VBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="EditModalTitle" type="Label" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "🌟 Creador de Perfil"
+horizontal_alignment = 1
+
+[node name="NameSection" type="VBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="NamePrompt" type="Label" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/NameSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "¿Cómo te llamas? (Nombre o Nick):"
+
+[node name="EditNameInput" type="LineEdit" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/NameSection"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+placeholder_text = "Escribe tu nombre o apodo..."
+alignment = 1
+max_length = 20
+
+[node name="GenderSection" type="VBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="GenderPrompt" type="Label" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "¿Eres Niño o Niña? (Para que Pollito te hable bien):"
+
+[node name="GenderHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnGenderGirl" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/GenderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "👧 Niña"
+
+[node name="BtnGenderBoy" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/GenderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "👦 Niño"
+
+[node name="EditButtonsVBox" type="VBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnSaveProfile" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/EditButtonsVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "💾 Guardar Perfil"
+
+[node name="EditSecondaryHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/EditButtonsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnCancelEditProfile" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/EditButtonsVBox/EditSecondaryHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 13
+text = "❌ Cancelar"
+
+[node name="BtnDeleteProfile" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/EditButtonsVBox/EditSecondaryHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 13
+text = "🗑️ Eliminar"
+
+
+[node name="OnlineLobbyOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModalBackdrop" type="ColorRect" parent="OnlineLobbyOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.05, 0.1, 0.45)
+
+[node name="Center" type="CenterContainer" parent="OnlineLobbyOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyCard" type="PanelContainer" parent="OnlineLobbyOverlay/Center"]
+custom_minimum_size = Vector2(500, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="Margin" type="MarginContainer" parent="OnlineLobbyOverlay/Center/LobbyCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TitleHBox" type="HBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="LobbyTitle" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/TitleHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "🌐 Partida Versus con Amigos"
+
+[node name="BtnCloseLobby" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/TitleHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+focus_mode = 0
+text = "✕"
+
+[node name="TabsHBox" type="HBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnTabCreate" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/TabsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_active")
+text = "👑 Crear Sala"
+
+[node name="BtnTabJoin" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/TabsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_inactive")
+text = "🎮 Unirse con Código"
+
+[node name="BtnTabLan" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/TabsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_inactive")
+text = "🏠 Mismo PC / LAN"
+
+[node name="HSeparator" type="HSeparator" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="CreateRoomView" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ColorSection" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/ColorSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "Elige tu bando:"
+
+[node name="ColorHBox" type="HBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/ColorSection"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnColorWhite" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/ColorSection/ColorHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_selected")
+text = "⚪ Blancas"
+
+[node name="BtnColorBlack" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/ColorSection/ColorHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_unselected")
+text = "⚫ Negras"
+
+[node name="BtnColorRandom" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/ColorSection/ColorHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_unselected")
+text = "🎲 Aleatorio"
+
+[node name="TimeSection" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/TimeSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "Tiempo de reloj:"
+
+[node name="TimeHBox" type="HBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/TimeSection"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnTimeNone" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/TimeSection/TimeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_unselected")
+text = "Sin reloj"
+
+[node name="BtnTime3m" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/TimeSection/TimeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_unselected")
+text = "⚡ 3 Min"
+
+[node name="BtnTime5m" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/TimeSection/TimeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_selected")
+text = "⏱️ 5 Min"
+
+[node name="BtnTime10m" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/TimeSection/TimeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_pill_btn_unselected")
+text = "⏳ 10 Min"
+
+[node name="BtnDoCreateRoom" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_online_normal")
+text = "✨ Crear Sala y Generar Código"
+
+[node name="WaitingContainer" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CodeCard" type="PanelContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/WaitingContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_code_box")
+
+[node name="CodeHBox" type="HBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/WaitingContainer/CodeCard"]
+layout_mode = 2
+alignment = 1
+
+[node name="RoomCodeLabel" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/WaitingContainer/CodeCard/CodeHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+text = "POLLO-1234"
+horizontal_alignment = 1
+
+[node name="BtnCopyCode" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/WaitingContainer/CodeCard/CodeHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 34)
+layout_mode = 2
+text = "📋 Copiar"
+
+[node name="WaitingStatusLabel" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/WaitingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "Esperando que tu oponente se una con el código... ⏳"
+horizontal_alignment = 1
+
+[node name="BtnCancelCreatedRoom" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/CreateRoomView/WaitingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Cancelar Sala"
+
+[node name="JoinRoomView" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="JoinDesc" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/JoinRoomView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "Ingresa el código que te compartió tu amigo:"
+
+[node name="JoinCodeInput" type="LineEdit" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/JoinRoomView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+placeholder_text = "Ej: POLLO-7842"
+alignment = 1
+
+[node name="BtnDoJoinRoom" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/JoinRoomView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_online_normal")
+text = "🚀 Unirse y Jugar"
+
+[node name="JoinStatusLabel" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/JoinRoomView"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="LanRoomView" type="VBoxContainer" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LanDesc" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/LanRoomView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juega en la misma red Wi-Fi o en el mismo PC sin internet:"
+
+[node name="BtnDoLanHost" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/LanRoomView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_online_normal")
+text = "👑 Hospedar Partida LAN (Host)"
+
+[node name="LanIpInput" type="LineEdit" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/LanRoomView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "IP del Host (ej: 127.0.0.1 o 192.168.1.X)"
+alignment = 1
+
+[node name="BtnDoLanJoin" type="Button" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/LanRoomView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "🚀 Conectar a IP LAN"
+
+[node name="LanStatusLabel" type="Label" parent="OnlineLobbyOverlay/Center/LobbyCard/Margin/VBox/LanRoomView"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+
+[node name="MatchHistoryOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HistoryBackdrop" type="ColorRect" parent="MatchHistoryOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.05, 0.1, 0.5)
+
+[node name="Center" type="CenterContainer" parent="MatchHistoryOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HistoryCard" type="PanelContainer" parent="MatchHistoryOverlay/Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(660, 540)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="Margin" type="MarginContainer" parent="MatchHistoryOverlay/Center/HistoryCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleHBox" type="HBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="HistoryTitle" type="Label" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/TitleHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.388235, 0.4, 0.945098, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "📜 Historial de Partidas"
+
+[node name="BtnClearAllHistory" type="Button" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/TitleHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+focus_mode = 0
+text = "🗑️ Vaciar Historial"
+
+[node name="BtnCloseHistoryModal" type="Button" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/TitleHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+focus_mode = 0
+text = "✕"
+
+[node name="FilterHBox" type="HBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnFilterAll" type="Button" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/FilterHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_active")
+text = "Todas (0)"
+
+[node name="BtnFilterBots" type="Button" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/FilterHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_inactive")
+text = "🐣 Contra Bots (0)"
+
+[node name="BtnFilterVersus" type="Button" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/FilterHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_inactive")
+text = "🌐 Versus (0)"
+
+[node name="HSeparator" type="HSeparator" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 320)
+
+[node name="HistoryContent" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptyHistoryLabel" type="Label" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/ScrollContainer/HistoryContent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 14
+text = "Aún no tienes partidas registradas en el historial.
+
+¡Juega una partida contra los Bots o en Modo Versus
+y se guardará automáticamente aquí para revisarla!"
+horizontal_alignment = 1
+
+[node name="HistoryListVBox" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/ScrollContainer/HistoryContent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="FooterLabel" type="Label" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.55, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "💡 Pulsa en '🔍 Revisar' para repasar cualquier partida jugada paso a paso en el tablero."
+horizontal_alignment = 1

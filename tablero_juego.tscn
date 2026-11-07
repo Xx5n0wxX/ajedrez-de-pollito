@@ -1,0 +1,1377 @@
+[gd_scene format=3 uid="uid://bvjp8kkfvk5f4"]
+
+[ext_resource type="Script" uid="uid://bdp4nkuc7oqqr" path="res://scripts/GameController.gd" id="1_controller"]
+[ext_resource type="Script" uid="uid://d3ajckwqw7epp" path="res://scripts/ChessBoard.gd" id="2_board"]
+[ext_resource type="Script" uid="uid://novev7vqfsqb" path="res://scripts/PollitoAvatar.gd" id="4_avatar_script"]
+[ext_resource type="FontFile" uid="uid://co7yneq2l3ayg" path="res://assets/fonts/CherryBombOne-Regular.ttf" id="5_cherry_font"]
+[ext_resource type="Texture2D" uid="uid://cxts51d0ssvnl" path="res://assets/ui/pollito_pensando.png" id="6_pollito_pensando"]
+[ext_resource type="Texture2D" path="res://assets/icons/swap_layout.svg" id="8_swap_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_comic_panel"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984314, 0.811765, 0.909804, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.85, 0.4, 0.65, 0.12)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_voice_normal"]
+content_margin_bottom = 4.0
+bg_color = Color(0.992157, 0.94902, 0.972549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.984314, 0.811765, 0.909804, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_voice_pressed"]
+content_margin_top = 3.0
+content_margin_bottom = 1.0
+bg_color = Color(0.968627, 0.878431, 0.933333, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.956863, 0.447059, 0.713725, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_voice_hover"]
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0.956863, 0.447059, 0.713725, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble"]
+bg_color = Color(0.992157, 0.94902, 0.972549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984314, 0.811765, 0.909804, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_diff_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.92549, 0.282353, 0.6, 1)
+border_width_bottom = 3
+border_color = Color(0.745098, 0.0941176, 0.364706, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_diff_pressed"]
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+bg_color = Color(0.858824, 0.152941, 0.466667, 1)
+border_width_bottom = 1
+border_color = Color(0.745098, 0.0941176, 0.364706, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_diff_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.956863, 0.447059, 0.713725, 1)
+border_width_bottom = 3
+border_color = Color(0.745098, 0.0941176, 0.364706, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_diff_disabled"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0.75, 0.77, 0.82, 1)
+border_width_bottom = 2
+border_color = Color(0.6, 0.63, 0.68, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_undo_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.231373, 0.509804, 0.964706, 1)
+border_width_bottom = 3
+border_color = Color(0.113725, 0.305882, 0.847059, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_undo_pressed"]
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+bg_color = Color(0.145098, 0.388235, 0.921569, 1)
+border_width_bottom = 1
+border_color = Color(0.113725, 0.305882, 0.847059, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_undo_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.376471, 0.647059, 0.980392, 1)
+border_width_bottom = 3
+border_color = Color(0.113725, 0.305882, 0.847059, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_undo_disabled"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0.75, 0.77, 0.82, 1)
+border_width_bottom = 2
+border_color = Color(0.6, 0.63, 0.68, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_ng_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.0627451, 0.72549, 0.505882, 1)
+border_width_bottom = 3
+border_color = Color(0.0196078, 0.588235, 0.411765, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_ng_pressed"]
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+bg_color = Color(0.0196078, 0.588235, 0.411765, 1)
+border_width_bottom = 1
+border_color = Color(0.0156863, 0.470588, 0.341176, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_ng_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.203922, 0.827451, 0.6, 1)
+border_width_bottom = 3
+border_color = Color(0.0196078, 0.588235, 0.411765, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_res_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.956863, 0.247059, 0.368627, 1)
+border_width_bottom = 3
+border_color = Color(0.745098, 0.0705882, 0.235294, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_res_pressed"]
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+bg_color = Color(0.882353, 0.113725, 0.282353, 1)
+border_width_bottom = 1
+border_color = Color(0.623529, 0.0705882, 0.223529, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_res_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0.984314, 0.443137, 0.521569, 1)
+border_width_bottom = 3
+border_color = Color(0.745098, 0.0705882, 0.235294, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_res_disabled"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0.75, 0.77, 0.82, 1)
+border_width_bottom = 2
+border_color = Color(0.6, 0.63, 0.68, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_resume_normal"]
+bg_color = Color(0.858824, 0.152941, 0.466667, 1)
+border_width_bottom = 3
+border_color = Color(0.686275, 0.0823529, 0.352941, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_resume_pressed"]
+content_margin_top = 3.0
+bg_color = Color(0.745098, 0.0941176, 0.364706, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_resume_hover"]
+bg_color = Color(0.92549, 0.282353, 0.6, 1)
+border_width_bottom = 3
+border_color = Color(0.745098, 0.0941176, 0.364706, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_history_panel"]
+bg_color = Color(0.97, 0.98, 0.99, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.88, 0.9, 0.94, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_back_normal"]
+bg_color = Color(0.94, 0.95, 0.97, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.82, 0.85, 0.9, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_back_pressed"]
+content_margin_top = 3.0
+bg_color = Color(0.82, 0.85, 0.9, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_back_hover"]
+bg_color = Color(0.88, 0.9, 0.94, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.75, 0.78, 0.85, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_replay_normal"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0.945098, 0.960784, 0.976471, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_replay_pressed"]
+content_margin_left = 4.0
+content_margin_top = 3.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+bg_color = Color(0.886275, 0.909804, 0.941176, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.796078, 0.835294, 0.882353, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_replay_hover"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.796078, 0.835294, 0.882353, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_replay_disabled"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+bg_color = Color(0.95, 0.96, 0.97, 1)
+border_width_bottom = 1
+border_color = Color(0.88, 0.9, 0.92, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_match_stats"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.97, 0.98, 0.99, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.88, 0.9, 0.94, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_white_card"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.95, 0.97, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_black_card"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.96, 0.97, 0.99, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.88, 0.9, 0.94, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_card"]
+bg_color = Color(1, 1, 1, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 20
+shadow_offset = Vector2(0, 6)
+
+[node name="TableroJuego" type="Control" unique_id=137699509]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_controller")
+game_mode = null
+current_lesson_id = null
+
+[node name="Background" type="ColorRect" parent="." unique_id=1679476599]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.988235, 0.905882, 0.952941, 1)
+
+[node name="MainLayout" type="BoxContainer" parent="." unique_id=810200036]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="LeftColumn" type="MarginContainer" parent="MainLayout" unique_id=684454222]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.15
+
+[node name="ContenedorTablero" type="MarginContainer" parent="MainLayout/LeftColumn" unique_id=188232232]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChessBoard" type="Control" parent="MainLayout/LeftColumn/ContenedorTablero" unique_id=382584984]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_board")
+
+[node name="RightColumn" type="PanelContainer" parent="MainLayout" unique_id=918014749]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.85
+theme_override_styles/panel = SubResource("StyleBoxFlat_comic_panel")
+
+[node name="Margin" type="MarginContainer" parent="MainLayout/RightColumn" unique_id=1055974724]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin" unique_id=1457464613]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox" unique_id=1217587894]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AvatarContainer" type="Control" parent="MainLayout/RightColumn/Margin/VBox/Header" unique_id=1027647403]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+
+[node name="AvatarRect" type="TextureRect" parent="MainLayout/RightColumn/Margin/VBox/Header/AvatarContainer" unique_id=587340087]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(48, 48)
+script = ExtResource("4_avatar_script")
+
+[node name="InfoContainer" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/Header" unique_id=994514775]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="LessonBadge" type="Label" parent="MainLayout/RightColumn/Margin/VBox/Header/InfoContainer" unique_id=968760658]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 12
+text = "🐣 FÁCIL (PRINCIPIANTE)"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="LessonTitle" type="Label" parent="MainLayout/RightColumn/Margin/VBox/Header/InfoContainer" unique_id=1281916083]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.215686, 0.254902, 0.317647, 1)
+theme_override_font_sizes/font_size = 18
+text = "Tu Turno (Blancas)"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="LessonSubtitle" type="Label" parent="MainLayout/RightColumn/Margin/VBox/Header/InfoContainer" unique_id=2100865197]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.419608, 0.447059, 0.501961, 1)
+theme_override_font_sizes/font_size = 12
+text = "Nivel: Fácil • Turno 1"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="TopRightControls" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/Header" unique_id=1176093345]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TopButtonsRow" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/Header/TopRightControls" unique_id=775797060]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 6
+
+[node name="HintButton" type="Button" parent="MainLayout/RightColumn/Margin/VBox/Header/TopRightControls/TopButtonsRow" unique_id=1135491897]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Pedir una pista al Profe Pollito"
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_voice_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_voice_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_voice_hover")
+text = "💡"
+
+[node name="MuteButton" type="Button" parent="MainLayout/RightColumn/Margin/VBox/Header/TopRightControls/TopButtonsRow" unique_id=643446899]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Silenciar voz del Profe Pollito"
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_voice_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_voice_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_voice_hover")
+text = "🔊"
+
+[node name="BtnSwapLayout" type="Button" parent="MainLayout/RightColumn/Margin/VBox/Header/TopRightControls/TopButtonsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Intercambiar posición del tablero y el panel"
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_voice_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_voice_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_voice_hover")
+icon = ExtResource("8_swap_icon")
+icon_alignment = 1
+expand_icon = true
+
+[node name="BtnPauseMenu" type="Button" parent="MainLayout/RightColumn/Margin/VBox/Header/TopRightControls/TopButtonsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+tooltip_text = "Menú de pausa y opciones (Escape)"
+focus_mode = 0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_voice_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_voice_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_voice_hover")
+text = "⏸️"
+
+[node name="DialogueBubble" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox" unique_id=970855300]
+custom_minimum_size = Vector2(0, 156)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
+
+[node name="DialogueMargin" type="MarginContainer" parent="MainLayout/RightColumn/Margin/VBox/DialogueBubble" unique_id=1246749889]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="DialogueVBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/DialogueBubble/DialogueMargin" unique_id=1909975968]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="DialogueText" type="RichTextLabel" parent="MainLayout/RightColumn/Margin/VBox/DialogueBubble/DialogueMargin/DialogueVBox" unique_id=1715629744]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 98)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.215686, 0.254902, 0.317647, 1)
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "[color=#db2777][b]Profe Pollito:[/b][/color] ¡Hola Lyanna! Juguemos una partida de ajedrez completa. Tú llevas las piezas blancas. ¡Mueve un peón o un caballo para iniciar!"
+
+[node name="HSeparator" type="HSeparator" parent="MainLayout/RightColumn/Margin/VBox/DialogueBubble/DialogueMargin/DialogueVBox" unique_id=1883263808]
+layout_mode = 2
+
+[node name="InstructionLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/DialogueBubble/DialogueMargin/DialogueVBox" unique_id=1839123220]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 13
+text = "🎯 Arrastra o toca una pieza blanca para mover"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="ControlsSplitRow" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox" unique_id=1035364105]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ClockSection" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow" unique_id=1757945932]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="ClockTopHBox" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection" unique_id=1829165613]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ClockToggle" type="CheckButton" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClockTopHBox" unique_id=1846286725]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0.35, 0.38, 0.45, 1)
+theme_override_colors/font_pressed_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 11
+text = "⏱️ Reloj"
+
+[node name="ClockTimeOption" type="OptionButton" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClockTopHBox" unique_id=1060638777]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 22)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+selected = 3
+item_count = 8
+popup/item_0/text = "1 min"
+popup/item_0/id = 0
+popup/item_1/text = "2 min"
+popup/item_1/id = 1
+popup/item_2/text = "3 min"
+popup/item_2/id = 2
+popup/item_3/text = "5 min"
+popup/item_3/id = 3
+popup/item_4/text = "10 min"
+popup/item_4/id = 4
+popup/item_5/text = "15 min"
+popup/item_5/id = 5
+popup/item_6/text = "20 min"
+popup/item_6/id = 6
+popup/item_7/text = "30 min"
+popup/item_7/id = 7
+
+[node name="ClocksHBox" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection" unique_id=1930484129]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="WhiteClockPanel" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox" unique_id=917353880]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="WhiteMargin" type="MarginContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/WhiteClockPanel" unique_id=287292961]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="VBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/WhiteClockPanel/WhiteMargin" unique_id=856545005]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="WhitePlayerLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/WhiteClockPanel/WhiteMargin/VBox" unique_id=136049327]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = "⚪ Blancas"
+horizontal_alignment = 1
+
+[node name="WhiteTimeLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/WhiteClockPanel/WhiteMargin/VBox" unique_id=93757105]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 16
+text = "05:00"
+horizontal_alignment = 1
+
+[node name="BlackClockPanel" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox" unique_id=1080779392]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BlackMargin" type="MarginContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/BlackClockPanel" unique_id=736780005]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="VBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/BlackClockPanel/BlackMargin" unique_id=620940167]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="BlackPlayerLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/BlackClockPanel/BlackMargin/VBox" unique_id=672590370]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = "⚫ Negras"
+horizontal_alignment = 1
+
+[node name="BlackTimeLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ClockSection/ClocksHBox/BlackClockPanel/BlackMargin/VBox" unique_id=501749090]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.22, 0.28, 1)
+theme_override_font_sizes/font_size = 16
+text = "05:00"
+horizontal_alignment = 1
+
+[node name="ActionButtonsContainer" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow" unique_id=449317333]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="ActionRowTop" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer" unique_id=196960881]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="DifficultyButton" type="Button" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer/ActionRowTop" unique_id=327223074]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_diff_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_diff_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_diff_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_diff_disabled")
+text = "🐣 FÁCIL"
+
+[node name="UndoButton" type="Button" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer/ActionRowTop" unique_id=242807390]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_undo_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_undo_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_undo_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_undo_disabled")
+text = "↩️ Deshacer"
+
+[node name="ActionRowBottom" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer" unique_id=666514076]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="NewGameButton" type="Button" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer/ActionRowBottom" unique_id=620265113]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_ng_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_ng_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_ng_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_undo_disabled")
+disabled = true
+text = "🔄 Reiniciar Partida"
+
+[node name="ResignButton" type="Button" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer/ActionRowBottom" unique_id=551219103]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_res_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_res_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_res_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_res_disabled")
+text = "🏳️ Rendirse"
+
+[node name="BtnReviewMatch" type="Button" parent="MainLayout/RightColumn/Margin/VBox/ControlsSplitRow/ActionButtonsContainer" unique_id=1601878691]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_resume_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_resume_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_resume_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_undo_disabled")
+text = "🔍 Revisar Partida"
+
+[node name="BottomSplitHBox" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox" unique_id=733696106]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="MoveHistorySection" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox" unique_id=65144689]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_history_panel")
+
+[node name="Margin" type="MarginContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection" unique_id=1800793283]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin" unique_id=920491832]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HistoryHeader" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox" unique_id=1247866466]
+layout_mode = 2
+
+[node name="HistoryTitle" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/HistoryHeader" unique_id=1958602425]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 11
+text = "📜 Historial:"
+
+[node name="HistoryReviewHint" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/HistoryHeader" unique_id=629897685]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 10
+text = "💡 Repaso"
+
+[node name="BtnExitReview" type="Button" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/HistoryHeader" unique_id=2144332743]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(85, 26)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_back_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_back_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_back_hover")
+text = "🔙 Volver"
+
+[node name="MoveHistoryScroll" type="ScrollContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox" unique_id=1308325530]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="MoveHistoryText" type="RichTextLabel" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/MoveHistoryScroll" unique_id=984918970]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[color=#9ca3af]Las jugadas aparecerán aquí...[/color]"
+fit_content = true
+scroll_active = false
+meta_underlined = false
+
+[node name="ReplayControlsBar" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox" unique_id=1737724014]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="ReplayFirstBtn" type="Button" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/ReplayControlsBar" unique_id=789357286]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+tooltip_text = "Ir al inicio (posición inicial)"
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_replay_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_replay_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_replay_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_replay_disabled")
+text = "⏮"
+
+[node name="ReplayPrevBtn" type="Button" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/ReplayControlsBar" unique_id=916161215]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+tooltip_text = "Jugada anterior"
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_replay_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_replay_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_replay_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_replay_disabled")
+text = "◀"
+
+[node name="ReplayPlayBtn" type="Button" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/ReplayControlsBar" unique_id=37560326]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 26)
+layout_mode = 2
+tooltip_text = "Reproducir / Pausar partida"
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_diff_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_diff_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_diff_hover")
+text = "▶ Ver"
+
+[node name="ReplayNextBtn" type="Button" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/ReplayControlsBar" unique_id=1495941510]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+tooltip_text = "Siguiente jugada"
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_replay_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_replay_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_replay_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_replay_disabled")
+text = "▶"
+
+[node name="ReplayLastBtn" type="Button" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MoveHistorySection/Margin/VBox/ReplayControlsBar" unique_id=1877292877]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+tooltip_text = "Ir al final de la partida"
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_replay_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_replay_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_replay_hover")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_replay_disabled")
+text = "⏭"
+
+[node name="MatchStatsSection" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox" unique_id=1358100018]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_match_stats")
+
+[node name="StatsVBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection" unique_id=1139038311]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="TopRow" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox" unique_id=1531835347]
+layout_mode = 2
+
+[node name="MatchTimerLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/TopRow" unique_id=1352535249]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+text = "⏱️ Tiempo: 00:00"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Spacer" type="Control" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/TopRow" unique_id=206904165]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AdvantageLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/TopRow" unique_id=1616310467]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.45, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚖️ Igualado"
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="StatsSeparator" type="HSeparator" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox" unique_id=114920998]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="WhiteCard" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox" unique_id=495158459]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_white_card")
+
+[node name="WhiteVBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/WhiteCard" unique_id=1420557546]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="WhiteHeader" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/WhiteCard/WhiteVBox" unique_id=1521886795]
+layout_mode = 2
+
+[node name="WhiteNameLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/WhiteCard/WhiteVBox/WhiteHeader" unique_id=825397358]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.745098, 0.0941176, 0.364706, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚪ Lyanna"
+
+[node name="WhiteSpacer" type="Control" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/WhiteCard/WhiteVBox/WhiteHeader" unique_id=1285979690]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WhiteScoreLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/WhiteCard/WhiteVBox/WhiteHeader" unique_id=724330743]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.745098, 0.0941176, 0.364706, 1)
+theme_override_font_sizes/font_size = 11
+text = "0 pts (0)"
+horizontal_alignment = 2
+
+[node name="WhiteCapturedText" type="RichTextLabel" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/WhiteCard/WhiteVBox" unique_id=213570716]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 11
+bbcode_enabled = true
+text = "[color=#9ca3af]Sin capturas[/color]"
+scroll_active = false
+
+[node name="BlackCard" type="PanelContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox" unique_id=1578791890]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_black_card")
+
+[node name="BlackVBox" type="VBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/BlackCard" unique_id=1000951842]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="BlackHeader" type="HBoxContainer" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/BlackCard/BlackVBox" unique_id=1347292754]
+layout_mode = 2
+
+[node name="BlackNameLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/BlackCard/BlackVBox/BlackHeader" unique_id=1286084201]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚫ Profe Pollito"
+
+[node name="BlackSpacer" type="Control" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/BlackCard/BlackVBox/BlackHeader" unique_id=842395912]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BlackScoreLabel" type="Label" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/BlackCard/BlackVBox/BlackHeader" unique_id=2020976240]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 11
+text = "0 pts (0)"
+horizontal_alignment = 2
+
+[node name="BlackCapturedText" type="RichTextLabel" parent="MainLayout/RightColumn/Margin/VBox/BottomSplitHBox/MatchStatsSection/StatsVBox/BlackCard/BlackVBox" unique_id=2087450031]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 11
+bbcode_enabled = true
+text = "[color=#9ca3af]Sin capturas[/color]"
+scroll_active = false
+
+[node name="PauseMenuOverlay" type="ColorRect" parent="." unique_id=2020874498]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.12, 0.18, 0.65)
+
+[node name="Center" type="CenterContainer" parent="PauseMenuOverlay" unique_id=337436141]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseCard" type="PanelContainer" parent="PauseMenuOverlay/Center" unique_id=1211954849]
+custom_minimum_size = Vector2(400, 380)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pause_card")
+
+[node name="Margin" type="MarginContainer" parent="PauseMenuOverlay/Center/PauseCard" unique_id=714925318]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenuOverlay/Center/PauseCard/Margin" unique_id=2145735461]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="PollitoPause" type="TextureRect" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox" unique_id=1872442181]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_pollito_pensando")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PauseHeader" type="Label" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox" unique_id=579058946]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("5_cherry_font")
+theme_override_font_sizes/font_size = 26
+text = "⏸️ Juego Pausado"
+horizontal_alignment = 1
+
+[node name="PauseSubtitle" type="Label" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox" unique_id=2047587245]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "La partida está en pausa. ¿Qué deseas hacer?"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox" unique_id=938013796]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox" unique_id=946007534]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ResumeButton" type="Button" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox/ButtonsVBox" unique_id=951140536]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_cherry_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_resume_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_resume_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_resume_hover")
+text = "▶️ Reanudar"
+
+[node name="BackToMenuButton" type="Button" parent="PauseMenuOverlay/Center/PauseCard/Margin/VBox/ButtonsVBox" unique_id=1060168378]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_back_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_back_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_back_hover")
+text = "🏠 Volver al Menú Principal"
+
+[node name="ConfirmModalOverlay" type="ColorRect" parent="." unique_id=1675770469]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.12, 0.18, 0.65)
+
+[node name="Center" type="CenterContainer" parent="ConfirmModalOverlay" unique_id=1583966785]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmCard" type="PanelContainer" parent="ConfirmModalOverlay/Center" unique_id=522191197]
+custom_minimum_size = Vector2(400, 380)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pause_card")
+
+[node name="Margin" type="MarginContainer" parent="ConfirmModalOverlay/Center/ConfirmCard" unique_id=789816321]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin" unique_id=609586458]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="PollitoConfirm" type="TextureRect" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox" unique_id=799852709]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_pollito_pensando")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ConfirmHeader" type="Label" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox" unique_id=1763621013]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("5_cherry_font")
+theme_override_font_sizes/font_size = 24
+text = "🔄 Nueva Partida"
+horizontal_alignment = 1
+
+[node name="ConfirmSubtitle" type="Label" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox" unique_id=860091745]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "¿Deseas iniciar una nueva partida?
+
+Se perderá el avance del juego actual."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox" unique_id=89152811]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox" unique_id=1069894502]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ConfirmActionButton" type="Button" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox/ButtonsVBox" unique_id=780892674]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_cherry_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_resume_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_resume_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_resume_hover")
+text = "Sí, nueva partida"
+
+[node name="ConfirmCancelButton" type="Button" parent="ConfirmModalOverlay/Center/ConfirmCard/Margin/VBox/ButtonsVBox" unique_id=211657177]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_back_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_back_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_back_hover")
+text = "Cancelar"
+

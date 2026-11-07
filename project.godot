@@ -1,0 +1,57 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="El Mundo de Ajedrez del Profe Pollito"
+run/main_scene="res://scenes/SplashScreen.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(1, 0.964706, 0.929412, 1)
+boot_splash/image="res://assets/ui/boot_splash.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=true
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
+
+[editor]
+
+export/convert_text_resources_to_binary=false
+
+[autoload]
+
+UpdateManager="*res://scripts/UpdateManager.gd"
+ScreenManager="*res://scripts/ScreenManager.gd"
+ProfileManager="*res://scripts/ProfileManager.gd"
+VoiceManager="*res://scripts/VoiceManager.gd"
+NetworkManager="*res://scripts/NetworkManager.gd"
+AcademyManager="*res://scripts/AcademyManager.gd"
+MatchHistoryManager="*res://scripts/MatchHistoryManager.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=6
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
+textures/vram_compression/import_etc2_astc=true

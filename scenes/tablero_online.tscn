@@ -1,0 +1,930 @@
+[gd_scene format=3 uid="uid://c8m4p7k3w9e2v"]
+
+[ext_resource type="Script" path="res://scripts/OnlineGameController.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/ChessBoard.gd" id="2_board"]
+[ext_resource type="FontFile" path="res://assets/fonts/CherryBombOne-Regular.ttf" id="3_font"]
+[ext_resource type="Texture2D" path="res://assets/icons/swap_layout.svg" id="5_swap_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_card"]
+bg_color = Color(1, 1, 1, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.85, 0.4, 0.65, 0.12)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clock_box"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.96, 0.97, 0.99, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.85, 0.9, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subbox"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.98, 0.98, 0.99, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9, 0.92, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_quick_btn"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 3.0
+bg_color = Color(0.94, 0.96, 0.98, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.8, 0.85, 0.9, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pink"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.858824, 0.152941, 0.466667, 1)
+border_width_bottom = 3
+border_color = Color(0.686275, 0.0823529, 0.352941, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_red"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.93, 0.27, 0.27, 1)
+border_width_bottom = 3
+border_color = Color(0.72, 0.15, 0.15, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_teal"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.06, 0.65, 0.52, 1)
+border_width_bottom = 3
+border_color = Color(0.03, 0.48, 0.38, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_gray"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.6, 0.65, 0.72, 1)
+border_width_bottom = 3
+border_color = Color(0.45, 0.5, 0.58, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_card"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.96, 0.82, 0.89, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 20
+shadow_offset = Vector2(0, 8)
+
+[node name="TableroOnline" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_controller")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.988235, 0.905882, 0.952941, 1)
+
+[node name="MainLayout" type="BoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="BoardContainer" type="MarginContainer" parent="MainLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.35
+
+[node name="ChessBoard" type="Control" parent="MainLayout/BoardContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_board")
+
+[node name="VersusPanelContainer" type="PanelContainer" parent="MainLayout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_card")
+
+[node name="Margin" type="MarginContainer" parent="MainLayout/VersusPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="ContentVBox" type="VBoxContainer" parent="MainLayout/VersusPanelContainer/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="OpponentCardWrapper" type="PanelContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="OpponentCard" type="VBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Row1" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard"]
+layout_mode = 2
+
+[node name="Icon" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "👤"
+
+[node name="OpponentNameLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+text = "Rival"
+
+[node name="OpponentColorBadge" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "⚫ Negras"
+
+[node name="Spacer" type="Control" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OpponentStatusLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.08, 0.65, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "🟢 En línea"
+
+[node name="BtnSwapLayoutOnline" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(34, 30)
+layout_mode = 2
+tooltip_text = "Intercambiar posición del tablero y el panel"
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+icon = ExtResource("5_swap_icon")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Row2" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard"]
+layout_mode = 2
+
+[node name="OpponentCapturedLabel" type="RichTextLabel" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="OpponentScoreLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.65, 0.45, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+
+[node name="OpponentClockPanel" type="PanelContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_clock_box")
+
+[node name="OpponentTimeLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/OpponentCardWrapper/OpponentCard/Row2/OpponentClockPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15, 0.2, 0.3, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "05:00"
+horizontal_alignment = 1
+
+[node name="Sep1" type="HSeparator" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TurnStatusBadge" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 15
+text = "⚪ Tu Turno (Blancas)"
+horizontal_alignment = 1
+
+[node name="HistoryPanel" type="PanelContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_subbox")
+
+[node name="HistoryVBox" type="VBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ReviewHeader" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ReviewTitle" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.25, 0.3, 0.4, 1)
+theme_override_font_sizes/font_size = 12
+text = "📜 Historial:"
+
+[node name="ReviewStatusLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewHeader"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 12
+text = "Jugada 0/0"
+
+[node name="BtnExitReviewOnline" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewHeader"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(85, 26)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gray")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_gray")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_gray")
+text = "🔙 Volver"
+
+[node name="BtnSwapLayoutReviewOnline" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewHeader"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(34, 26)
+layout_mode = 2
+tooltip_text = "Intercambiar posición del tablero y el panel"
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+icon = ExtResource("5_swap_icon")
+icon_alignment = 1
+expand_icon = true
+
+[node name="MoveHistoryScroll" type="ScrollContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MoveHistoryLabel" type="RichTextLabel" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/MoveHistoryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 12
+text = "[color=#111827]Sin movimientos aún...[/color]"
+
+[node name="ReviewControlsBar" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 6
+
+[node name="BtnReviewFirst" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewControlsBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+text = "⏮"
+
+[node name="BtnReviewPrev" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewControlsBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+text = "◀"
+
+[node name="BtnReviewPlay" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewControlsBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+text = "▶ Ver"
+
+[node name="BtnReviewNext" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewControlsBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+text = "▶"
+
+[node name="BtnReviewLast" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/HistoryPanel/HistoryVBox/ReviewControlsBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 44)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.25, 0.28, 0.35, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_quick_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_quick_btn")
+text = "⏭"
+
+[node name="ChatSection" type="VBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="ChatTitle" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_font_sizes/font_size = 12
+text = "💬 Chat de Partida"
+
+[node name="ChatPanel" type="PanelContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_subbox")
+
+[node name="ChatHistoryScroll" type="ScrollContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/ChatPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ChatHistoryLabel" type="RichTextLabel" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/ChatPanel/ChatHistoryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+
+[node name="QuickReactionsBar" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BtnQuickHello" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/QuickReactionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+text = "👋 ¡Hola!"
+
+[node name="BtnQuickGood" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/QuickReactionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+text = "👏 ¡Buena!"
+
+[node name="BtnQuickOops" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/QuickReactionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+text = "😅 ¡Ups!"
+
+[node name="BtnQuickGG" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/QuickReactionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_quick_btn")
+text = "🤝 GG"
+
+[node name="ChatInputBar" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ChatInput" type="LineEdit" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/ChatInputBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/placeholder_color = Color(0.3, 0.35, 0.4, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+placeholder_text = "Escribe un mensaje..."
+
+[node name="BtnChatSend" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/ChatSection/ChatInputBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pink")
+text = "Enviar ✉️"
+
+[node name="Sep2" type="HSeparator" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayerCard" type="VBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Row1" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard"]
+layout_mode = 2
+
+[node name="Icon" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "👤"
+
+[node name="PlayerNameLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+text = "Jugador"
+
+[node name="PlayerColorBadge" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_font_sizes/font_size = 13
+text = "⚪ Blancas"
+
+[node name="Spacer" type="Control" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerClockPanel" type="PanelContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row1"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_clock_box")
+
+[node name="PlayerTimeLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row1/PlayerClockPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15, 0.2, 0.3, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "05:00"
+horizontal_alignment = 1
+
+[node name="Row2" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard"]
+layout_mode = 2
+
+[node name="PlayerCapturedLabel" type="RichTextLabel" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="PlayerScoreLabel" type="Label" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/Row2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.65, 0.45, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+
+[node name="ActionsBar" type="HBoxContainer" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnResign" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/ActionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_red")
+text = "🏳️ Rendirse"
+
+[node name="BtnOfferDraw" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/ActionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_teal")
+text = "🤝 Ofrecer Tablas"
+
+[node name="BtnPauseMenu" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/ActionsBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gray")
+text = "⚙️ Pausa"
+
+[node name="BtnReviewMatchOnlinePanel" type="Button" parent="MainLayout/VersusPanelContainer/Margin/ContentVBox/PlayerCard/ActionsBar"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pink")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_pink")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pink")
+text = "🔍 Revisar"
+
+[node name="ResignConfirmOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Center" type="CenterContainer" parent="ResignConfirmOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="ResignConfirmOverlay/Center"]
+custom_minimum_size = Vector2(360, 180)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="VBox" type="VBoxContainer" parent="ResignConfirmOverlay/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="ResignConfirmOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.27, 0.27, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "¿Seguro que deseas rendirte?"
+horizontal_alignment = 1
+
+[node name="Detail" type="Label" parent="ResignConfirmOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "Se le otorgará la victoria a tu oponente."
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="ResignConfirmOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnConfirmResignYes" type="Button" parent="ResignConfirmOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_red")
+text = "Sí, rendirme 🏳️"
+
+[node name="BtnConfirmResignNo" type="Button" parent="ResignConfirmOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gray")
+text = "Seguir jugando"
+
+[node name="DrawOfferOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Center" type="CenterContainer" parent="DrawOfferOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="DrawOfferOverlay/Center"]
+custom_minimum_size = Vector2(380, 180)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="VBox" type="VBoxContainer" parent="DrawOfferOverlay/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="DrawOfferOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.06, 0.65, 0.52, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "🤝 Oferta de Tablas"
+horizontal_alignment = 1
+
+[node name="DrawOfferMessage" type="Label" parent="DrawOfferOverlay/Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.25, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "Tu rival te ofrece tablas. ¿Aceptas el empate?"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="DrawOfferOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnAcceptDraw" type="Button" parent="DrawOfferOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_teal")
+text = "Aceptar Tablas 🤝"
+
+[node name="BtnDeclineDraw" type="Button" parent="DrawOfferOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gray")
+text = "Rechazar ⚔️"
+
+[node name="GameOverOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Center" type="CenterContainer" parent="GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="GameOverOverlay/Center"]
+custom_minimum_size = Vector2(400, 220)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="VBox" type="VBoxContainer" parent="GameOverOverlay/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="GameOverTitle" type="Label" parent="GameOverOverlay/Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 24
+text = "¡Jaque Mate! 🏆"
+horizontal_alignment = 1
+
+[node name="GameOverDetail" type="Label" parent="GameOverOverlay/Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+text = "Victoria para el jugador"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="GameOverOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnRematch" type="Button" parent="GameOverOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pink")
+text = "🔄 Pedir Revancha"
+
+[node name="BtnLeaveMatch" type="Button" parent="GameOverOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gray")
+text = "🚪 Menú Principal"
+
+[node name="BtnReviewMatchOnline" type="Button" parent="GameOverOverlay/Center/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pink")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_pink")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pink")
+text = "🔍 Revisar Partida"
+
+[node name="PauseMenuOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Center" type="CenterContainer" parent="PauseMenuOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="PauseMenuOverlay/Center"]
+custom_minimum_size = Vector2(340, 240)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenuOverlay/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="PauseMenuOverlay/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "⚙️ Pausa - Modo Versus"
+horizontal_alignment = 1
+
+[node name="BtnResumeGame" type="Button" parent="PauseMenuOverlay/Center/Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pink")
+text = "▶️ Continuar Partida"
+
+[node name="BtnExitToMainMenu" type="Button" parent="PauseMenuOverlay/Center/Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_gray")
+text = "🚪 Salir al Menú Principal"
+
