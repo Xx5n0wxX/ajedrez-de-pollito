@@ -40,12 +40,14 @@ var _current_history_filter: String = "all"
 
 # Modal de Selección de Perfil
 @onready var profile_select_overlay: Control = %ProfileSelectOverlay if has_node("%ProfileSelectOverlay") else find_child("ProfileSelectOverlay", true, false)
+@onready var select_card: Control = %SelectCard if has_node("%SelectCard") else (profile_select_overlay.find_child("SelectCard", true, false) if profile_select_overlay else null)
 @onready var profiles_list_vbox: VBoxContainer = %ProfilesListVBox if has_node("%ProfilesListVBox") else find_child("ProfilesListVBox", true, false)
 @onready var btn_modal_new_profile: Button = %BtnModalNewProfile if has_node("%BtnModalNewProfile") else find_child("BtnModalNewProfile", true, false)
 @onready var btn_close_select_modal: Button = %BtnCloseSelectModal if has_node("%BtnCloseSelectModal") else find_child("BtnCloseSelectModal", true, false)
 
 # Modal de Edición / Creación de Perfil
 @onready var profile_edit_overlay: Control = %ProfileEditOverlay if has_node("%ProfileEditOverlay") else find_child("ProfileEditOverlay", true, false)
+@onready var edit_card: Control = %EditCard if has_node("%EditCard") else (profile_edit_overlay.find_child("EditCard", true, false) if profile_edit_overlay else null)
 @onready var edit_modal_title: Label = %EditModalTitle if has_node("%EditModalTitle") else find_child("EditModalTitle", true, false)
 @onready var edit_name_input: LineEdit = %EditNameInput if has_node("%EditNameInput") else find_child("EditNameInput", true, false)
 @onready var btn_gender_girl: Button = %BtnGenderGirl if has_node("%BtnGenderGirl") else find_child("BtnGenderGirl", true, false)
@@ -56,6 +58,7 @@ var _current_history_filter: String = "all"
 
 # Modal Lobby Online / Versus
 @onready var online_lobby_overlay: Control = %OnlineLobbyOverlay if has_node("%OnlineLobbyOverlay") else find_child("OnlineLobbyOverlay", true, false)
+@onready var lobby_card: Control = %LobbyCard if has_node("%LobbyCard") else (online_lobby_overlay.find_child("LobbyCard", true, false) if online_lobby_overlay else null)
 @onready var btn_close_lobby: Button = %BtnCloseLobby if has_node("%BtnCloseLobby") else find_child("BtnCloseLobby", true, false)
 @onready var btn_tab_create: Button = %BtnTabCreate if has_node("%BtnTabCreate") else find_child("BtnTabCreate", true, false)
 @onready var btn_tab_join: Button = %BtnTabJoin if has_node("%BtnTabJoin") else find_child("BtnTabJoin", true, false)
@@ -218,6 +221,115 @@ func _get_pm() -> Node:
 		return ProfileManagerScript.instance
 	return null
 
+# =========================================================================
+# ESTILOS Y HELPERS UNIFICADOS DE POPUPS (ESTILO NUEVA PARTIDA / TOY 3D)
+# =========================================================================
+
+func _apply_uniform_popup_card_style(card: Control, border_col: Color = Color("#F472B6"), bg_col: Color = Color("#FFF9FB")) -> void:
+	if not card:
+		return
+	var card_sb := StyleBoxFlat.new()
+	card_sb.bg_color = bg_col
+	card_sb.border_width_left = 5
+	card_sb.border_width_top = 5
+	card_sb.border_width_right = 5
+	card_sb.border_width_bottom = 10
+	card_sb.border_color = border_col
+	card_sb.set_corner_radius_all(34)
+	card_sb.content_margin_left = 26
+	card_sb.content_margin_right = 26
+	card_sb.content_margin_top = 22
+	card_sb.content_margin_bottom = 26
+	card_sb.shadow_color = Color(0.0, 0.0, 0.0, 0.35)
+	card_sb.shadow_size = 24
+	card_sb.shadow_offset = Vector2(0, 10)
+	card_sb.anti_aliasing = true
+	card.add_theme_stylebox_override("panel", card_sb)
+
+func _style_circular_close_btn(btn: Button) -> void:
+	if not btn:
+		return
+	btn.text = "✕"
+	btn.custom_minimum_size = Vector2(50, 50)
+	btn.focus_mode = Control.FOCUS_NONE
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	btn.add_theme_font_size_override("font_size", 24)
+	btn.add_theme_color_override("font_color", Color.WHITE)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("#EF4444")
+	sb.border_width_left = 3
+	sb.border_width_top = 3
+	sb.border_width_right = 3
+	sb.border_width_bottom = 5
+	sb.border_color = Color("#B91C1C")
+	sb.set_corner_radius_all(25)
+	var sb_hov := sb.duplicate()
+	sb_hov.bg_color = Color("#F87171")
+	btn.add_theme_stylebox_override("normal", sb)
+	btn.add_theme_stylebox_override("hover", sb_hov)
+	btn.add_theme_stylebox_override("pressed", sb)
+
+func _style_popup_header_label(lbl: Label, text_str: String = "", font_sz: int = 32) -> void:
+	if not lbl:
+		return
+	if not text_str.is_empty():
+		lbl.text = text_str
+	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_override("font", CHERRY_FONT_MOB)
+	lbl.add_theme_font_size_override("font_size", font_sz)
+	lbl.add_theme_color_override("font_color", Color("#BE185D"))
+	lbl.add_theme_color_override("font_outline_color", Color.WHITE)
+	lbl.add_theme_constant_override("outline_size", 8)
+
+func _setup_dimmer_dismiss(overlay: Control, close_callable: Callable) -> void:
+	if not overlay:
+		return
+	var dimmer: Control = overlay.get_node_or_null("Dimmer")
+	if not dimmer:
+		dimmer = overlay.get_node_or_null("ModalBackdrop")
+	if not dimmer:
+		dimmer = overlay.get_node_or_null("HistoryBackdrop")
+	if not dimmer:
+		return
+
+	if dimmer is ColorRect:
+		dimmer.color = Color(0.09, 0.04, 0.14, 0.72)
+		dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
+		if not dimmer.gui_input.is_connected(_on_dimmer_input_event):
+			dimmer.gui_input.connect(func(ev: InputEvent): _on_dimmer_input_event(ev, close_callable))
+
+func _on_dimmer_input_event(ev: InputEvent, close_callable: Callable) -> void:
+	if (ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT) or (ev is InputEventScreenTouch and ev.pressed):
+		close_callable.call()
+
+func _open_styled_popup(overlay: Control, card: Control) -> void:
+	if not overlay:
+		return
+	overlay.visible = true
+	overlay.move_to_front()
+	overlay.z_index = 1000
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+
+	if card:
+		var is_mob: bool = false
+		if has_node("/root/ScreenManager"):
+			var sm = get_node("/root/ScreenManager")
+			if sm.has_method("is_mobile"):
+				is_mob = sm.is_mobile()
+
+		var vp_sz = get_viewport().get_visible_rect().size
+		var is_portrait = (vp_sz.x < vp_sz.y)
+		var target_scale = Vector2.ONE
+		if is_mob and is_portrait:
+			var s: float = clampf((vp_sz.x * 0.92) / maxf(card.custom_minimum_size.x, 440.0), 0.95, 1.15)
+			target_scale = Vector2(s, s)
+
+		card.pivot_offset = card.size * 0.5
+		card.scale = target_scale * 0.85
+		var tw := create_tween()
+		tw.tween_property(card, "scale", target_scale, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
 func _setup_profile_ui() -> void:
 	var pm = _get_pm()
 	if pm:
@@ -254,8 +366,184 @@ func _setup_profile_ui() -> void:
 	if edit_name_input and not edit_name_input.text_submitted.is_connected(func(_t): _on_save_profile_pressed()):
 		edit_name_input.text_submitted.connect(func(_t): _on_save_profile_pressed())
 
+	_setup_uniform_popups_ui()
 	_style_main_buttons()
 	_update_active_profile_display()
+
+func _setup_uniform_popups_ui() -> void:
+	# 1. SelectCard
+	if select_card:
+		_apply_uniform_popup_card_style(select_card)
+		var sel_vbox = select_card.find_child("VBox", true, false) as VBoxContainer
+		var sel_header = select_card.find_child("Header", true, false) as Label
+		if sel_vbox and sel_header and not select_card.has_node("SelectHeaderHBox"):
+			var hdr_hbox = HBoxContainer.new()
+			hdr_hbox.name = "SelectHeaderHBox"
+			hdr_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+			sel_vbox.add_child(hdr_hbox)
+			sel_vbox.move_child(hdr_hbox, 0)
+
+			var sp_l = Control.new()
+			sp_l.custom_minimum_size = Vector2(50, 50)
+			hdr_hbox.add_child(sp_l)
+
+			sel_header.reparent(hdr_hbox)
+			_style_popup_header_label(sel_header, "👑 Seleccionar Perfil", 32)
+
+			if btn_close_select_modal:
+				btn_close_select_modal.reparent(hdr_hbox)
+				_style_circular_close_btn(btn_close_select_modal)
+
+		var sel_subtitle = select_card.find_child("Subtitle", true, false) as Label
+		if sel_subtitle:
+			sel_subtitle.text = "Elige quién jugará hoy o crea un nuevo perfil:"
+			sel_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			sel_subtitle.add_theme_font_size_override("font_size", 15)
+			sel_subtitle.add_theme_color_override("font_color", Color("#701A75"))
+
+		if btn_modal_new_profile:
+			btn_modal_new_profile.text = "➕ Crear Nuevo Perfil"
+			btn_modal_new_profile.custom_minimum_size = Vector2(0, 52)
+			btn_modal_new_profile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			btn_modal_new_profile.add_theme_font_override("font", CHERRY_FONT_MOB)
+			btn_modal_new_profile.add_theme_font_size_override("font_size", 18)
+			var btn_new_sb := StyleBoxFlat.new()
+			btn_new_sb.bg_color = Color("#F59E0B")
+			btn_new_sb.border_width_bottom = 5
+			btn_new_sb.border_color = Color("#D97706")
+			btn_new_sb.set_corner_radius_all(18)
+			var btn_new_hov := btn_new_sb.duplicate()
+			btn_new_hov.bg_color = Color("#FBBF24")
+			btn_modal_new_profile.add_theme_stylebox_override("normal", btn_new_sb)
+			btn_modal_new_profile.add_theme_stylebox_override("hover", btn_new_hov)
+			btn_modal_new_profile.add_theme_stylebox_override("pressed", btn_new_sb)
+			btn_modal_new_profile.add_theme_color_override("font_color", Color.WHITE)
+
+	_setup_dimmer_dismiss(profile_select_overlay, _close_select_modal)
+
+	# 2. EditCard
+	if edit_card:
+		_apply_uniform_popup_card_style(edit_card)
+		var edit_vbox = edit_card.find_child("VBox", true, false) as VBoxContainer
+		if edit_vbox and edit_modal_title and not edit_card.has_node("EditHeaderHBox"):
+			var edit_hdr_hbox = HBoxContainer.new()
+			edit_hdr_hbox.name = "EditHeaderHBox"
+			edit_hdr_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+			edit_vbox.add_child(edit_hdr_hbox)
+			edit_vbox.move_child(edit_hdr_hbox, 0)
+
+			var sp_el = Control.new()
+			sp_el.custom_minimum_size = Vector2(50, 50)
+			edit_hdr_hbox.add_child(sp_el)
+
+			edit_modal_title.reparent(edit_hdr_hbox)
+			_style_popup_header_label(edit_modal_title, "🌟 Configurar Perfil", 30)
+
+			var edit_x_btn = Button.new()
+			edit_x_btn.name = "BtnCloseEditHeader"
+			_style_circular_close_btn(edit_x_btn)
+			edit_x_btn.pressed.connect(_close_edit_modal)
+			edit_hdr_hbox.add_child(edit_x_btn)
+
+		if edit_name_input:
+			edit_name_input.custom_minimum_size = Vector2(0, 52)
+			edit_name_input.alignment = HORIZONTAL_ALIGNMENT_CENTER
+			edit_name_input.add_theme_font_size_override("font_size", 18)
+			var in_sb = StyleBoxFlat.new()
+			in_sb.bg_color = Color.WHITE
+			in_sb.border_width_left = 3
+			in_sb.border_width_top = 3
+			in_sb.border_width_right = 3
+			in_sb.border_width_bottom = 5
+			in_sb.border_color = Color("#F472B6")
+			in_sb.set_corner_radius_all(16)
+			edit_name_input.add_theme_stylebox_override("normal", in_sb)
+			edit_name_input.add_theme_stylebox_override("focus", in_sb)
+
+		if btn_save_profile:
+			btn_save_profile.text = "✨ ¡Guardar Perfil!"
+			btn_save_profile.custom_minimum_size = Vector2(0, 54)
+			btn_save_profile.add_theme_font_override("font", CHERRY_FONT_MOB)
+			btn_save_profile.add_theme_font_size_override("font_size", 20)
+			var save_sb := StyleBoxFlat.new()
+			save_sb.bg_color = Color("#10B981")
+			save_sb.border_width_bottom = 6
+			save_sb.border_color = Color("#047857")
+			save_sb.set_corner_radius_all(18)
+			var save_hov := save_sb.duplicate()
+			save_hov.bg_color = Color("#34D399")
+			btn_save_profile.add_theme_stylebox_override("normal", save_sb)
+			btn_save_profile.add_theme_stylebox_override("hover", save_hov)
+			btn_save_profile.add_theme_stylebox_override("pressed", save_sb)
+			btn_save_profile.add_theme_color_override("font_color", Color.WHITE)
+
+		if btn_cancel_edit_profile:
+			btn_cancel_edit_profile.custom_minimum_size = Vector2(0, 44)
+			var cancel_sb := StyleBoxFlat.new()
+			cancel_sb.bg_color = Color("#F1F5F9")
+			cancel_sb.border_width_bottom = 3
+			cancel_sb.border_color = Color("#CBD5E1")
+			cancel_sb.set_corner_radius_all(14)
+			btn_cancel_edit_profile.add_theme_stylebox_override("normal", cancel_sb)
+			btn_cancel_edit_profile.add_theme_stylebox_override("hover", cancel_sb)
+			btn_cancel_edit_profile.add_theme_stylebox_override("pressed", cancel_sb)
+			btn_cancel_edit_profile.add_theme_color_override("font_color", Color("#475569"))
+			btn_cancel_edit_profile.add_theme_font_size_override("font_size", 14)
+
+		if btn_delete_profile:
+			btn_delete_profile.custom_minimum_size = Vector2(0, 44)
+			var del_sb := StyleBoxFlat.new()
+			del_sb.bg_color = Color("#FEE2E2")
+			del_sb.border_width_bottom = 3
+			del_sb.border_color = Color("#F87171")
+			del_sb.set_corner_radius_all(14)
+			btn_delete_profile.add_theme_stylebox_override("normal", del_sb)
+			btn_delete_profile.add_theme_stylebox_override("hover", del_sb)
+			btn_delete_profile.add_theme_stylebox_override("pressed", del_sb)
+			btn_delete_profile.add_theme_color_override("font_color", Color("#DC2626"))
+			btn_delete_profile.add_theme_font_size_override("font_size", 14)
+
+	_setup_dimmer_dismiss(profile_edit_overlay, _close_edit_modal)
+
+	# 3. HistoryCard
+	if history_card:
+		_apply_uniform_popup_card_style(history_card)
+		var hist_title = history_card.find_child("HistoryTitle", true, false) as Label
+		if hist_title:
+			_style_popup_header_label(hist_title, "📜 Historial de Partidas", 32)
+		if btn_close_history_modal:
+			_style_circular_close_btn(btn_close_history_modal)
+		if btn_clear_all_history:
+			btn_clear_all_history.text = "🗑️ Borrar"
+			btn_clear_all_history.custom_minimum_size = Vector2(95, 42)
+			var clr_sb := StyleBoxFlat.new()
+			clr_sb.bg_color = Color("#FEE2E2")
+			clr_sb.border_width_bottom = 3
+			clr_sb.border_color = Color("#F87171")
+			clr_sb.set_corner_radius_all(14)
+			btn_clear_all_history.add_theme_stylebox_override("normal", clr_sb)
+			btn_clear_all_history.add_theme_stylebox_override("hover", clr_sb)
+			btn_clear_all_history.add_theme_stylebox_override("pressed", clr_sb)
+			btn_clear_all_history.add_theme_color_override("font_color", Color("#B91C1C"))
+			btn_clear_all_history.add_theme_font_size_override("font_size", 14)
+		_setup_dimmer_dismiss(match_history_overlay, _close_history_overlay)
+
+	# 4. LobbyCard
+	if lobby_card:
+		_apply_uniform_popup_card_style(lobby_card)
+		var lobby_title = lobby_card.find_child("LobbyTitle", true, false) as Label
+		if lobby_title:
+			_style_popup_header_label(lobby_title, "🌐 Partida Versus", 30)
+		if btn_close_lobby:
+			_style_circular_close_btn(btn_close_lobby)
+		var title_box = lobby_card.find_child("TitleHBox", true, false) as HBoxContainer
+		if title_box and not lobby_card.has_node("LobbySpacerL"):
+			var spl = Control.new()
+			spl.name = "LobbySpacerL"
+			spl.custom_minimum_size = Vector2(50, 50)
+			title_box.add_child(spl)
+			title_box.move_child(spl, 0)
+		_setup_dimmer_dismiss(online_lobby_overlay, _close_online_lobby)
 
 func _style_main_buttons() -> void:
 	# Estilo suave para los botones de cambio y edición
@@ -345,7 +633,7 @@ func _on_profiles_updated() -> void:
 func _open_select_modal() -> void:
 	if profile_select_overlay:
 		_populate_select_list()
-		profile_select_overlay.visible = true
+		_open_styled_popup(profile_select_overlay, select_card)
 
 func _close_select_modal() -> void:
 	if profile_select_overlay:
@@ -382,32 +670,33 @@ func _populate_select_list() -> void:
 
 		var card = PanelContainer.new()
 		var card_style = StyleBoxFlat.new()
-		card_style.bg_color = Color("#FFF6FA") if is_active else Color("#F8FAFC")
-		card_style.border_width_left = 2 if is_active else 1
-		card_style.border_width_top = 2 if is_active else 1
-		card_style.border_width_right = 2 if is_active else 1
-		card_style.border_width_bottom = 3
-		card_style.border_color = Color("#EC4899") if is_active else Color("#E2E8F0")
-		card_style.set_corner_radius_all(12)
+		card_style.bg_color = Color("#FFF0F6") if is_active else Color("#FFFFFF")
+		card_style.border_width_left = 3 if is_active else 2
+		card_style.border_width_top = 3 if is_active else 2
+		card_style.border_width_right = 3 if is_active else 2
+		card_style.border_width_bottom = 6 if is_active else 4
+		card_style.border_color = Color("#F472B6") if is_active else Color("#E2E8F0")
+		card_style.set_corner_radius_all(18)
 		card_style.anti_aliasing = true
 		card.add_theme_stylebox_override("panel", card_style)
 
 		var margin = MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", 14 if is_mob else 12)
-		margin.add_theme_constant_override("margin_top", 12 if is_mob else 8)
-		margin.add_theme_constant_override("margin_right", 14 if is_mob else 12)
-		margin.add_theme_constant_override("margin_bottom", 12 if is_mob else 8)
+		margin.add_theme_constant_override("margin_left", 16 if is_mob else 14)
+		margin.add_theme_constant_override("margin_top", 12 if is_mob else 10)
+		margin.add_theme_constant_override("margin_right", 16 if is_mob else 14)
+		margin.add_theme_constant_override("margin_bottom", 12 if is_mob else 10)
 		card.add_child(margin)
 
 		var row = HBoxContainer.new()
-		row.add_theme_constant_override("separation", 12 if is_mob else 10)
+		row.add_theme_constant_override("separation", 14 if is_mob else 12)
+		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		margin.add_child(row)
 
 		var info_label = Label.new()
 		info_label.text = "%s %s  (%s)" % [icon, p_name, gender_label]
 		var col = Color("#DB2777") if is_fem else Color("#2563EB")
 		info_label.add_theme_color_override("font_color", col)
-		info_label.add_theme_font_size_override("font_size", 20 if is_mob else 14)
+		info_label.add_theme_font_size_override("font_size", 20 if is_mob else 16)
 		info_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(info_label)
 
@@ -415,15 +704,25 @@ func _populate_select_list() -> void:
 			var active_badge = Label.new()
 			active_badge.text = "✓ Activo"
 			active_badge.add_theme_color_override("font_color", Color("#059669"))
-			active_badge.add_theme_font_size_override("font_size", 17 if is_mob else 13)
+			active_badge.add_theme_font_size_override("font_size", 18 if is_mob else 14)
 			row.add_child(active_badge)
 		else:
 			var btn_select = Button.new()
-			btn_select.text = "Seleccionar"
+			btn_select.text = "Elegir"
 			btn_select.focus_mode = Control.FOCUS_NONE
-			btn_select.add_theme_font_size_override("font_size", 17 if is_mob else 12)
-			if is_mob:
-				btn_select.custom_minimum_size = Vector2(126, 44)
+			btn_select.add_theme_font_size_override("font_size", 16 if is_mob else 13)
+			btn_select.custom_minimum_size = Vector2(110, 46) if is_mob else Vector2(90, 36)
+			var sel_sb := StyleBoxFlat.new()
+			sel_sb.bg_color = Color("#10B981")
+			sel_sb.border_width_bottom = 4
+			sel_sb.border_color = Color("#047857")
+			sel_sb.set_corner_radius_all(14)
+			var sel_hov := sel_sb.duplicate()
+			sel_hov.bg_color = Color("#34D399")
+			btn_select.add_theme_stylebox_override("normal", sel_sb)
+			btn_select.add_theme_stylebox_override("hover", sel_hov)
+			btn_select.add_theme_stylebox_override("pressed", sel_sb)
+			btn_select.add_theme_color_override("font_color", Color.WHITE)
 			var cur_id = p_id
 			btn_select.pressed.connect(func():
 				pm.set_active_profile_by_id(cur_id)
@@ -435,9 +734,18 @@ func _populate_select_list() -> void:
 		btn_edit.text = "✏️"
 		btn_edit.tooltip_text = "Editar este perfil"
 		btn_edit.focus_mode = Control.FOCUS_NONE
-		btn_edit.add_theme_font_size_override("font_size", 18 if is_mob else 12)
-		if is_mob:
-			btn_edit.custom_minimum_size = Vector2(52, 44)
+		btn_edit.add_theme_font_size_override("font_size", 18 if is_mob else 14)
+		btn_edit.custom_minimum_size = Vector2(48, 46) if is_mob else Vector2(40, 36)
+		var edit_sb := StyleBoxFlat.new()
+		edit_sb.bg_color = Color("#F1F5F9")
+		edit_sb.border_width_bottom = 3
+		edit_sb.border_color = Color("#CBD5E1")
+		edit_sb.set_corner_radius_all(12)
+		var edit_hov := edit_sb.duplicate()
+		edit_hov.bg_color = Color("#E2E8F0")
+		btn_edit.add_theme_stylebox_override("normal", edit_sb)
+		btn_edit.add_theme_stylebox_override("hover", edit_hov)
+		btn_edit.add_theme_stylebox_override("pressed", edit_sb)
 		var edit_id = p_id
 		btn_edit.pressed.connect(func():
 			_open_edit_specific_profile(edit_id)
@@ -468,7 +776,11 @@ func _open_create_new_profile() -> void:
 	_refresh_gender_buttons_ui()
 
 	if profile_edit_overlay:
-		profile_edit_overlay.visible = true
+		_open_styled_popup(profile_edit_overlay, edit_card)
+	if edit_card:
+		var x_btn = edit_card.find_child("BtnCloseEditHeader", true, false)
+		if x_btn:
+			x_btn.visible = true
 	if edit_name_input:
 		edit_name_input.grab_focus()
 
@@ -480,6 +792,10 @@ func _open_first_time_profile_modal() -> void:
 		btn_cancel_edit_profile.visible = false
 	if btn_delete_profile:
 		btn_delete_profile.visible = false
+	if edit_card:
+		var x_btn = edit_card.find_child("BtnCloseEditHeader", true, false)
+		if x_btn:
+			x_btn.visible = false
 
 func _open_edit_current_profile() -> void:
 	var pm = _get_pm()
@@ -518,7 +834,11 @@ func _open_edit_specific_profile(p_id: String) -> void:
 	_refresh_gender_buttons_ui()
 
 	if profile_edit_overlay:
-		profile_edit_overlay.visible = true
+		_open_styled_popup(profile_edit_overlay, edit_card)
+	if edit_card:
+		var x_btn = edit_card.find_child("BtnCloseEditHeader", true, false)
+		if x_btn:
+			x_btn.visible = true
 	if edit_name_input:
 		edit_name_input.grab_focus()
 
@@ -529,52 +849,70 @@ func _set_modal_gender(g: String) -> void:
 func _refresh_gender_buttons_ui() -> void:
 	var is_fem = (_selected_gender == "f")
 
-	# Estilo Niña Activo / Inactivo
 	var girl_style = StyleBoxFlat.new()
-	girl_style.set_corner_radius_all(12)
+	girl_style.set_corner_radius_all(18)
 	girl_style.anti_aliasing = true
 
 	var boy_style = StyleBoxFlat.new()
-	boy_style.set_corner_radius_all(12)
+	boy_style.set_corner_radius_all(18)
 	boy_style.anti_aliasing = true
 
 	if is_fem:
 		girl_style.bg_color = Color("#FDF2F8") # Soft pink
-		girl_style.border_width_left = 2
-		girl_style.border_width_top = 2
-		girl_style.border_width_right = 2
-		girl_style.border_width_bottom = 4
+		girl_style.border_width_left = 3
+		girl_style.border_width_top = 3
+		girl_style.border_width_right = 3
+		girl_style.border_width_bottom = 6
 		girl_style.border_color = Color("#EC4899")
 		if btn_gender_girl:
 			btn_gender_girl.text = "👧 Niña  ✓"
 			btn_gender_girl.add_theme_color_override("font_color", Color("#BE185D"))
+			btn_gender_girl.add_theme_font_size_override("font_size", 18)
 
 		boy_style.bg_color = Color("#F8FAFC") # Soft gray
 		boy_style.border_width_left = 1
 		boy_style.border_width_top = 1
 		boy_style.border_width_right = 1
-		boy_style.border_width_bottom = 2
+		boy_style.border_width_bottom = 3
 		boy_style.border_color = Color("#CBD5E1")
 		if btn_gender_boy:
 			btn_gender_boy.text = "👦 Niño"
 			btn_gender_boy.add_theme_color_override("font_color", Color("#64748B"))
+			btn_gender_boy.add_theme_font_size_override("font_size", 16)
 	else:
 		girl_style.bg_color = Color("#F8FAFC")
 		girl_style.border_width_left = 1
 		girl_style.border_width_top = 1
 		girl_style.border_width_right = 1
-		girl_style.border_width_bottom = 2
+		girl_style.border_width_bottom = 3
 		girl_style.border_color = Color("#CBD5E1")
 		if btn_gender_girl:
 			btn_gender_girl.text = "👧 Niña"
 			btn_gender_girl.add_theme_color_override("font_color", Color("#64748B"))
+			btn_gender_girl.add_theme_font_size_override("font_size", 16)
 
 		boy_style.bg_color = Color("#EFF6FF") # Soft blue
-		boy_style.border_width_left = 2
-		boy_style.border_width_top = 2
-		boy_style.border_width_right = 2
-		boy_style.border_width_bottom = 4
+		boy_style.border_width_left = 3
+		boy_style.border_width_top = 3
+		boy_style.border_width_right = 3
+		boy_style.border_width_bottom = 6
 		boy_style.border_color = Color("#3B82F6")
+		if btn_gender_boy:
+			btn_gender_boy.text = "👦 Niño  ✓"
+			btn_gender_boy.add_theme_color_override("font_color", Color("#1D4ED8"))
+			btn_gender_boy.add_theme_font_size_override("font_size", 18)
+
+	for b in [btn_gender_girl, btn_gender_boy]:
+		if b:
+			b.custom_minimum_size = Vector2(160, 52)
+	if btn_gender_girl:
+		btn_gender_girl.add_theme_stylebox_override("normal", girl_style)
+		btn_gender_girl.add_theme_stylebox_override("hover", girl_style)
+		btn_gender_girl.add_theme_stylebox_override("pressed", girl_style)
+	if btn_gender_boy:
+		btn_gender_boy.add_theme_stylebox_override("normal", boy_style)
+		btn_gender_boy.add_theme_stylebox_override("hover", boy_style)
+		btn_gender_boy.add_theme_stylebox_override("pressed", boy_style)
 		if btn_gender_boy:
 			btn_gender_boy.text = "👦 Niño  ✓"
 			btn_gender_boy.add_theme_color_override("font_color", Color("#1D4ED8"))
@@ -702,7 +1040,7 @@ func _setup_online_lobby_ui() -> void:
 
 func _open_online_lobby() -> void:
 	if online_lobby_overlay:
-		online_lobby_overlay.visible = true
+		_open_styled_popup(online_lobby_overlay, lobby_card)
 	_set_lobby_tab("create")
 	_select_online_color(_selected_online_color)
 	_select_online_time(_selected_online_time)
@@ -964,7 +1302,7 @@ func _on_filter_versus_pressed() -> void:
 
 func _open_history_overlay() -> void:
 	if match_history_overlay:
-		match_history_overlay.visible = true
+		_open_styled_popup(match_history_overlay, history_card)
 
 	var is_mob: bool = false
 	if has_node("/root/ScreenManager"):
@@ -979,29 +1317,10 @@ func _open_history_overlay() -> void:
 		else:
 			history_card.custom_minimum_size = Vector2(660, 540)
 
-	var title_lbl = match_history_overlay.find_child("HistoryTitle", true, false) as Label
-	if is_instance_valid(title_lbl):
-		title_lbl.add_theme_font_size_override("font_size", 24 if is_mob else 22)
-
 	for btn in [btn_filter_all, btn_filter_bots, btn_filter_versus]:
 		if is_instance_valid(btn):
-			btn.custom_minimum_size.y = 42.0 if is_mob else 32.0
-			btn.add_theme_font_size_override("font_size", 14 if is_mob else 12)
-
-	if is_instance_valid(btn_clear_all_history):
-		btn_clear_all_history.custom_minimum_size = Vector2(140, 40) if is_mob else Vector2(130, 32)
-		btn_clear_all_history.add_theme_font_size_override("font_size", 14 if is_mob else 12)
-
-	if is_instance_valid(btn_close_history_modal):
-		btn_close_history_modal.custom_minimum_size = Vector2(40, 40) if is_mob else Vector2(32, 32)
-		btn_close_history_modal.add_theme_font_size_override("font_size", 18 if is_mob else 14)
-
-	if is_instance_valid(empty_history_label):
-		empty_history_label.add_theme_font_size_override("font_size", 16 if is_mob else 14)
-
-	var footer_lbl = match_history_overlay.find_child("FooterLabel", true, false) as Label
-	if is_instance_valid(footer_lbl):
-		footer_lbl.add_theme_font_size_override("font_size", 14 if is_mob else 12)
+			btn.custom_minimum_size.y = 44.0 if is_mob else 34.0
+			btn.add_theme_font_size_override("font_size", 15 if is_mob else 13)
 
 	_render_history_list()
 
@@ -1015,18 +1334,29 @@ func _set_history_filter(filter_name: String) -> void:
 	_render_history_list()
 
 func _update_history_filter_tabs() -> void:
-	var active_style = _create_style_box(Color("#6366f1"), Color("#4338ca"), 0, 4, 10)
-	var inactive_style = _create_style_box(Color("#f3f4f6"), Color("#d1d5db"), 1, 2, 10)
+	var active_style = StyleBoxFlat.new()
+	active_style.bg_color = Color("#6366F1")
+	active_style.border_width_bottom = 4
+	active_style.border_color = Color("#4338CA")
+	active_style.set_corner_radius_all(16)
+	active_style.anti_aliasing = true
+
+	var inactive_style = StyleBoxFlat.new()
+	inactive_style.bg_color = Color("#F1F5F9")
+	inactive_style.border_width_bottom = 3
+	inactive_style.border_color = Color("#CBD5E1")
+	inactive_style.set_corner_radius_all(16)
+	inactive_style.anti_aliasing = true
 
 	if btn_filter_all:
 		var is_act = (_current_history_filter == "all")
-		_apply_btn_style(btn_filter_all, active_style if is_act else inactive_style, Color.WHITE if is_act else Color("#4b5563"))
+		_apply_btn_style(btn_filter_all, active_style if is_act else inactive_style, Color.WHITE if is_act else Color("#475569"))
 	if btn_filter_bots:
 		var is_act = (_current_history_filter == "bot")
-		_apply_btn_style(btn_filter_bots, active_style if is_act else inactive_style, Color.WHITE if is_act else Color("#4b5563"))
+		_apply_btn_style(btn_filter_bots, active_style if is_act else inactive_style, Color.WHITE if is_act else Color("#475569"))
 	if btn_filter_versus:
 		var is_act = (_current_history_filter == "versus")
-		_apply_btn_style(btn_filter_versus, active_style if is_act else inactive_style, Color.WHITE if is_act else Color("#4b5563"))
+		_apply_btn_style(btn_filter_versus, active_style if is_act else inactive_style, Color.WHITE if is_act else Color("#475569"))
 
 func _on_clear_history_pressed() -> void:
 	var mhm = _get_mhm()
@@ -1382,6 +1712,7 @@ func _build_mobile_scenic_menu() -> void:
 	_mobile_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_mobile_root.visible = false
 	_mobile_root.z_index = 10
+	_mobile_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_mobile_root)
 
 	# 1. Lienzo escénico (Cielo pastel, nubes animadas, colinas, árboles, flores y tablero 3D)
@@ -1894,12 +2225,7 @@ func _create_mode_option_card(
 func _open_mobile_mode_popup() -> void:
 	if not _mobile_mode_popup:
 		return
-	_mobile_mode_popup.visible = true
-	if _mob_popup_card:
-		_mob_popup_card.pivot_offset = _mob_popup_card.size * 0.5
-		_mob_popup_card.scale = Vector2(0.85, 0.85)
-		var tw := create_tween()
-		tw.tween_property(_mob_popup_card, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_open_styled_popup(_mobile_mode_popup, _mob_popup_card)
 
 func _close_mobile_mode_popup() -> void:
 	if _mobile_mode_popup:
@@ -2623,12 +2949,7 @@ func _on_update_button_pressed() -> void:
 func _open_update_popup() -> void:
 	if not _update_popup_overlay:
 		return
-	_update_popup_overlay.visible = true
-	if _update_popup_card:
-		_update_popup_card.pivot_offset = _update_popup_card.size * 0.5
-		_update_popup_card.scale = Vector2(0.88, 0.88)
-		var tw := create_tween()
-		tw.tween_property(_update_popup_card, "scale", Vector2.ONE, 0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_open_styled_popup(_update_popup_overlay, _update_popup_card)
 
 func _close_update_popup() -> void:
 	var um = _get_um()

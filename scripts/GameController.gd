@@ -36,6 +36,7 @@ const ChessTutorConcepts = preload("res://scripts/ChessTutorConcepts.gd")
 
 const ChessSparringEngine = preload("res://scripts/ChessSparringEngine.gd")
 const MatchEndEffectsOverlay = preload("res://scripts/MatchEndEffectsOverlay.gd")
+const CHERRY_FONT: FontFile = preload("res://assets/fonts/CherryBombOne-Regular.ttf")
 
 
 
@@ -1164,111 +1165,121 @@ func _init_free_play_mode() -> void:
 
 
 
+func _apply_uniform_modal_card_style(card: Control, border_col: Color = Color("#F472B6"), bg_col: Color = Color("#FFF9FB")) -> void:
+	if not card:
+		return
+	var card_sb := StyleBoxFlat.new()
+	card_sb.bg_color = bg_col
+	card_sb.border_width_left = 5
+	card_sb.border_width_top = 5
+	card_sb.border_width_right = 5
+	card_sb.border_width_bottom = 10
+	card_sb.border_color = border_col
+	card_sb.set_corner_radius_all(34)
+	card_sb.content_margin_left = 28
+	card_sb.content_margin_right = 28
+	card_sb.content_margin_top = 24
+	card_sb.content_margin_bottom = 28
+	card_sb.shadow_color = Color(0.0, 0.0, 0.0, 0.35)
+	card_sb.shadow_size = 24
+	card_sb.shadow_offset = Vector2(0, 10)
+	card_sb.anti_aliasing = true
+	card.add_theme_stylebox_override("panel", card_sb)
+
 func _setup_confirmation_dialogs() -> void:
-
 	if not confirm_modal_overlay:
-
 		confirm_modal_overlay = %ConfirmModalOverlay if has_node("%ConfirmModalOverlay") else find_child("ConfirmModalOverlay", true, false)
-
 	if not confirm_header:
-
 		confirm_header = %ConfirmHeader if has_node("%ConfirmHeader") else find_child("ConfirmHeader", true, false)
-
 	if not confirm_subtitle:
-
 		confirm_subtitle = %ConfirmSubtitle if has_node("%ConfirmSubtitle") else find_child("ConfirmSubtitle", true, false)
-
 	if not confirm_action_button:
-
 		confirm_action_button = %ConfirmActionButton if has_node("%ConfirmActionButton") else find_child("ConfirmActionButton", true, false)
-
 	if not confirm_cancel_button:
-
 		confirm_cancel_button = %ConfirmCancelButton if has_node("%ConfirmCancelButton") else find_child("ConfirmCancelButton", true, false)
 
-
-
 	if confirm_modal_overlay:
-
 		confirm_modal_overlay.z_index = 1000
-
 		confirm_modal_overlay.z_as_relative = false
-
 		confirm_modal_overlay.visible = false
+		if confirm_modal_overlay is ColorRect:
+			(confirm_modal_overlay as ColorRect).color = Color(0.09, 0.04, 0.14, 0.72)
+		if not confirm_modal_overlay.gui_input.is_connected(_on_confirm_overlay_gui_input):
+			confirm_modal_overlay.gui_input.connect(_on_confirm_overlay_gui_input)
 
+		var card = confirm_modal_overlay.find_child("ConfirmCard", true, false) as Control
+		if card:
+			_apply_uniform_modal_card_style(card)
 
+	if confirm_header:
+		confirm_header.add_theme_font_override("font", CHERRY_FONT)
+		confirm_header.add_theme_font_size_override("font_size", 28)
+		confirm_header.add_theme_color_override("font_color", Color("#BE185D"))
+		confirm_header.add_theme_color_override("font_outline_color", Color.WHITE)
+		confirm_header.add_theme_constant_override("outline_size", 8)
+		confirm_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	if confirm_subtitle:
+		confirm_subtitle.add_theme_font_size_override("font_size", 15)
+		confirm_subtitle.add_theme_color_override("font_color", Color("#701A75"))
+		confirm_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	if confirm_cancel_button:
+		confirm_cancel_button.custom_minimum_size = Vector2(0, 48)
+		var cancel_sb := StyleBoxFlat.new()
+		cancel_sb.bg_color = Color("#F1F5F9")
+		cancel_sb.border_width_bottom = 4
+		cancel_sb.border_color = Color("#CBD5E1")
+		cancel_sb.set_corner_radius_all(18)
+		var cancel_hov := cancel_sb.duplicate()
+		cancel_hov.bg_color = Color("#E2E8F0")
+		confirm_cancel_button.add_theme_stylebox_override("normal", cancel_sb)
+		confirm_cancel_button.add_theme_stylebox_override("hover", cancel_hov)
+		confirm_cancel_button.add_theme_stylebox_override("pressed", cancel_sb)
+		confirm_cancel_button.add_theme_color_override("font_color", Color("#475569"))
+		confirm_cancel_button.add_theme_font_size_override("font_size", 16)
 
 	if confirm_action_button and not confirm_action_button.pressed.is_connected(_on_confirm_action_pressed):
-
 		confirm_action_button.pressed.connect(_on_confirm_action_pressed)
-
 	if confirm_cancel_button and not confirm_cancel_button.pressed.is_connected(_on_confirm_cancel_pressed):
-
 		confirm_cancel_button.pressed.connect(_on_confirm_cancel_pressed)
 
-
+func _on_confirm_overlay_gui_input(ev: InputEvent) -> void:
+	if (ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT) or (ev is InputEventScreenTouch and ev.pressed):
+		_on_confirm_cancel_pressed()
 
 func _set_confirm_button_color(is_green: bool) -> void:
-
 	if not confirm_action_button:
-
 		return
 
+	confirm_action_button.custom_minimum_size = Vector2(0, 52)
+	confirm_action_button.add_theme_font_override("font", CHERRY_FONT)
+	confirm_action_button.add_theme_font_size_override("font_size", 19)
+
+	var norm := StyleBoxFlat.new()
+	norm.set_corner_radius_all(18)
+	norm.anti_aliasing = true
+
 	if is_green:
-
-		var norm = StyleBoxFlat.new()
-
-		norm.bg_color = Color(0.0627451, 0.72549, 0.505882, 1)
-
-		norm.border_width_bottom = 3
-
-		norm.border_color = Color(0.035, 0.52, 0.36, 1)
-
-		norm.set_corner_radius_all(14)
-
-		norm.anti_aliasing = true
-
-		
-
-		var hov = StyleBoxFlat.new()
-
-		hov.bg_color = Color(0.12, 0.8, 0.58, 1)
-
-		hov.border_width_bottom = 3
-
-		hov.border_color = Color(0.035, 0.52, 0.36, 1)
-
-		hov.set_corner_radius_all(14)
-
-		hov.anti_aliasing = true
-
-
-
-		var prs = StyleBoxFlat.new()
-
-		prs.content_margin_top = 3.0
-
-		prs.bg_color = Color(0.035, 0.52, 0.36, 1)
-
-		prs.set_corner_radius_all(14)
-
-		prs.anti_aliasing = true
-
-
-
+		norm.bg_color = Color("#10B981")
+		norm.border_width_bottom = 5
+		norm.border_color = Color("#047857")
+		var hov := norm.duplicate()
+		hov.bg_color = Color("#34D399")
 		confirm_action_button.add_theme_stylebox_override("normal", norm)
-
 		confirm_action_button.add_theme_stylebox_override("hover", hov)
-
-		confirm_action_button.add_theme_stylebox_override("pressed", prs)
-
+		confirm_action_button.add_theme_stylebox_override("pressed", norm)
+		confirm_action_button.add_theme_color_override("font_color", Color.WHITE)
 	else:
-
-		confirm_action_button.remove_theme_stylebox_override("normal")
-
-		confirm_action_button.remove_theme_stylebox_override("hover")
-
-		confirm_action_button.remove_theme_stylebox_override("pressed")
+		norm.bg_color = Color("#F59E0B")
+		norm.border_width_bottom = 5
+		norm.border_color = Color("#D97706")
+		var hov := norm.duplicate()
+		hov.bg_color = Color("#FBBF24")
+		confirm_action_button.add_theme_stylebox_override("normal", norm)
+		confirm_action_button.add_theme_stylebox_override("hover", hov)
+		confirm_action_button.add_theme_stylebox_override("pressed", norm)
+		confirm_action_button.add_theme_color_override("font_color", Color.WHITE)
 
 
 
@@ -1297,8 +1308,14 @@ func _show_confirm_dialog(title: String, message: String, action_text: String, c
 		confirm_cancel_button.text = _adapt_text(cancel_text)
 
 	if confirm_modal_overlay:
-
 		confirm_modal_overlay.visible = true
+		confirm_modal_overlay.move_to_front()
+		var card = confirm_modal_overlay.find_child("ConfirmCard", true, false) as Control
+		if card:
+			card.pivot_offset = card.size * 0.5
+			card.scale = Vector2(0.85, 0.85)
+			var tw := create_tween()
+			tw.tween_property(card, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	if chess_board:
 
@@ -1609,44 +1626,87 @@ func _setup_review_controls() -> void:
 
 
 func _setup_pause_menu() -> void:
-
 	if not pause_menu_overlay:
-
 		pause_menu_overlay = %PauseMenuOverlay if has_node("%PauseMenuOverlay") else find_child("PauseMenuOverlay", true, false)
-
 	if not resume_button:
-
 		resume_button = %ResumeButton if has_node("%ResumeButton") else find_child("ResumeButton", true, false)
-
 	if not back_to_menu_button:
-
 		back_to_menu_button = %BackToMenuButton if has_node("%BackToMenuButton") else find_child("BackToMenuButton", true, false)
-
 	if not is_instance_valid(btn_pause_menu):
-
 		btn_pause_menu = %BtnPauseMenu if has_node("%BtnPauseMenu") else find_child("BtnPauseMenu", true, false)
 
 	if is_instance_valid(btn_pause_menu) and not btn_pause_menu.pressed.is_connected(_toggle_pause_menu):
-
 		btn_pause_menu.pressed.connect(_toggle_pause_menu)
-
 	if resume_button and not resume_button.pressed.is_connected(_resume_game):
-
 		resume_button.pressed.connect(_resume_game)
-
 	if back_to_menu_button and not back_to_menu_button.pressed.is_connected(_on_back_to_menu_pressed):
-
 		back_to_menu_button.pressed.connect(_on_back_to_menu_pressed)
 
 	if pause_menu_overlay:
-
 		pause_menu_overlay.z_index = 1000
-
 		pause_menu_overlay.z_as_relative = false
-
 		pause_menu_overlay.visible = false
+		if pause_menu_overlay is ColorRect:
+			(pause_menu_overlay as ColorRect).color = Color(0.09, 0.04, 0.14, 0.72)
+		if not pause_menu_overlay.gui_input.is_connected(_on_pause_overlay_gui_input):
+			pause_menu_overlay.gui_input.connect(_on_pause_overlay_gui_input)
 
+		var card = pause_menu_overlay.find_child("PauseCard", true, false) as Control
+		if card:
+			_apply_uniform_modal_card_style(card)
 
+		var p_header = pause_menu_overlay.find_child("PauseHeader", true, false) as Label
+		if p_header:
+			p_header.add_theme_font_override("font", CHERRY_FONT)
+			p_header.add_theme_font_size_override("font_size", 30)
+			p_header.add_theme_color_override("font_color", Color("#BE185D"))
+			p_header.add_theme_color_override("font_outline_color", Color.WHITE)
+			p_header.add_theme_constant_override("outline_size", 8)
+			p_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+		var p_sub = pause_menu_overlay.find_child("PauseSubtitle", true, false) as Label
+		if p_sub:
+			p_sub.add_theme_font_size_override("font_size", 15)
+			p_sub.add_theme_color_override("font_color", Color("#701A75"))
+			p_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+		if resume_button:
+			resume_button.text = "▶️ Continuar Partida"
+			resume_button.custom_minimum_size = Vector2(0, 52)
+			resume_button.add_theme_font_override("font", CHERRY_FONT)
+			resume_button.add_theme_font_size_override("font_size", 19)
+			var res_sb := StyleBoxFlat.new()
+			res_sb.bg_color = Color("#10B981")
+			res_sb.border_width_bottom = 5
+			res_sb.border_color = Color("#047857")
+			res_sb.set_corner_radius_all(18)
+			var res_hov := res_sb.duplicate()
+			res_hov.bg_color = Color("#34D399")
+			resume_button.add_theme_stylebox_override("normal", res_sb)
+			resume_button.add_theme_stylebox_override("hover", res_hov)
+			resume_button.add_theme_stylebox_override("pressed", res_sb)
+			resume_button.add_theme_color_override("font_color", Color.WHITE)
+
+		if back_to_menu_button:
+			back_to_menu_button.text = "🏠 Volver al Menú"
+			back_to_menu_button.custom_minimum_size = Vector2(0, 48)
+			back_to_menu_button.add_theme_font_override("font", CHERRY_FONT)
+			back_to_menu_button.add_theme_font_size_override("font_size", 17)
+			var back_sb := StyleBoxFlat.new()
+			back_sb.bg_color = Color("#F43F5E")
+			back_sb.border_width_bottom = 5
+			back_sb.border_color = Color("#BE123C")
+			back_sb.set_corner_radius_all(18)
+			var back_hov := back_sb.duplicate()
+			back_hov.bg_color = Color("#FB7185")
+			back_to_menu_button.add_theme_stylebox_override("normal", back_sb)
+			back_to_menu_button.add_theme_stylebox_override("hover", back_hov)
+			back_to_menu_button.add_theme_stylebox_override("pressed", back_sb)
+			back_to_menu_button.add_theme_color_override("font_color", Color.WHITE)
+
+func _on_pause_overlay_gui_input(ev: InputEvent) -> void:
+	if (ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT) or (ev is InputEventScreenTouch and ev.pressed):
+		_resume_game()
 
 func _input(event: InputEvent) -> void:
 
@@ -1701,16 +1761,18 @@ func _toggle_pause_menu() -> void:
 
 
 func _pause_game() -> void:
-
 	if is_game_paused:
-
 		return
-
 	is_game_paused = true
-
 	if pause_menu_overlay:
-
 		pause_menu_overlay.visible = true
+		pause_menu_overlay.move_to_front()
+		var card = pause_menu_overlay.find_child("PauseCard", true, false) as Control
+		if card:
+			card.pivot_offset = card.size * 0.5
+			card.scale = Vector2(0.85, 0.85)
+			var tw := create_tween()
+			tw.tween_property(card, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	if chess_board:
 

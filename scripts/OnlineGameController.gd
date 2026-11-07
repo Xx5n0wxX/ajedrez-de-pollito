@@ -1768,15 +1768,49 @@ func _end_game(title: String, detail: String) -> void:
 # MENÚ DE PAUSA Y PERSONALIZACIÓN
 # =========================================================================
 
+func _apply_uniform_modal_card_style(card: Control, border_col: Color = Color("#F472B6"), bg_col: Color = Color("#FFF9FB")) -> void:
+	if not card:
+		return
+	var card_sb := StyleBoxFlat.new()
+	card_sb.bg_color = bg_col
+	card_sb.border_width_left = 5
+	card_sb.border_width_top = 5
+	card_sb.border_width_right = 5
+	card_sb.border_width_bottom = 10
+	card_sb.border_color = border_col
+	card_sb.set_corner_radius_all(34)
+	card_sb.content_margin_left = 28
+	card_sb.content_margin_right = 28
+	card_sb.content_margin_top = 24
+	card_sb.content_margin_bottom = 28
+	card_sb.shadow_color = Color(0.0, 0.0, 0.0, 0.35)
+	card_sb.shadow_size = 24
+	card_sb.shadow_offset = Vector2(0, 10)
+	card_sb.anti_aliasing = true
+	card.add_theme_stylebox_override("panel", card_sb)
+
 func _setup_overlay_z_indices() -> void:
 	for overlay in [pause_menu_overlay, resign_confirm_overlay, draw_offer_overlay, game_over_overlay]:
 		if overlay:
 			overlay.z_index = 1000
 			overlay.z_as_relative = false
+			if overlay is ColorRect:
+				(overlay as ColorRect).color = Color(0.09, 0.04, 0.14, 0.72)
+			var p = overlay.find_child("Panel", true, false) as Control
+			if p:
+				_apply_uniform_modal_card_style(p)
 
 func _toggle_pause_menu() -> void:
 	if not pause_menu_overlay:
 		return
 	pause_menu_overlay.visible = not pause_menu_overlay.visible
+	if pause_menu_overlay.visible:
+		pause_menu_overlay.move_to_front()
+		var p = pause_menu_overlay.find_child("Panel", true, false) as Control
+		if p:
+			p.pivot_offset = p.size * 0.5
+			p.scale = Vector2(0.85, 0.85)
+			var tw := create_tween()
+			tw.tween_property(p, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	if chess_board:
 		chess_board.set_interactive(is_my_turn and not pause_menu_overlay.visible)

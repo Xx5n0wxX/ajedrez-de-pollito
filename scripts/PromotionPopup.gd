@@ -42,7 +42,7 @@ func _build_ui() -> void:
 	backdrop.name = "Backdrop"
 	backdrop.anchors_preset = Control.PRESET_FULL_RECT
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.color = Color(0.08, 0.04, 0.12, 0.55)
+	backdrop.color = Color(0.09, 0.04, 0.14, 0.72)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(backdrop)
 
@@ -55,33 +55,33 @@ func _build_ui() -> void:
 
 	panel_box = PanelContainer.new()
 	panel_box.name = "DialogPanel"
-	panel_box.custom_minimum_size = Vector2(340, 190)
+	panel_box.custom_minimum_size = Vector2(400, 210)
 	panel_box.mouse_filter = Control.MOUSE_FILTER_STOP
-	
+
 	var style_panel = StyleBoxFlat.new()
-	style_panel.bg_color = Color("#FFF6ED") # Crema suave plastilina
-	style_panel.border_width_left = 3
-	style_panel.border_width_top = 3
-	style_panel.border_width_right = 3
-	style_panel.border_width_bottom = 6
-	style_panel.border_color = Color("#E4D2C1")
-	style_panel.set_corner_radius_all(20)
-	style_panel.shadow_color = Color(0.3, 0.1, 0.2, 0.25)
-	style_panel.shadow_size = 14
-	style_panel.shadow_offset = Vector2(0, 6)
+	style_panel.bg_color = Color("#FFF9FB")
+	style_panel.border_width_left = 5
+	style_panel.border_width_top = 5
+	style_panel.border_width_right = 5
+	style_panel.border_width_bottom = 10
+	style_panel.border_color = Color("#F472B6")
+	style_panel.set_corner_radius_all(34)
+	style_panel.shadow_color = Color(0.0, 0.0, 0.0, 0.35)
+	style_panel.shadow_size = 24
+	style_panel.shadow_offset = Vector2(0, 10)
 	style_panel.anti_aliasing = true
 	panel_box.add_theme_stylebox_override("panel", style_panel)
 	center_container.add_child(panel_box)
 
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 18)
-	margin.add_theme_constant_override("margin_top", 16)
-	margin.add_theme_constant_override("margin_right", 18)
-	margin.add_theme_constant_override("margin_bottom", 18)
+	margin.add_theme_constant_override("margin_left", 24)
+	margin.add_theme_constant_override("margin_top", 20)
+	margin.add_theme_constant_override("margin_right", 24)
+	margin.add_theme_constant_override("margin_bottom", 24)
 	panel_box.add_child(margin)
 
 	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
+	vbox.add_theme_constant_override("separation", 14)
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(vbox)
 
@@ -90,16 +90,18 @@ func _build_ui() -> void:
 	title_lbl.text = "👑 ¡CORONACIÓN DE PEÓN!"
 	title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title_lbl.add_theme_font_override("font", COORD_FONT)
-	title_lbl.add_theme_font_size_override("font_size", 20)
-	title_lbl.add_theme_color_override("font_color", Color("#db2777")) # Rosa Profe Pollito
+	title_lbl.add_theme_font_size_override("font_size", 24)
+	title_lbl.add_theme_color_override("font_color", Color("#BE185D"))
+	title_lbl.add_theme_color_override("font_outline_color", Color.WHITE)
+	title_lbl.add_theme_constant_override("outline_size", 8)
 	vbox.add_child(title_lbl)
 
 	# Subtítulo explicativo
 	subtitle_lbl = Label.new()
 	subtitle_lbl.text = "¡Tu peón cruzó el tablero! Elige su nueva pieza:"
 	subtitle_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	subtitle_lbl.add_theme_font_size_override("font_size", 13)
-	subtitle_lbl.add_theme_color_override("font_color", Color("#701a35"))
+	subtitle_lbl.add_theme_font_size_override("font_size", 14)
+	subtitle_lbl.add_theme_color_override("font_color", Color("#701A75"))
 	vbox.add_child(subtitle_lbl)
 
 	# Fila de 4 piezas
@@ -120,29 +122,29 @@ func _build_ui() -> void:
 
 func _create_piece_button(type_key: String, label_text: String, _default_tex_key: String) -> Button:
 	var btn = Button.new()
-	btn.custom_minimum_size = Vector2(68, 82)
+	btn.custom_minimum_size = Vector2(76, 92)
 	btn.pivot_offset = btn.custom_minimum_size / 2.0
 	btn.focus_mode = Control.FOCUS_NONE
 
 	# Estilos 2.5D de plastilina rosa pastel
 	var sb_normal = StyleBoxFlat.new()
-	sb_normal.bg_color = Color("#FCE7F3")
+	sb_normal.bg_color = Color("#FFF0F6")
 	sb_normal.border_width_left = 2
 	sb_normal.border_width_top = 2
 	sb_normal.border_width_right = 2
-	sb_normal.border_width_bottom = 5
+	sb_normal.border_width_bottom = 6
 	sb_normal.border_color = Color("#F472B6")
-	sb_normal.set_corner_radius_all(14)
+	sb_normal.set_corner_radius_all(18)
 	sb_normal.anti_aliasing = true
 
 	var sb_hover = StyleBoxFlat.new()
-	sb_hover.bg_color = Color("#FFF1F2")
+	sb_hover.bg_color = Color("#FCE7F3")
 	sb_hover.border_width_left = 2
 	sb_hover.border_width_top = 2
 	sb_hover.border_width_right = 2
-	sb_hover.border_width_bottom = 5
+	sb_hover.border_width_bottom = 6
 	sb_hover.border_color = Color("#EC4899")
-	sb_hover.set_corner_radius_all(14)
+	sb_hover.set_corner_radius_all(18)
 	sb_hover.anti_aliasing = true
 
 	var sb_pressed = StyleBoxFlat.new()
@@ -152,7 +154,7 @@ func _create_piece_button(type_key: String, label_text: String, _default_tex_key
 	sb_pressed.border_width_right = 2
 	sb_pressed.border_width_bottom = 2
 	sb_pressed.border_color = Color("#DB2777")
-	sb_pressed.set_corner_radius_all(14)
+	sb_pressed.set_corner_radius_all(18)
 	sb_pressed.anti_aliasing = true
 
 	btn.add_theme_stylebox_override("normal", sb_normal)
@@ -167,7 +169,7 @@ func _create_piece_button(type_key: String, label_text: String, _default_tex_key
 	btn.add_child(inner_vbox)
 
 	var icon_rect = TextureRect.new()
-	icon_rect.custom_minimum_size = Vector2(48, 48)
+	icon_rect.custom_minimum_size = Vector2(52, 52)
 	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -176,7 +178,7 @@ func _create_piece_button(type_key: String, label_text: String, _default_tex_key
 	var lbl = Label.new()
 	lbl.text = label_text
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.add_theme_font_size_override("font_size", 12)
 	lbl.add_theme_color_override("font_color", Color("#831843"))
 	inner_vbox.add_child(lbl)
 
