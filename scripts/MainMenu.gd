@@ -2265,16 +2265,19 @@ func _layout_mobile_scenic_menu(vp_size: Vector2, is_portrait: bool) -> void:
 		return
 
 	var touch_btn := _mobile_root.get_node_or_null("GalloTouchArea") as Button
+	var safe_top: float = 0.0
+	if has_node("/root/ScreenManager"):
+		safe_top = get_node("/root/ScreenManager").get_safe_top_margin()
 
 	if is_portrait:
-		# Diseño Vertical (Portrait) idéntico a la propuesta v2 aprobada
-		_mob_top_bar.position = Vector2(28, 32)
+		# Diseño Vertical (Portrait) idéntico a la propuesta v2 aprobada con Safe Area
+		_mob_top_bar.position = Vector2(28, safe_top + 16)
 		_mob_top_bar.scale = Vector2.ONE
 		if _mob_btn_update:
 			_mob_btn_update.size = Vector2(184, 54)
-			_mob_btn_update.position = Vector2(vp_size.x - 184.0 - 28.0, 32)
+			_mob_btn_update.position = Vector2(vp_size.x - 184.0 - 28.0, safe_top + 16)
 
-		_mob_greeting_box.position = Vector2(24, 114)
+		_mob_greeting_box.position = Vector2(24, safe_top + 88)
 		_mob_greeting_box.size = Vector2(vp_size.x - 48.0, 175.0)
 		_mob_lbl_hello.add_theme_font_size_override("font_size", 42)
 		_mob_lbl_player_name.add_theme_font_size_override("font_size", 68)
@@ -2310,11 +2313,11 @@ func _layout_mobile_scenic_menu(vp_size: Vector2, is_portrait: bool) -> void:
 			_mob_nav_icons[i].custom_minimum_size = Vector2(68, 64)
 			_mob_nav_icons[i].queue_redraw()
 	else:
-		# Diseño Horizontal (Landscape) adaptado ergonómicamente para móvil
-		_mob_top_bar.position = Vector2(28, 20)
+		# Diseño Horizontal (Landscape) adaptado ergonómicamente para móvil con Safe Area
+		_mob_top_bar.position = Vector2(28, safe_top + 14)
 		if _mob_btn_update:
 			_mob_btn_update.size = Vector2(180, 50)
-			_mob_btn_update.position = Vector2(vp_size.x - 180.0 - 28.0, 20)
+			_mob_btn_update.position = Vector2(vp_size.x - 180.0 - 28.0, safe_top + 14)
 
 		var left_center_x: float = vp_size.x * 0.30
 		var gallo_scale: float = clampf((vp_size.y / 648.0) * 0.78, 0.58, 0.88)

@@ -8,97 +8,127 @@
 [ext_resource type="Texture2D" path="res://assets/icons/swap_layout.svg" id="6_swap_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
-bg_color = Color(0.988235, 0.960784, 0.972549, 1)
+bg_color = Color(0.992157, 0.94902, 0.972549, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_comic_panel"]
-bg_color = Color(1, 1, 1, 0.98)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 4
-border_color = Color(0.96, 0.82, 0.89, 1)
+bg_color = Color(1, 0.976471, 0.984314, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 8
+border_color = Color(0.956863, 0.447059, 0.713726, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+shadow_color = Color(0.85, 0.15, 0.45, 0.14)
+shadow_size = 14
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.956863, 0.447059, 0.713726, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 shadow_color = Color(0.85, 0.15, 0.45, 0.1)
-shadow_size = 12
-shadow_offset = Vector2(0, 4)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble"]
-bg_color = Color(0.992157, 0.94902, 0.972549, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.96, 0.82, 0.89, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_objective"]
-bg_color = Color(0.94, 0.98, 0.95, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.6, 0.85, 0.65, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+bg_color = Color(0.941176, 0.992157, 0.956863, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.290196, 0.870588, 0.501961, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.18, 0.8, 0.4, 0.12)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feedback"]
-bg_color = Color(1, 0.93, 0.93, 1)
+bg_color = Color(1, 0.945098, 0.94902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.956863, 0.247059, 0.368627, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.9, 0.2, 0.3, 0.12)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+bg_color = Color(0.0627451, 0.72549, 0.505882, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
-border_width_bottom = 3
-border_color = Color(0.95, 0.45, 0.45, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
-bg_color = Color(0.858824, 0.152941, 0.466667, 1)
-border_width_bottom = 4
-border_color = Color(0.686275, 0.0823529, 0.352941, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
+border_width_bottom = 6
+border_color = Color(0.0156863, 0.470588, 0.341176, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.06, 0.72, 0.5, 0.25)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_rewind"]
-bg_color = Color(0.92, 0.35, 0.2, 1)
-border_width_bottom = 4
-border_color = Color(0.72, 0.22, 0.1, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
+bg_color = Color(0.976471, 0.45098, 0.0862745, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.760784, 0.254902, 0.0470588, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.97, 0.45, 0.08, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action"]
-bg_color = Color(0.12, 0.65, 0.52, 1)
-border_width_bottom = 3
-border_color = Color(0.08, 0.48, 0.38, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+bg_color = Color(0.960784, 0.619608, 0.0431373, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color(0.705882, 0.32549, 0.0352941, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.96, 0.62, 0.04, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_secondary"]
-bg_color = Color(0.95, 0.95, 0.97, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 3
-border_color = Color(0.85, 0.85, 0.9, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.956863, 0.447059, 0.713726, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.85, 0.15, 0.45, 0.12)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
 
 [node name="AulaAcademia" type="Control"]
 layout_mode = 3
@@ -125,12 +155,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 14.0
-offset_top = 12.0
+offset_top = 14.0
 offset_right = -14.0
-offset_bottom = -12.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 
 [node name="LeftColumn" type="VBoxContainer" parent="MainLayout"]
 unique_name_in_owner = true
@@ -146,13 +176,15 @@ theme_override_constants/separation = 12
 
 [node name="BtnBackToMap" type="Button" parent="MainLayout/LeftColumn/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 38)
+custom_minimum_size = Vector2(170, 50)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/font_color = Color(0.3, 0.35, 0.45, 1)
+theme_override_colors/font_color = Color(0.745098, 0.0941176, 0.364706, 1)
 theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_secondary")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_secondary")
 text = "⬅️ Volver a Grados"
 
 [node name="VBoxTitles" type="VBoxContainer" parent="MainLayout/LeftColumn/TopBar"]
@@ -163,15 +195,17 @@ theme_override_constants/separation = 1
 [node name="LblGradeTitle" type="Label" parent="MainLayout/LeftColumn/TopBar/VBoxTitles"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.858824, 0.152941, 0.466667, 1)
+theme_override_colors/font_color = Color(0.745098, 0.0941176, 0.364706, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "🥉 Grado 1: El Despertar del Tablero"
 
 [node name="LblLessonTitle" type="Label" parent="MainLayout/LeftColumn/TopBar/VBoxTitles"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.45, 0.55, 1)
+theme_override_colors/font_color = Color(0.35, 0.4, 0.5, 1)
 theme_override_font_sizes/font_size = 13
 text = "Lección 1: El Mapa del Tesoro"
 
@@ -183,31 +217,33 @@ theme_override_constants/separation = 4
 [node name="Star1" type="Label" parent="MainLayout/LeftColumn/TopBar/StarsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.75, 0.18, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.95, 0.65, 0.05, 1)
+theme_override_font_sizes/font_size = 22
 text = "⭐"
 
 [node name="Star2" type="Label" parent="MainLayout/LeftColumn/TopBar/StarsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.75, 0.18, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.95, 0.65, 0.05, 1)
+theme_override_font_sizes/font_size = 22
 text = "⭐"
 
 [node name="Star3" type="Label" parent="MainLayout/LeftColumn/TopBar/StarsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.75, 0.18, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.95, 0.65, 0.05, 1)
+theme_override_font_sizes/font_size = 22
 text = "⭐"
 
 [node name="BtnSwapLayoutAula" type="Button" parent="MainLayout/LeftColumn/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(38, 38)
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 tooltip_text = "Intercambiar posición del tablero y el panel"
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_secondary")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_secondary")
 icon = ExtResource("6_swap_icon")
 icon_alignment = 1
 expand_icon = true
@@ -265,16 +301,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
 
 [node name="BubbleMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox/BubblePanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
 
 [node name="LblDialogue" type="RichTextLabel" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox/BubblePanel/BubbleMargin"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/default_color = Color(0.2, 0.25, 0.35, 1)
-theme_override_font_sizes/normal_font_size = 14
+theme_override_colors/default_color = Color(0.12, 0.16, 0.24, 1)
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "¡Hola! ¡Te doy la bienvenida oficial a la Academia de Ajedrez!"
 fit_content = true
@@ -285,17 +321,17 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_objective")
 
 [node name="ObjMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ObjectivePanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
 
 [node name="LblObjective" type="Label" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ObjectivePanel/ObjMargin"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.2, 1)
+theme_override_colors/font_color = Color(0.08, 0.45, 0.22, 1)
 theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 16
 text = "🎯 OBJETIVO: Mueve tu pieza al lugar correcto."
 autowrap_mode = 2
 
@@ -307,9 +343,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_feedback")
 
 [node name="FeedbackMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
+theme_override_constants/margin_left = 14
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
+theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 10
 
 [node name="FeedbackVBox" type="VBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel/FeedbackMargin"]
@@ -319,20 +355,22 @@ theme_override_constants/separation = 8
 [node name="LblFeedback" type="Label" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel/FeedbackMargin/FeedbackVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.15, 0.15, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.75, 0.12, 0.2, 1)
+theme_override_font_sizes/font_size = 15
 text = "⚠️ ¡Cuidado con el contraataque!"
 autowrap_mode = 2
 
 [node name="BtnRewind" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent/FeedbackPanel/FeedbackMargin/FeedbackVBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 44)
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_rewind")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_rewind")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_rewind")
 text = "⏪ Rebobinar Jugada"
 
 [node name="Spacer" type="Control" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
@@ -341,38 +379,45 @@ size_flags_vertical = 3
 
 [node name="ActionsHBox" type="HBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="BtnHint" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ActionsHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_action")
 text = "💡 Pedir Pista"
 
 [node name="BtnReset" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent/ActionsHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 42)
+custom_minimum_size = Vector2(120, 52)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/font_color = Color(0.35, 0.4, 0.5, 1)
-theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.745098, 0.0941176, 0.364706, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_secondary")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_secondary")
 text = "🔄 Reiniciar"
 
 [node name="BtnNextLesson" type="Button" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_primary")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_primary")
 text = "➡️ Siguiente Lección 🎉"

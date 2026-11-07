@@ -7,6 +7,7 @@ extends Node
 signal orientation_changed(is_portrait: bool)
 signal layout_swap_toggled(is_swapped: bool)
 signal mobile_mode_changed(is_mobile_active: bool)
+signal safe_area_changed(top_margin: float)
 
 const SETTINGS_PATH: String = "user://display_settings.json"
 
@@ -136,6 +137,39 @@ func _update_screen_scale() -> void:
 	if not _initialized or _is_portrait != new_is_portrait:
 		_is_portrait = new_is_portrait
 		orientation_changed.emit(_is_portrait)
+	safe_area_changed.emit(get_safe_top_margin())
+
+func get_safe_top_margin() -> float:
+	var safe_top: float = 0.0
+	var safe_rect = DisplayServer.get_display_safe_area()
+	var top_inset = safe_rect.position.y
+	var win = _get_active_window()
+	if top_inset > 0 and win and win.size.y > 0:
+		var scale = float(win.content_scale_size.y) / float(win.size.y)
+		safe_top = float(top_inset) * scale
+
+	if is_mobile():
+		if is_portrait():
+			# En teléfonos verticales modernos la barra de notificaciones y el notch/cámara
+			# ocupan entre 48px y 68px de espacio virtual a escala 720p.
+			return maxf(safe_top, 58.0)
+		else:
+			return maxf(safe_top, 24.0)
+
+	return safe_top
+
+func get_safe_bottom_margin() -> float:
+	var safe_bottom: float = 0.0
+	var safe_rect = DisplayServer.get_display_safe_area()
+	var win = _get_active_window()
+	if win and win.size.y > 0:
+		var bottom_inset = float(win.size.y - (safe_rect.position.y + safe_rect.size.y))
+		if bottom_inset > 0:
+			var scale = float(win.content_scale_size.y) / float(win.size.y)
+			safe_bottom = bottom_inset * scale
+	if is_mobile() and is_portrait():
+		return maxf(safe_bottom, 16.0)
+	return safe_bottom
 
 func is_portrait() -> bool:
 	return _is_portrait

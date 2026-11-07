@@ -1,8 +1,8 @@
 {
-  "version_code": 3,
-  "version_name": "1.0.2",
+  "version_code": 4,
+  "version_name": "1.0.3",
   "release_date": "2026-11-07",
-  "notes": "Correccion de interaccion tactil en popups de Android y rediseno visual unificado de todos los popups del juego",
+  "notes": "Rediseno completo de la Academia y Gimnasio tactico con estilo 3D, textos grandes y Safe Area para notch y barra de estado",
   "pck_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck",
   "pck_win_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck",
   "apk_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk",
