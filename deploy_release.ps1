@@ -89,6 +89,7 @@ $versionData.notes = $Notes
 $versionData.pck_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck"
 $versionData.pck_win_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck"
 $versionData.apk_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk"
+$versionData.exe_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.exe"
 
 $newJson = $versionData | ConvertTo-Json -Depth 4
 Set-Content -Path $VersionJsonPath -Value $newJson -Encoding UTF8

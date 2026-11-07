@@ -1302,9 +1302,9 @@ func _update_responsive_menu() -> void:
 		else:
 			if is_portrait:
 				var target_w = clampf(vp_size.x * 0.88, 440.0, 560.0)
-				menu_card.custom_minimum_size = Vector2(target_w, 620.0)
+				menu_card.custom_minimum_size = Vector2(target_w, 610.0)
 			else:
-				menu_card.custom_minimum_size = Vector2(500.0, 620.0)
+				menu_card.custom_minimum_size = Vector2(500.0, 610.0)
 
 	_apply_menu_scaling(is_mob, is_portrait, vp_size.x)
 	_adjust_modal_widths(is_portrait, vp_size.x)
@@ -2507,9 +2507,12 @@ func _build_update_popup_ui() -> void:
 	_upd_btn_ota.pressed.connect(_on_start_ota_pressed)
 	vbox.add_child(_upd_btn_ota)
 
-	# Botón secundario: Descargar APK completo en el navegador
+	# Botón secundario: Descargar APK/EXE completo en el navegador
 	_upd_btn_apk = Button.new()
-	_upd_btn_apk.text = "📦 Descargar APK Completo (Navegador)"
+	if OS.get_name() == "Windows":
+		_upd_btn_apk.text = "💻 Descargar Ejecutable EXE Completo (Navegador)"
+	else:
+		_upd_btn_apk.text = "📦 Descargar APK Completo (Navegador)"
 	_upd_btn_apk.custom_minimum_size = Vector2(0, 52)
 	_upd_btn_apk.focus_mode = Control.FOCUS_NONE
 	_upd_btn_apk.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -2545,21 +2548,27 @@ func _setup_updater_connections() -> void:
 	if not um.update_failed.is_connected(_on_update_failed):
 		um.update_failed.connect(_on_update_failed)
 
-	# Actualizar texto del pie de página en PC y añadir botón de actualización
+	# Actualizar texto del pie de página en PC y añadir botón de actualización inline
 	var footer_lbl := find_child("Footer", true, false) as Label
 	if footer_lbl:
-		footer_lbl.text = "Versión v%s • Creado para Lyanna ❤️" % str(um.current_version_name)
+		footer_lbl.text = "Creado para Lyanna ❤️ •"
 		var parent_vbox := footer_lbl.get_parent() as VBoxContainer
 		if parent_vbox and not _pc_btn_update:
+			var footer_hbox := HBoxContainer.new()
+			footer_hbox.name = "FooterHBox"
+			footer_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+			footer_hbox.add_theme_constant_override("separation", 8)
+			parent_vbox.add_child(footer_hbox)
+			footer_lbl.reparent(footer_hbox)
+
 			_pc_btn_update = Button.new()
-			_pc_btn_update.text = "🔄 Buscar Actualización (v%s)" % str(um.current_version_name)
-			_pc_btn_update.custom_minimum_size = Vector2(220, 30)
-			_pc_btn_update.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+			_pc_btn_update.text = "🔄 v%s" % str(um.current_version_name)
+			_pc_btn_update.custom_minimum_size = Vector2(96, 24)
 			_pc_btn_update.focus_mode = Control.FOCUS_NONE
 			_pc_btn_update.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-			_pc_btn_update.add_theme_font_size_override("font_size", 12)
+			_pc_btn_update.add_theme_font_size_override("font_size", 11)
 			_pc_btn_update.pressed.connect(_on_update_button_pressed)
-			parent_vbox.add_child(_pc_btn_update)
+			footer_hbox.add_child(_pc_btn_update)
 
 	_refresh_version_badges()
 
@@ -2576,10 +2585,29 @@ func _refresh_version_badges() -> void:
 			_mob_btn_update.text = "🔄 v" + ver_txt
 		_apply_mobile_update_pill_style(has_upd)
 	if _pc_btn_update:
+		var pc_sb := StyleBoxFlat.new()
+		pc_sb.set_corner_radius_all(10)
+		pc_sb.anti_aliasing = true
 		if has_upd:
-			_pc_btn_update.text = "✨ ¡Nueva Versión Disponible!"
+			_pc_btn_update.text = "✨ ¡Actualizar a v%s!" % str(um.remote_version_info.get("version_name", ver_txt))
+			pc_sb.bg_color = Color("#10B981")
+			pc_sb.border_color = Color("#059669")
+			pc_sb.border_width_bottom = 2
+			_pc_btn_update.add_theme_color_override("font_color", Color.WHITE)
 		else:
-			_pc_btn_update.text = "🔄 Buscar Actualización (v%s)" % ver_txt
+			_pc_btn_update.text = "🔄 v%s" % ver_txt
+			pc_sb.bg_color = Color(0.96, 0.94, 0.96, 1.0)
+			pc_sb.border_color = Color(0.85, 0.75, 0.82, 1.0)
+			pc_sb.border_width_left = 1
+			pc_sb.border_width_top = 1
+			pc_sb.border_width_right = 1
+			pc_sb.border_width_bottom = 2
+			_pc_btn_update.add_theme_color_override("font_color", Color(0.4, 0.42, 0.5, 1.0))
+		_pc_btn_update.add_theme_stylebox_override("normal", pc_sb)
+		var pc_hov := pc_sb.duplicate()
+		pc_hov.bg_color = pc_sb.bg_color.lightened(0.08)
+		_pc_btn_update.add_theme_stylebox_override("hover", pc_hov)
+		_pc_btn_update.add_theme_stylebox_override("pressed", pc_sb)
 
 func _trigger_auto_update_check() -> void:
 	var um = _get_um()

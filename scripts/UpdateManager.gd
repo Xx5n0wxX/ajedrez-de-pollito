@@ -17,6 +17,7 @@ const RAW_FALLBACK_URL: String = "https://raw.githubusercontent.com/Xx5n0wxX/aje
 const DEFAULT_PCK_ANDROID_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck"
 const DEFAULT_PCK_WIN_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck"
 const DEFAULT_APK_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk"
+const DEFAULT_EXE_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.exe"
 
 const LOCAL_VERSION_PATH: String = "res://version.json"
 const OTA_PCK_PATH: String = "user://ota_update.pck"
@@ -299,7 +300,16 @@ func _reload_updated_scripts_in_cache() -> void:
 			ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REPLACE)
 
 func open_full_apk_download() -> void:
-	var apk_url: String = str(remote_version_info.get("apk_url", DEFAULT_APK_URL))
-	if apk_url.is_empty():
-		apk_url = DEFAULT_APK_URL
-	OS.shell_open(apk_url)
+	open_full_installer_download()
+
+func open_full_installer_download() -> void:
+	if OS.get_name() == "Windows":
+		var exe_url: String = str(remote_version_info.get("exe_url", DEFAULT_EXE_URL))
+		if exe_url.is_empty():
+			exe_url = DEFAULT_EXE_URL
+		OS.shell_open(exe_url)
+	else:
+		var apk_url: String = str(remote_version_info.get("apk_url", DEFAULT_APK_URL))
+		if apk_url.is_empty():
+			apk_url = DEFAULT_APK_URL
+		OS.shell_open(apk_url)
