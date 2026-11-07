@@ -1,27 +1,27 @@
 <#
 .SYNOPSIS
-    Script automatizado de compilación y publicación de actualizaciones (OTA .pck + APK + EXE) en GitHub Releases.
+    Script automatizado de compilacion y publicacion de actualizaciones (OTA .pck + APK + EXE) en GitHub Releases.
 
 .DESCRIPTION
-    1. Incrementa la versión en version.json y export_presets.cfg (o usa la indicada).
+    1. Incrementa la version en version.json y export_presets.cfg (o usa la indicada).
     2. Compila el paquete OTA ligero de Android (update_android.pck ~2.3 MB).
     3. Compila el paquete OTA ligero de Windows (update_windows.pck).
     4. Compila el APK completo para Android (build/Ajedrez_de_Pollito.apk).
     5. Compila el ejecutable para Windows (build/Ajedrez_de_Pollito.exe).
     6. Hace commit y push de los cambios al repositorio GitHub.
-    7. Crea o actualiza la Release en GitHub con los artefactos y notas de versión.
+    7. Crea o actualiza la Release en GitHub con los artefactos y notas de version.
 
 .PARAMETER VersionName
-    Nombre semántico de la versión (ej: 1.0.1). Si se omite, incrementa el último dígito.
+    Nombre semantico de la version (ej: 1.0.1). Si se omite, incrementa el ultimo digito.
 
 .PARAMETER VersionCode
-    Código numérico de compilación (ej: 2). Si se omite, incrementa el actual.
+    Codigo numerico de compilacion (ej: 2). Si se omite, incrementa el actual.
 
 .PARAMETER Notes
-    Notas o novedades de la versión.
+    Notas o novedades de la version.
 
 .PARAMETER OnlyPck
-    Si se activa, sólo compila y sube los paquetes OTA .pck (actualización ultra rápida sin reconstruir APK).
+    Si se activa, solo compila y sube los paquetes OTA .pck (actualizacion ultra rapida sin reconstruir APK).
 #>
 param(
     [string]$VersionName = "",
@@ -37,7 +37,7 @@ Set-Location $ProjectPath
 # Localizar ejecutables
 $GodotExe = "C:\Herramientas\GODOT\Godot_v4.7.2-stable_win64_console.exe"
 if (-not (Test-Path $GodotExe)) {
-    throw "No se encontró el ejecutable de Godot en: $GodotExe"
+    throw "No se encontro el ejecutable de Godot en: $GodotExe"
 }
 
 $GhExe = "C:\Users\diego\AppData\Local\Programs\GitHub CLI\gh.exe"
@@ -45,14 +45,14 @@ if (-not (Test-Path $GhExe)) {
     if (Get-Command gh -ErrorAction SilentlyContinue) {
         $GhExe = "gh"
     } else {
-        throw "No se encontró GitHub CLI (gh.exe)."
+        throw "No se encontro GitHub CLI (gh.exe)."
     }
 }
 
 # 1. Leer version.json actual
 $VersionJsonPath = Join-Path $ProjectPath "version.json"
 if (-not (Test-Path $VersionJsonPath)) {
-    throw "No se encontró version.json en $VersionJsonPath"
+    throw "No se encontro version.json en $VersionJsonPath"
 }
 
 $versionData = Get-Content $VersionJsonPath -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -72,13 +72,13 @@ if ([string]::IsNullOrWhiteSpace($VersionName)) {
 }
 
 if ([string]::IsNullOrWhiteSpace($Notes)) {
-    $Notes = "Actualización v$VersionName (Build $VersionCode): Mejoras y correcciones generales."
+    $Notes = "Actualizacion v$VersionName (Build $VersionCode): Mejoras y correcciones generales."
 }
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "🚀 Iniciando Deploy para Ajedrez de Pollito" -ForegroundColor Yellow
-Write-Host "📌 Versión: $VersionName (Build Code: $VersionCode)" -ForegroundColor Green
-Write-Host "📝 Notas:   $Notes" -ForegroundColor White
+Write-Host ">> Iniciando Deploy para Ajedrez de Pollito" -ForegroundColor Yellow
+Write-Host "[*] Version: $VersionName (Build Code: $VersionCode)" -ForegroundColor Green
+Write-Host "[*] Notas:   $Notes" -ForegroundColor White
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 # 2. Actualizar version.json
@@ -92,16 +92,16 @@ $versionData.apk_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/
 
 $newJson = $versionData | ConvertTo-Json -Depth 4
 Set-Content -Path $VersionJsonPath -Value $newJson -Encoding UTF8
-Write-Host "✔ version.json actualizado." -ForegroundColor Green
+Write-Host "[OK] version.json actualizado." -ForegroundColor Green
 
 # 3. Actualizar export_presets.cfg (para Android)
 $ExportPresetsPath = Join-Path $ProjectPath "export_presets.cfg"
 if (Test-Path $ExportPresetsPath) {
     $cfgContent = Get-Content $ExportPresetsPath -Raw -Encoding UTF8
     $cfgContent = $cfgContent -replace 'version/code=\d+', "version/code=$VersionCode"
-    $cfgContent = $cfgContent -replace 'version/name="[^"]*"', "version/name=`"$VersionName`""
+    $cfgContent = $cfgContent -replace 'version/name="[^"]*"', ('version/name="' + $VersionName + '"')
     Set-Content -Path $ExportPresetsPath -Value $cfgContent -Encoding UTF8
-    Write-Host "✔ export_presets.cfg sincronizado con v$VersionName." -ForegroundColor Green
+    Write-Host "[OK] export_presets.cfg sincronizado con v$VersionName." -ForegroundColor Green
 }
 
 # 4. Crear carpeta build si no existe
@@ -115,42 +115,42 @@ $PckWindows = Join-Path $BuildDir "update_windows.pck"
 $ApkAndroid = Join-Path $BuildDir "Ajedrez_de_Pollito.apk"
 $ExeWindows = Join-Path $BuildDir "Ajedrez_de_Pollito.exe"
 
-# 5. Compilación con Godot
-Write-Host "`n📦 Compilando paquete OTA para Android (update_android.pck)..." -ForegroundColor Cyan
+# 5. Compilacion con Godot
+Write-Host "`n[PACK] Compilando paquete OTA para Android (update_android.pck)..." -ForegroundColor Cyan
 & $GodotExe --headless --path $ProjectPath --export-pack "Android" $PckAndroid | Out-Null
 if (-not (Test-Path $PckAndroid)) { throw "Error al compilar $PckAndroid" }
 $pckSizeMB = [math]::Round((Get-Item $PckAndroid).Length / 1MB, 2)
-Write-Host "✔ Android PCK listo: $PckAndroid ($pckSizeMB MB)" -ForegroundColor Green
+Write-Host "[OK] Android PCK listo: $PckAndroid ($pckSizeMB MB)" -ForegroundColor Green
 
-Write-Host "📦 Compilando paquete OTA para Windows (update_windows.pck)..." -ForegroundColor Cyan
+Write-Host "[PACK] Compilando paquete OTA para Windows (update_windows.pck)..." -ForegroundColor Cyan
 & $GodotExe --headless --path $ProjectPath --export-pack "Windows Desktop" $PckWindows | Out-Null
 if (-not (Test-Path $PckWindows)) { throw "Error al compilar $PckWindows" }
 $pckWinSizeMB = [math]::Round((Get-Item $PckWindows).Length / 1MB, 2)
-Write-Host "✔ Windows PCK listo: $PckWindows ($pckWinSizeMB MB)" -ForegroundColor Green
+Write-Host "[OK] Windows PCK listo: $PckWindows ($pckWinSizeMB MB)" -ForegroundColor Green
 
 if (-not $OnlyPck) {
-    Write-Host "`n📱 Compilando APK completo de Android (Ajedrez_de_Pollito.apk)..." -ForegroundColor Cyan
+    Write-Host "`n[APK] Compilando APK completo de Android (Ajedrez_de_Pollito.apk)..." -ForegroundColor Cyan
     & $GodotExe --headless --path $ProjectPath --export-release "Android" $ApkAndroid | Out-Null
     if (-not (Test-Path $ApkAndroid)) { throw "Error al compilar $ApkAndroid" }
     $apkSizeMB = [math]::Round((Get-Item $ApkAndroid).Length / 1MB, 2)
-    Write-Host "✔ APK listo: $ApkAndroid ($apkSizeMB MB)" -ForegroundColor Green
+    Write-Host "[OK] APK listo: $ApkAndroid ($apkSizeMB MB)" -ForegroundColor Green
 
-    Write-Host "💻 Compilando ejecutable de Windows (Ajedrez_de_Pollito.exe)..." -ForegroundColor Cyan
+    Write-Host "[EXE] Compilando ejecutable de Windows (Ajedrez_de_Pollito.exe)..." -ForegroundColor Cyan
     & $GodotExe --headless --path $ProjectPath --export-release "Windows Desktop" $ExeWindows | Out-Null
     if (-not (Test-Path $ExeWindows)) { throw "Error al compilar $ExeWindows" }
     $exeSizeMB = [math]::Round((Get-Item $ExeWindows).Length / 1MB, 2)
-    Write-Host "✔ Windows EXE listo: $ExeWindows ($exeSizeMB MB)" -ForegroundColor Green
+    Write-Host "[OK] Windows EXE listo: $ExeWindows ($exeSizeMB MB)" -ForegroundColor Green
 }
 
 # 6. Git commit y push
-Write-Host "`n🐙 Sincronizando con repositorio Git..." -ForegroundColor Cyan
+Write-Host "`n[GIT] Sincronizando con repositorio Git..." -ForegroundColor Cyan
 git add -A
 $commitMsg = "Release v$VersionName (Build $VersionCode): $Notes"
 git commit -m $commitMsg --allow-empty
 git push origin main
 
 # 7. Crear GitHub Release
-Write-Host "`n🚀 Publicando Release v$VersionName en GitHub..." -ForegroundColor Cyan
+Write-Host "`n[RELEASE] Publicando Release v$VersionName en GitHub..." -ForegroundColor Cyan
 $Tag = "v$VersionName"
 
 $ReleaseFiles = @(
@@ -170,8 +170,8 @@ git push origin :refs/tags/$Tag 2>$null
 & $GhExe release create $Tag $ReleaseFiles --title "Ajedrez de Pollito v$VersionName" --notes $Notes --latest
 
 Write-Host "`n==========================================================" -ForegroundColor Green
-Write-Host "🎉 ¡Deploy completado con éxito!" -ForegroundColor Yellow
-Write-Host "🌐 URL de Release: https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/tag/$Tag" -ForegroundColor White
-Write-Host "📱 Los teléfonos con el juego recibirán la notificación automática" -ForegroundColor White
-Write-Host "   y podrán actualizarse en 2 segundos descargando sólo $pckSizeMB MB." -ForegroundColor White
+Write-Host "[DONE] Deploy completado con exito!" -ForegroundColor Yellow
+Write-Host "URL de Release: https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/tag/$Tag" -ForegroundColor White
+Write-Host "Los telefonos con el juego recibiran la notificacion automatica" -ForegroundColor White
+Write-Host "y podran actualizarse en 2 segundos descargando solo $pckSizeMB MB." -ForegroundColor White
 Write-Host "==========================================================" -ForegroundColor Green
