@@ -327,6 +327,12 @@ func _open_styled_popup(overlay: Control, card: Control) -> void:
 
 		card.pivot_offset = card.size * 0.5
 		card.scale = target_scale * 0.85
+		var safe_top: float = 0.0
+		if has_node("/root/ScreenManager"):
+			safe_top = get_node("/root/ScreenManager").get_safe_top_margin()
+		if safe_top > 0.0 and card.global_position.y < safe_top:
+			card.position.y += (safe_top - card.global_position.y) + 8.0
+
 		var tw := create_tween()
 		tw.tween_property(card, "scale", target_scale, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
@@ -1573,6 +1579,8 @@ func _setup_responsive_menu() -> void:
 			sm.orientation_changed.connect(_on_orientation_changed)
 		if sm.has_signal("mobile_mode_changed") and not sm.mobile_mode_changed.is_connected(_on_mobile_mode_changed):
 			sm.mobile_mode_changed.connect(_on_mobile_mode_changed)
+		if sm.has_signal("safe_area_changed") and not sm.safe_area_changed.is_connected(_on_safe_area_changed):
+			sm.safe_area_changed.connect(_on_safe_area_changed)
 	if has_node("/root/AcademyManager"):
 		var am = get_node("/root/AcademyManager")
 		if am.has_signal("progress_updated") and not am.progress_updated.is_connected(_update_mobile_profile_and_stats):
@@ -1586,6 +1594,9 @@ func _on_mobile_mode_changed(_active: bool) -> void:
 	_update_responsive_menu()
 
 func _on_orientation_changed(_is_portrait: bool) -> void:
+	_update_responsive_menu()
+
+func _on_safe_area_changed(_top: float) -> void:
 	_update_responsive_menu()
 
 func _on_viewport_resized() -> void:

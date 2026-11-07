@@ -228,6 +228,14 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 		main_layout.vertical = true
 		main_layout.add_theme_constant_override("separation", 10)
 
+		if is_instance_valid(btn_back_to_map):
+			btn_back_to_map.text = "⬅️ Volver"
+			btn_back_to_map.custom_minimum_size = Vector2(116, 48)
+		if is_instance_valid(lbl_grade_title):
+			lbl_grade_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		if is_instance_valid(lbl_lesson_title):
+			lbl_lesson_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
 		if is_instance_valid(left_column):
 			left_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			left_column.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -249,6 +257,10 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 	else:
 		main_layout.vertical = false
 		main_layout.add_theme_constant_override("separation", 20)
+
+		if is_instance_valid(btn_back_to_map):
+			btn_back_to_map.text = "⬅️ Volver a Grados"
+			btn_back_to_map.custom_minimum_size = Vector2(165, 48)
 
 		if is_instance_valid(left_column):
 			left_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL

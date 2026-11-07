@@ -415,6 +415,8 @@ func _setup_responsive_layout() -> void:
 			sm.layout_swap_toggled.connect(_on_layout_swap_toggled)
 		if sm.has_signal("mobile_mode_changed") and not sm.mobile_mode_changed.is_connected(_on_mobile_mode_changed):
 			sm.mobile_mode_changed.connect(_on_mobile_mode_changed)
+		if sm.has_signal("safe_area_changed") and not sm.safe_area_changed.is_connected(_on_safe_area_changed):
+			sm.safe_area_changed.connect(_on_safe_area_changed)
 
 	style_card_portrait = StyleBoxFlat.new()
 	style_card_portrait.bg_color = Color(1.0, 1.0, 1.0, 0.98)
@@ -445,6 +447,9 @@ func _setup_responsive_layout() -> void:
 func _on_viewport_size_changed() -> void:
 	_update_responsive_layout()
 
+func _on_safe_area_changed(_top: float) -> void:
+	_update_responsive_layout()
+
 func _update_responsive_layout(animate: bool = false) -> void:
 	var vp = get_viewport()
 	if not vp:
@@ -458,6 +463,11 @@ func _update_responsive_layout(animate: bool = false) -> void:
 func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 	if not is_instance_valid(main_layout) or not is_instance_valid(versus_panel_container):
 		return
+
+	var safe_top: float = 0.0
+	if has_node("/root/ScreenManager"):
+		safe_top = get_node("/root/ScreenManager").get_safe_top_margin()
+	main_layout.offset_top = safe_top + 12.0
 
 	_is_portrait_mode = is_portrait
 

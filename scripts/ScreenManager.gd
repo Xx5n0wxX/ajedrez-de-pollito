@@ -92,6 +92,17 @@ func _ready() -> void:
 			win.size_changed.connect(_on_window_size_changed)
 	_update_screen_scale()
 	_initialized = true
+	get_tree().node_added.connect(_on_node_added)
+
+func _on_node_added(node: Node) -> void:
+	if node is Control and node.get_parent() == get_tree().root:
+		# Escena raíz recién montada: sincronizar Safe Area global
+		call_deferred("_apply_global_safe_area_to_root_scene", node)
+
+func _apply_global_safe_area_to_root_scene(scene_control: Control) -> void:
+	if not is_instance_valid(scene_control):
+		return
+	safe_area_changed.emit(get_safe_top_margin())
 
 func _load_settings() -> void:
 	if not FileAccess.file_exists(SETTINGS_PATH):

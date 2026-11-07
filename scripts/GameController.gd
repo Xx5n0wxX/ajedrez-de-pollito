@@ -5324,6 +5324,8 @@ func _setup_responsive_layout() -> void:
 			sm.layout_swap_toggled.connect(_on_layout_swap_toggled)
 		if sm.has_signal("mobile_mode_changed") and not sm.mobile_mode_changed.is_connected(_on_mobile_mode_changed):
 			sm.mobile_mode_changed.connect(_on_mobile_mode_changed)
+		if sm.has_signal("safe_area_changed") and not sm.safe_area_changed.is_connected(_on_safe_area_changed):
+			sm.safe_area_changed.connect(_on_safe_area_changed)
 
 	if not is_instance_valid(btn_swap_layout):
 		btn_swap_layout = %BtnSwapLayout if has_node("%BtnSwapLayout") else find_child("BtnSwapLayout", true, false)
@@ -5374,6 +5376,9 @@ func _on_mobile_mode_changed(_mob: bool) -> void:
 func _on_screen_orientation_changed(_is_portrait: bool) -> void:
 	_update_responsive_layout()
 
+func _on_safe_area_changed(_top: float) -> void:
+	_update_responsive_layout()
+
 func _on_viewport_size_changed() -> void:
 	_update_responsive_layout()
 
@@ -5403,6 +5408,11 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 
 	if not is_instance_valid(main_layout):
 		return
+
+	var safe_top: float = 0.0
+	if has_node("/root/ScreenManager"):
+		safe_top = get_node("/root/ScreenManager").get_safe_top_margin()
+	main_layout.offset_top = safe_top + 12.0
 
 	var is_swapped: bool = false
 	var is_mob: bool = false

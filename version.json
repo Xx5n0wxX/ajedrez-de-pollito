@@ -1,8 +1,8 @@
 {
-  "version_code": 4,
-  "version_name": "1.0.3",
+  "version_code": 5,
+  "version_name": "1.0.4",
   "release_date": "2026-11-07",
-  "notes": "Rediseno completo de la Academia y Gimnasio tactico con estilo 3D, textos grandes y Safe Area para notch y barra de estado",
+  "notes": "Zona segura (Safe Area) global para notch de camara y barra de notificaciones aplicada a todas las pantallas del juego (Partida Bot, Versus Online, Academia, Aula y Menu)",
   "pck_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck",
   "pck_win_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck",
   "apk_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk",
