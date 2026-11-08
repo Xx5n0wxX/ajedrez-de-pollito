@@ -36,8 +36,10 @@ var _touch_start_pos: Vector2 = Vector2.ZERO
 var _touch_last_pos: Vector2 = Vector2.ZERO
 var _touch_start_scroll_val: int = 0
 var _is_touch_dragging: bool = false
-var _drag_threshold: float = 12.0 # Píxeles necesarios para diferenciar tap rápido de arrastre
+var _drag_threshold: float = 6.0 # Reducido a 6px para detectar arrastre de inmediato
+var _total_drag_distance: float = 0.0
 var _touch_last_time_ms: int = 0
+var _last_scroll_time_ms: int = 0 # Momento del último movimiento de scroll
 var _scroll_velocity: float = 0.0 # Velocidad inercial en píxeles/segundo
 var _momentum_target: ScrollContainer = null
 var _momentum_axis: String = ""
@@ -54,6 +56,16 @@ func _ready() -> void:
 		grades_tab_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if lessons_vbox:
 		lessons_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# Monitorear cambios en los scrollbars para registrar cualquier movimiento de scroll
+	if grades_scroll:
+		var hbar = grades_scroll.get_h_scroll_bar()
+		if hbar and not hbar.value_changed.is_connected(_on_scroll_value_changed):
+			hbar.value_changed.connect(_on_scroll_value_changed)
+	if lessons_scroll:
+		var vbar = lessons_scroll.get_v_scroll_bar()
+		if vbar and not vbar.value_changed.is_connected(_on_scroll_value_changed):
+			vbar.value_changed.connect(_on_scroll_value_changed)
 	
 	# Conexión con ScreenManager para Notch / Safe Area y rotación
 	if has_node("/root/ScreenManager"):
@@ -78,8 +90,24 @@ func _ready() -> void:
 	_apply_safe_area()
 	_refresh_view()
 
+func _on_scroll_value_changed(_val: float) -> void:
+	_last_scroll_time_ms = Time.get_ticks_msec()
+
+## Verifica si está permitido activar un botón (evita clics accidentales durante o tras un scroll)
+func _can_interact_buttons() -> bool:
+	if _is_touch_dragging:
+		return false
+	if _total_drag_distance > 6.0:
+		return false
+	if abs(_scroll_velocity) > 15.0:
+		return false
+	if (Time.get_ticks_msec() - _last_scroll_time_ms) < 350:
+		return false
+	return true
+
 func _process(delta: float) -> void:
 	if _momentum_target and is_instance_valid(_momentum_target) and abs(_scroll_velocity) > 10.0:
+		_last_scroll_time_ms = Time.get_ticks_msec()
 		if _momentum_axis == "h":
 			var hbar = _momentum_target.get_h_scroll_bar()
 			var max_val = max(0, int(hbar.max_value - hbar.page))
@@ -132,10 +160,15 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if is_down:
+		var was_moving = (abs(_scroll_velocity) > 15.0) or ((Time.get_ticks_msec() - _last_scroll_time_ms) < 250)
 		_scroll_velocity = 0.0
 		_momentum_target = null
 		_touch_scroll_active = null
 		_is_touch_dragging = false
+		_total_drag_distance = 0.0
+
+		if was_moving:
+			_last_scroll_time_ms = Time.get_ticks_msec()
 
 		if grades_scroll and grades_scroll.is_visible_in_tree():
 			var local_g = grades_scroll.make_input_local(event)
@@ -164,10 +197,14 @@ func _input(event: InputEvent) -> void:
 		var dt = (now - _touch_last_time_ms) / 1000.0
 		_touch_last_time_ms = now
 
+		var total_delta = (ev_pos - _touch_start_pos).length()
+		_total_drag_distance = max(_total_drag_distance, total_delta)
+
 		if _touch_scroll_axis == "h":
 			var delta_x = ev_pos.x - _touch_start_pos.x
-			if abs(delta_x) > _drag_threshold or _is_touch_dragging:
+			if abs(delta_x) > _drag_threshold or _is_touch_dragging or _total_drag_distance > 6.0:
 				_is_touch_dragging = true
+				_last_scroll_time_ms = now
 				var hbar = _touch_scroll_active.get_h_scroll_bar()
 				var max_val = max(0, int(hbar.max_value - hbar.page))
 				var target_val = clamp(int(_touch_start_scroll_val - delta_x), 0, max_val)
@@ -179,10 +216,15 @@ func _input(event: InputEvent) -> void:
 				_touch_last_pos = ev_pos
 				get_viewport().set_input_as_handled()
 
+				var fo = get_viewport().gui_get_focus_owner()
+				if fo:
+					fo.release_focus()
+
 		elif _touch_scroll_axis == "v":
 			var delta_y = ev_pos.y - _touch_start_pos.y
-			if abs(delta_y) > _drag_threshold or _is_touch_dragging:
+			if abs(delta_y) > _drag_threshold or _is_touch_dragging or _total_drag_distance > 6.0:
 				_is_touch_dragging = true
+				_last_scroll_time_ms = now
 				var vbar = _touch_scroll_active.get_v_scroll_bar()
 				var max_val = max(0, int(vbar.max_value - vbar.page))
 				var target_val = clamp(int(_touch_start_scroll_val - delta_y), 0, max_val)
@@ -194,9 +236,14 @@ func _input(event: InputEvent) -> void:
 				_touch_last_pos = ev_pos
 				get_viewport().set_input_as_handled()
 
+				var fo = get_viewport().gui_get_focus_owner()
+				if fo:
+					fo.release_focus()
+
 	elif is_up:
 		if _touch_scroll_active != null:
-			if _is_touch_dragging:
+			if _is_touch_dragging or _total_drag_distance > 6.0:
+				_last_scroll_time_ms = Time.get_ticks_msec()
 				var now = Time.get_ticks_msec()
 				var dt = (now - _touch_last_time_ms) / 1000.0
 				if dt < 0.12 and abs(_scroll_velocity) > 60.0:
@@ -263,18 +310,21 @@ func _update_header() -> void:
 		gender_icon = pm.get_gender_icon()
 	
 	if lbl_player_info:
-		lbl_player_info.text = "%s %s" % [gender_icon, player_name]
-		lbl_player_info.add_theme_font_size_override("font_size", 18 if is_port else 16)
+		var display_name = player_name
+		if is_port and display_name.length() > 7:
+			display_name = display_name.substr(0, 6) + "…"
+		lbl_player_info.text = "%s %s" % [gender_icon, display_name]
+		lbl_player_info.add_theme_font_size_override("font_size", 16 if is_port else 16)
 	
 	var total_stars = am.get_total_stars() if am else 0
 	if lbl_total_stars:
 		lbl_total_stars.text = "⭐ %d" % total_stars
-		lbl_total_stars.add_theme_font_size_override("font_size", 18 if is_port else 16)
+		lbl_total_stars.add_theme_font_size_override("font_size", 16 if is_port else 16)
 	
 	if btn_back_to_menu:
 		btn_back_to_menu.text = "⬅️ Menú"
-		btn_back_to_menu.custom_minimum_size = Vector2(110 if is_port else 136, 52)
-		btn_back_to_menu.add_theme_font_size_override("font_size", 18 if is_port else 16)
+		btn_back_to_menu.custom_minimum_size = Vector2(96 if is_port else 136, 48 if is_port else 52)
+		btn_back_to_menu.add_theme_font_size_override("font_size", 16 if is_port else 16)
 
 	var title_lbl = find_child("MainTitle", true, false) as Label
 	if title_lbl:
@@ -355,6 +405,8 @@ func _build_mode_buttons() -> void:
 		mode_selector_bar.add_child(btn)
 
 func _select_mode(m_id: String) -> void:
+	if not _can_interact_buttons():
+		return
 	if audio_player:
 		audio_player.stream = SFX_CLICK
 		audio_player.play()
@@ -487,6 +539,8 @@ func _build_practice_tabs() -> void:
 		grades_tab_container.add_child(btn)
 
 func _select_grade(g_num: int) -> void:
+	if not _can_interact_buttons():
+		return
 	if audio_player:
 		audio_player.stream = SFX_CLICK
 		audio_player.play()
@@ -499,6 +553,8 @@ func _select_grade(g_num: int) -> void:
 	_refresh_view()
 
 func _select_practice_pack(p_id: String) -> void:
+	if not _can_interact_buttons():
+		return
 	if audio_player:
 		audio_player.stream = SFX_CLICK
 		audio_player.play()
@@ -915,6 +971,8 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 	return card
 
 func _start_lesson(lesson_idx: int) -> void:
+	if not _can_interact_buttons():
+		return
 	if audio_player:
 		audio_player.stream = SFX_CLICK
 		audio_player.play()
@@ -928,6 +986,8 @@ func _start_lesson(lesson_idx: int) -> void:
 	get_tree().change_scene_to_file("res://scenes/AulaAcademia.tscn")
 
 func _start_practice_exercise(ex_idx: int) -> void:
+	if not _can_interact_buttons():
+		return
 	if audio_player:
 		audio_player.stream = SFX_CLICK
 		audio_player.play()
@@ -941,6 +1001,8 @@ func _start_practice_exercise(ex_idx: int) -> void:
 	get_tree().change_scene_to_file("res://scenes/AulaAcademia.tscn")
 
 func _on_back_to_menu_pressed() -> void:
+	if not _can_interact_buttons():
+		return
 	if audio_player:
 		audio_player.stream = SFX_CLICK
 		audio_player.play()
