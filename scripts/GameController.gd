@@ -178,6 +178,8 @@ var is_player_turn: bool = true
 var current_turn_number: int = 1
 
 @onready var diff_button: Button = %DifficultyButton if has_node("%DifficultyButton") else find_child("DifficultyButton", true, false)
+const DifficultyModalScene = preload("res://scenes/DifficultyModal.tscn")
+var difficulty_modal: CanvasLayer = null
 
 @onready var undo_button: Button = %UndoButton if has_node("%UndoButton") else find_child("UndoButton", true, false)
 
@@ -1489,9 +1491,11 @@ func _setup_match_control_buttons() -> void:
 
 		diff_button = %DifficultyButton if has_node("%DifficultyButton") else find_child("DifficultyButton", true, false)
 
-	if diff_button and not diff_button.pressed.is_connected(cycle_difficulty):
-
-		diff_button.pressed.connect(cycle_difficulty)
+	if diff_button:
+		if diff_button.pressed.is_connected(cycle_difficulty):
+			diff_button.pressed.disconnect(cycle_difficulty)
+		if not diff_button.pressed.is_connected(open_difficulty_modal):
+			diff_button.pressed.connect(open_difficulty_modal)
 
 
 
@@ -2683,16 +2687,43 @@ func _speak_voice(text: String, delay: float = 0.22) -> void:
 
 
 
+func _setup_difficulty_modal() -> void:
+	if not is_instance_valid(difficulty_modal):
+		difficulty_modal = DifficultyModalScene.instantiate()
+		add_child(difficulty_modal)
+		difficulty_modal.level_selected.connect(_on_difficulty_selected)
+
+func open_difficulty_modal() -> void:
+	if is_match_started:
+		return
+	_setup_difficulty_modal()
+	if is_instance_valid(difficulty_modal):
+		difficulty_modal.open(bot_difficulty)
+
+func _on_difficulty_selected(new_level: int) -> void:
+	bot_difficulty = clampi(new_level, 1, 5)
+	_update_difficulty_ui()
+	if bot_difficulty >= 4 and clock_toggle and clock_toggle.button_pressed:
+		set_dialogue("[color=#db2777][b]Profe Pollito:[/b][/color] ¡Dificultad ajustada a [b]%s[/b]! ⏱️ Modo torneo activo: tras mover tu pieza, deberás pulsar tu reloj o presionar [b][Espacio][/b] para pasar el turno." % _get_difficulty_name())
+	else:
+		set_dialogue("[color=#db2777][b]Profe Pollito:[/b][/color] ¡Dificultad ajustada a [b]%s[/b]!" % _get_difficulty_name())
+
+	if chess_board:
+		chess_board.clear_suggestion()
+
+	if is_player_turn and not is_match_started:
+		_apply_turn_coaching()
+
 func _setup_difficulty_button() -> void:
-
 	if not diff_button:
-
 		diff_button = %DifficultyButton if has_node("%DifficultyButton") else find_child("DifficultyButton", true, false)
+	if diff_button:
+		if diff_button.pressed.is_connected(cycle_difficulty):
+			diff_button.pressed.disconnect(cycle_difficulty)
+		if not diff_button.pressed.is_connected(open_difficulty_modal):
+			diff_button.pressed.connect(open_difficulty_modal)
 
-	if diff_button and not diff_button.pressed.is_connected(cycle_difficulty):
-
-		diff_button.pressed.connect(cycle_difficulty)
-
+	_setup_difficulty_modal()
 	_update_difficulty_ui()
 
 
@@ -3208,21 +3239,13 @@ func _get_difficulty_name() -> String:
 func _update_difficulty_ui() -> void:
 
 	if diff_button:
-
-		var btn_label = "🐣 FÁCIL"
-
+		var btn_label = "🎯 Nivel: 🐔 Profe Pollito (~1700) ▾"
 		match bot_difficulty:
-
-			1: btn_label = "🐣 FÁCIL"
-
-			2: btn_label = "🐥 MEDIO"
-
-			3: btn_label = "🐔 PROFE"
-
-			4: btn_label = "🦅 MAESTRO"
-
-			5: btn_label = "👑 GRAN MAESTRO"
-
+			1: btn_label = "🎯 Nivel: 🐣 Fácil (~700) ▾"
+			2: btn_label = "🎯 Nivel: 🐥 Medio (~1200) ▾"
+			3: btn_label = "🎯 Nivel: 🐔 Profe Pollito (~1700) ▾"
+			4: btn_label = "🎯 Nivel: 🦅 Maestro (~2200) ▾"
+			5: btn_label = "🎯 Nivel: 👑 Gran Maestro (~2600+) ▾"
 		diff_button.text = btn_label
 
 	if lesson_badge:
@@ -3295,14 +3318,10 @@ func cycle_difficulty() -> void:
 
 
 func _on_difficulty_badge_gui_input(event: InputEvent) -> void:
-
 	if is_match_started:
-
 		return
-
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-
-		cycle_difficulty()
+	if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+		open_difficulty_modal()
 
 
 
@@ -5463,7 +5482,7 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 			dialogue_text.custom_minimum_size = Vector2(0, 70 if is_mob else 60)
 		var avatar_cont_p = find_child("AvatarContainer", true, false) as Control
 		if is_instance_valid(avatar_cont_p):
-			avatar_cont_p.custom_minimum_size = Vector2(68, 68) if is_mob else Vector2(96, 96)
+			avatar_cont_p.custom_minimum_size = Vector2(74, 74) if is_mob else Vector2(96, 96)
 		if is_instance_valid(move_history_section) and not is_in_review_mode:
 			move_history_section.custom_minimum_size = Vector2(0, 80 if is_mob else 75)
 		var stats_sec = right_column.find_child("MatchStatsSection", true, false) if is_instance_valid(right_column) else null
@@ -5512,16 +5531,27 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 func _apply_mobile_scaling(is_mob: bool) -> void:
 	# Ajuste de tamaño de fuente para diálogo
 	if is_instance_valid(dialogue_text):
-		dialogue_text.add_theme_font_size_override("normal_font_size", 16 if is_mob else 14)
+		dialogue_text.add_theme_font_size_override("normal_font_size", 15 if is_mob else 14)
+
+	# Título de turno / lección
+	if is_instance_valid(lesson_title):
+		lesson_title.add_theme_font_override("font", CHERRY_FONT)
+		lesson_title.add_theme_font_size_override("font_size", 24 if is_mob else 20)
+		lesson_title.add_theme_color_override("font_color", Color("#be185d"))
 
 	# Botones de acción
 	var act_btns = [diff_button, undo_button, new_game_button, resign_button, btn_review_match]
-	var act_h = 48.0 if is_mob else 38.0
-	var act_font = 15 if is_mob else 13
+	var act_h = 52.0 if is_mob else 42.0
+	var act_font = 16 if is_mob else 13
 	for b in act_btns:
 		if is_instance_valid(b):
 			b.custom_minimum_size.y = act_h
 			b.add_theme_font_size_override("font_size", act_font)
+
+	if is_instance_valid(btn_review_match):
+		btn_review_match.custom_minimum_size.y = 52.0 if is_mob else 44.0
+		btn_review_match.add_theme_font_override("font", CHERRY_FONT)
+		btn_review_match.add_theme_font_size_override("font_size", 18 if is_mob else 15)
 
 	# Botones superiores (Pista, Silencio, Swap, Pausa)
 	var top_btns = [hint_button, mute_button, btn_swap_layout, btn_pause_menu]
@@ -5534,7 +5564,7 @@ func _apply_mobile_scaling(is_mob: bool) -> void:
 
 	# Botones de revisión
 	var rev_btns = [replay_first_btn, replay_prev_btn, replay_play_btn, replay_next_btn, replay_last_btn, btn_exit_review]
-	var rev_h = 46.0 if is_mob else 36.0
+	var rev_h = 48.0 if is_mob else 38.0
 	var rev_font = 16 if is_mob else 14
 	for rb in rev_btns:
 		if is_instance_valid(rb):
@@ -5542,11 +5572,13 @@ func _apply_mobile_scaling(is_mob: bool) -> void:
 			rb.add_theme_font_size_override("font_size", rev_font)
 
 	# Reloj de Ajedrez y tiempo
-	var time_font = 24 if is_mob else 16
-	var player_lbl_font = 14 if is_mob else 11
+	var time_font = 24 if is_mob else 20
+	var player_lbl_font = 13 if is_mob else 11
 	if is_instance_valid(white_time_label):
+		white_time_label.add_theme_font_override("font", CHERRY_FONT)
 		white_time_label.add_theme_font_size_override("font_size", time_font)
 	if is_instance_valid(black_time_label):
+		black_time_label.add_theme_font_override("font", CHERRY_FONT)
 		black_time_label.add_theme_font_size_override("font_size", time_font)
 	if is_instance_valid(white_player_label):
 		white_player_label.add_theme_font_size_override("font_size", player_lbl_font)

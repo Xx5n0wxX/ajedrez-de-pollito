@@ -325,7 +325,7 @@ fit_content = true
 
 [node name="PollitoAvatar" type="TextureRect" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 200)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

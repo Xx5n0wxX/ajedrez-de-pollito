@@ -94,22 +94,25 @@ func _on_parent_resized() -> void:
 	if visual_sprite:
 		visual_sprite.pivot_offset = size / 2.0
 	if gallo_puppet:
+		var avail_h: float = maxf(10.0, size.y - 12.0)
+		var avail_w: float = maxf(10.0, size.x - 12.0)
+		var max_fit_s: float = minf(avail_w / 420.0, avail_h / 400.0)
 		var s: float = 0.0
 		if fixed_scale > 0.0:
-			s = fixed_scale
+			# Respetar fixed_scale pero nunca desbordar los límites del control
+			s = clampf(max_fit_s, 0.22, fixed_scale)
 		else:
-			var target_dim: float = min(size.x, size.y)
-			var calc_s: float = target_dim / 420.0
 			if prevent_shrink:
-				if calc_s > _max_seen_scale:
-					_max_seen_scale = calc_s
-				s = _max_seen_scale if _max_seen_scale > 0.0 else calc_s
+				if max_fit_s > _max_seen_scale:
+					_max_seen_scale = max_fit_s
+				s = _max_seen_scale if _max_seen_scale > 0.0 else max_fit_s
 			else:
-				s = calc_s
+				s = max_fit_s
+			s = clampf(s, 0.22, 0.65)
 
 		gallo_puppet.scale = Vector2(s, s)
-		# Centrado visual exacto del cuerpo (439x437 px) evitando cualquier recorte
-		gallo_puppet.position = Vector2(size.x * 0.5 + 5.0 * s, size.y * 0.5 + 206.0 * s)
+		# Centrado visual simétrico exacto (crest a -200*s, pies/sombra a +200*s respecto al centro)
+		gallo_puppet.position = Vector2(size.x * 0.5 + 5.0 * s, size.y * 0.5 + 180.0 * s)
 
 func set_expression(expr_name: String, animate: bool = true) -> void:
 	current_expression = expr_name

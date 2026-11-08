@@ -7,6 +7,7 @@ extends Control
 ## Capturas y balance material (+N), Rendición, Oferta de tablas y Revancha.
 
 const NetworkManagerScript = preload("res://scripts/NetworkManager.gd")
+const CHERRY_FONT = preload("res://assets/fonts/CherryBombOne-Regular.ttf")
 
 # Referencias principales
 @onready var chess_board: ChessBoard = %ChessBoard if has_node("%ChessBoard") else find_child("ChessBoard", true, false)
@@ -604,28 +605,36 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 func _apply_mobile_scaling(is_mob: bool) -> void:
 	# Botones de acción principales
 	var act_btns = [btn_resign, btn_offer_draw, btn_pause_menu, btn_review_match_panel]
-	var act_h = 46.0 if is_mob else 34.0
-	var act_font = 15 if is_mob else 12
+	var act_h = 52.0 if is_mob else 40.0
+	var act_font = 16 if is_mob else 13
 	for b in act_btns:
 		if is_instance_valid(b):
 			b.custom_minimum_size.y = act_h
 			b.add_theme_font_size_override("font_size", act_font)
 
+	if is_instance_valid(btn_review_match_panel):
+		btn_review_match_panel.custom_minimum_size.y = 52.0 if is_mob else 40.0
+		btn_review_match_panel.add_theme_font_override("font", CHERRY_FONT)
+		btn_review_match_panel.add_theme_font_size_override("font_size", 16 if is_mob else 13)
+
 	# Botones de swap
 	if is_instance_valid(btn_swap_layout_online):
-		btn_swap_layout_online.custom_minimum_size = Vector2(38, 34) if is_mob else Vector2(34, 30)
+		btn_swap_layout_online.custom_minimum_size = Vector2(42, 38) if is_mob else Vector2(34, 30)
 		btn_swap_layout_online.add_theme_font_size_override("font_size", 18 if is_mob else 16)
 	if is_instance_valid(btn_swap_layout_review_online):
-		btn_swap_layout_review_online.custom_minimum_size = Vector2(38, 30) if is_mob else Vector2(34, 26)
+		btn_swap_layout_review_online.custom_minimum_size = Vector2(42, 34) if is_mob else Vector2(34, 26)
 		btn_swap_layout_review_online.add_theme_font_size_override("font_size", 16 if is_mob else 14)
 
 	# Reacciones rápidas
 	var reaction_container = find_child("ReactionGrid", true, false)
+	if not is_instance_valid(reaction_container):
+		reaction_container = find_child("QuickReactionsBar", true, false)
 	if is_instance_valid(reaction_container):
 		for child in reaction_container.get_children():
 			if child is Button:
-				child.custom_minimum_size = Vector2(40, 36) if is_mob else Vector2(30, 26)
-				child.add_theme_font_size_override("font_size", 18 if is_mob else 14)
+				child.custom_minimum_size = Vector2(0, 48) if is_mob else Vector2(0, 36)
+				child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				child.add_theme_font_size_override("font_size", 22 if is_mob else 16)
 
 	# Input de chat y botón enviar
 	var chat_input = find_child("ChatInput", true, false) as LineEdit
@@ -1764,12 +1773,26 @@ func _end_game(title: String, detail: String) -> void:
 		if btn_rematch:
 			btn_rematch.text = "🔄 Pedir Revancha"
 			btn_rematch.disabled = false
+		var is_mob_gameover: bool = _is_portrait_mode
+		if has_node("/root/ScreenManager"):
+			var sm = get_node("/root/ScreenManager")
+			if sm.has_method("is_mobile"):
+				is_mob_gameover = sm.is_mobile()
+
 		if btn_review_match_overlay:
 			btn_review_match_overlay.visible = true
 			btn_review_match_overlay.disabled = false
+			btn_review_match_overlay.text = "🔍 Revisar Partida"
+			btn_review_match_overlay.add_theme_font_override("font", CHERRY_FONT)
+			btn_review_match_overlay.add_theme_font_size_override("font_size", 16 if is_mob_gameover else 14)
+			btn_review_match_overlay.custom_minimum_size = Vector2(170, 52 if is_mob_gameover else 42)
 		if btn_review_match_panel:
 			btn_review_match_panel.visible = true
 			btn_review_match_panel.disabled = false
+			btn_review_match_panel.text = "🔍 Revisar Partida"
+			btn_review_match_panel.add_theme_font_override("font", CHERRY_FONT)
+			btn_review_match_panel.add_theme_font_size_override("font_size", 16 if is_mob_gameover else 13)
+			btn_review_match_panel.custom_minimum_size.y = 52.0 if is_mob_gameover else 40.0
 		game_over_overlay.visible = true
 
 	_add_system_chat("%s - %s" % [title, detail])
