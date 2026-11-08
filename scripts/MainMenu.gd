@@ -253,82 +253,6 @@ func _reset_modal_drag_flag() -> void:
 	_is_touch_modal_dragging = false
 	_touch_modal_total_drag_dist = 0.0
 
-func _handle_modal_scroll_gui_input(scroll_container: ScrollContainer, event: InputEvent) -> void:
-	if not scroll_container or not is_instance_valid(scroll_container):
-		return
-
-	if event is InputEventScreenTouch or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT):
-		if event.pressed:
-			var was_moving = (abs(_modal_scroll_velocity) > 15.0) or ((Time.get_ticks_msec() - _last_modal_scroll_time_ms) < 250)
-			_modal_scroll_velocity = 0.0
-			_modal_momentum_target = null
-			_touch_scroll_modal = scroll_container
-			_touch_modal_start_pos = event.position
-			_touch_modal_last_pos = event.position
-			_touch_modal_start_scroll_val = scroll_container.scroll_vertical
-			_touch_modal_total_drag_dist = 0.0
-			_touch_modal_last_time_ms = Time.get_ticks_msec()
-			_is_touch_modal_dragging = false
-			if was_moving:
-				_last_modal_scroll_time_ms = Time.get_ticks_msec()
-		else:
-			var now = Time.get_ticks_msec()
-			var dt = (now - _touch_modal_last_time_ms) / 1000.0
-			if dt < 0.12 and abs(_modal_scroll_velocity) > 60.0:
-				_modal_momentum_target = scroll_container
-				_last_modal_scroll_time_ms = now
-			else:
-				_modal_scroll_velocity = 0.0
-				_modal_momentum_target = null
-
-			if _is_touch_modal_dragging or _touch_modal_total_drag_dist > 6.0:
-				_last_modal_scroll_time_ms = now
-			_touch_scroll_modal = null
-			call_deferred("_reset_modal_drag_flag")
-
-	elif event is InputEventScreenDrag or (event is InputEventMouseMotion and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0):
-		var rel_y: float = 0.0
-		var vel_y: float = 0.0
-		if event is InputEventScreenDrag:
-			rel_y = event.relative.y
-			vel_y = event.velocity.y
-		elif event is InputEventMouseMotion:
-			rel_y = event.relative.y
-			vel_y = event.velocity.y
-
-		_touch_modal_total_drag_dist += abs(rel_y)
-
-		if abs(rel_y) > 0.0:
-			var now = Time.get_ticks_msec()
-			var dt = (now - _touch_modal_last_time_ms) / 1000.0
-			_touch_modal_last_time_ms = now
-
-			if _touch_modal_total_drag_dist > 6.0 or _is_touch_modal_dragging:
-				_is_touch_modal_dragging = true
-				_last_modal_scroll_time_ms = now
-
-				var vbar = scroll_container.get_v_scroll_bar()
-				var max_val = max(0, int(vbar.max_value - vbar.page))
-				var new_val = clamp(int(scroll_container.scroll_vertical - rel_y), 0, max_val)
-				scroll_container.scroll_vertical = new_val
-
-				if abs(vel_y) > 0.0:
-					_modal_scroll_velocity = -vel_y
-				elif dt > 0.001:
-					_modal_scroll_velocity = -rel_y / dt
-
-				var fo = get_viewport().gui_get_focus_owner()
-				if fo:
-					fo.release_focus()
-
-func _on_profiles_scroll_gui_input(ev: InputEvent) -> void:
-	if profiles_scroll:
-		_handle_modal_scroll_gui_input(profiles_scroll, ev)
-
-func _on_history_scroll_gui_input(ev: InputEvent) -> void:
-	if history_scroll_container:
-		_handle_modal_scroll_gui_input(history_scroll_container, ev)
-
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
@@ -345,12 +269,16 @@ func _handle_modal_scroll_input(event: InputEvent) -> void:
 	var ev_pos = Vector2.ZERO
 
 	if event is InputEventScreenTouch:
+		if event.index != 0:
+			return
 		ev_pos = event.position
 		if event.pressed:
 			is_down = true
 		else:
 			is_up = true
 	elif event is InputEventScreenDrag:
+		if event.index != 0:
+			return
 		ev_pos = event.position
 		is_drag = true
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -630,15 +558,11 @@ func _setup_profile_ui() -> void:
 	if profiles_scroll:
 		profiles_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 		profiles_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
-		if not profiles_scroll.gui_input.is_connected(_on_profiles_scroll_gui_input):
-			profiles_scroll.gui_input.connect(_on_profiles_scroll_gui_input)
 		var vbar = profiles_scroll.get_v_scroll_bar()
 		if vbar and not vbar.value_changed.is_connected(_on_modal_scroll_value_changed):
 			vbar.value_changed.connect(_on_modal_scroll_value_changed)
 	if profiles_list_vbox:
 		profiles_list_vbox.mouse_filter = Control.MOUSE_FILTER_PASS
-		if not profiles_list_vbox.gui_input.is_connected(_on_profiles_scroll_gui_input):
-			profiles_list_vbox.gui_input.connect(_on_profiles_scroll_gui_input)
 
 	# Botones de modal editor
 	_ensure_archetype_buttons_exist()
@@ -960,7 +884,6 @@ func _populate_select_list() -> void:
 
 		var card = PanelContainer.new()
 		card.mouse_filter = Control.MOUSE_FILTER_PASS
-		card.gui_input.connect(func(ev): _handle_modal_scroll_gui_input(profiles_scroll, ev))
 		var card_style = StyleBoxFlat.new()
 		card_style.bg_color = Color("#FFF0F6") if is_active else Color("#FFFFFF")
 		card_style.border_width_left = 3 if is_active else 2
@@ -1019,7 +942,6 @@ func _populate_select_list() -> void:
 			btn_select.add_theme_stylebox_override("hover", sel_hov)
 			btn_select.add_theme_stylebox_override("pressed", sel_sb)
 			btn_select.add_theme_color_override("font_color", Color.WHITE)
-			btn_select.gui_input.connect(func(ev): _handle_modal_scroll_gui_input(profiles_scroll, ev))
 			var cur_id = p_id
 			btn_select.pressed.connect(func():
 				if not _can_interact_modal_buttons():
@@ -1045,7 +967,6 @@ func _populate_select_list() -> void:
 		btn_edit.add_theme_stylebox_override("normal", edit_sb)
 		btn_edit.add_theme_stylebox_override("hover", edit_hov)
 		btn_edit.add_theme_stylebox_override("pressed", edit_sb)
-		btn_edit.gui_input.connect(func(ev): _handle_modal_scroll_gui_input(profiles_scroll, ev))
 		var edit_id = p_id
 		btn_edit.pressed.connect(func():
 			if not _can_interact_modal_buttons():
@@ -1752,21 +1673,15 @@ func _setup_match_history_ui() -> void:
 	if history_scroll_container:
 		history_scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 		history_scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
-		if not history_scroll_container.gui_input.is_connected(_on_history_scroll_gui_input):
-			history_scroll_container.gui_input.connect(_on_history_scroll_gui_input)
 		var vbar = history_scroll_container.get_v_scroll_bar()
 		if vbar and not vbar.value_changed.is_connected(_on_modal_scroll_value_changed):
 			vbar.value_changed.connect(_on_modal_scroll_value_changed)
 
 	if history_content:
 		history_content.mouse_filter = Control.MOUSE_FILTER_PASS
-		if not history_content.gui_input.is_connected(_on_history_scroll_gui_input):
-			history_content.gui_input.connect(_on_history_scroll_gui_input)
 
 	if history_list_vbox:
 		history_list_vbox.mouse_filter = Control.MOUSE_FILTER_PASS
-		if not history_list_vbox.gui_input.is_connected(_on_history_scroll_gui_input):
-			history_list_vbox.gui_input.connect(_on_history_scroll_gui_input)
 
 func _on_filter_all_pressed() -> void:
 	_set_history_filter("all")
@@ -1778,19 +1693,21 @@ func _on_filter_versus_pressed() -> void:
 	_set_history_filter("versus")
 
 func _open_history_overlay() -> void:
-	if match_history_overlay:
-		_open_styled_popup(match_history_overlay, history_card)
-
 	var is_mob: bool = false
+	var safe_top: float = 0.0
+	var safe_bottom: float = 0.0
 	if has_node("/root/ScreenManager"):
 		var sm = get_node("/root/ScreenManager")
 		if sm.has_method("is_mobile"):
 			is_mob = sm.is_mobile()
+		safe_top = sm.get_safe_top_margin()
+		safe_bottom = sm.get_safe_bottom_margin()
 
 	if history_card:
 		var vp_sz = get_viewport().get_visible_rect().size
 		if is_mob:
-			history_card.custom_minimum_size = Vector2(minf(vp_sz.x - 20.0, 680.0), minf(vp_sz.y - 40.0, 640.0))
+			var max_card_h = vp_sz.y - (safe_top + safe_bottom + 48.0)
+			history_card.custom_minimum_size = Vector2(minf(vp_sz.x - 20.0, 680.0), minf(max_card_h, 680.0))
 		else:
 			history_card.custom_minimum_size = Vector2(660, 540)
 
@@ -1798,6 +1715,9 @@ func _open_history_overlay() -> void:
 		if is_instance_valid(btn):
 			btn.custom_minimum_size.y = 44.0 if is_mob else 34.0
 			btn.add_theme_font_size_override("font_size", 15 if is_mob else 13)
+
+	if match_history_overlay:
+		_open_styled_popup(match_history_overlay, history_card)
 
 	_render_history_list()
 
@@ -1903,7 +1823,6 @@ func _create_match_card(m: Dictionary) -> Control:
 
 	var panel = PanelContainer.new()
 	panel.mouse_filter = Control.MOUSE_FILTER_PASS
-	panel.gui_input.connect(func(ev): _handle_modal_scroll_gui_input(history_scroll_container, ev))
 	var card_style = StyleBoxFlat.new()
 	card_style.bg_color = Color("#ffffff")
 	card_style.set_border_width_all(1)
@@ -2026,7 +1945,6 @@ func _create_match_card(m: Dictionary) -> Control:
 	var rev_style = _create_style_box(Color("#6366f1"), Color("#4338ca"), 0, 3, 8)
 	_apply_btn_style(btn_rev, rev_style, Color.WHITE)
 	btn_rev.add_theme_font_size_override("font_size", 15 if is_mob else 13)
-	btn_rev.gui_input.connect(func(ev): _handle_modal_scroll_gui_input(history_scroll_container, ev))
 	btn_rev.pressed.connect(func():
 		if not _can_interact_modal_buttons():
 			return
@@ -2040,7 +1958,6 @@ func _create_match_card(m: Dictionary) -> Control:
 	var del_style = _create_style_box(Color("#f8fafc"), Color("#cbd5e1"), 1, 1, 6)
 	_apply_btn_style(btn_del, del_style, Color("#64748b"))
 	btn_del.add_theme_font_size_override("font_size", 13 if is_mob else 11)
-	btn_del.gui_input.connect(func(ev): _handle_modal_scroll_gui_input(history_scroll_container, ev))
 	var match_id = str(m.get("id", ""))
 	btn_del.pressed.connect(func():
 		if not _can_interact_modal_buttons():
