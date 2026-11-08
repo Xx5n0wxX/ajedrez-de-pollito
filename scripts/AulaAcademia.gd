@@ -277,47 +277,47 @@ func _apply_responsive_layout(is_portrait: bool, animate: bool = false) -> void:
 			var panel_w = 520.0 if is_mob else 480.0
 			right_column.custom_minimum_size = Vector2(panel_w, 0)
 
-	_apply_mobile_scaling(is_mob)
+	_apply_mobile_scaling(is_mob or is_portrait)
 
 	if is_instance_valid(board) and board.has_method("_update_board_layout"):
 		board.call_deferred("_update_board_layout")
 
-func _apply_mobile_scaling(is_mob: bool) -> void:
+func _apply_mobile_scaling(big_mode: bool) -> void:
 	if is_instance_valid(lbl_dialogue):
-		lbl_dialogue.add_theme_font_size_override("normal_font_size", 18 if is_mob else 16)
+		lbl_dialogue.add_theme_font_size_override("normal_font_size", 20 if big_mode else 16)
 	if is_instance_valid(lbl_objective):
-		lbl_objective.add_theme_font_size_override("font_size", 17 if is_mob else 15)
+		lbl_objective.add_theme_font_size_override("font_size", 19 if big_mode else 16)
 	if is_instance_valid(lbl_feedback):
-		lbl_feedback.add_theme_font_size_override("font_size", 16 if is_mob else 14)
+		lbl_feedback.add_theme_font_size_override("font_size", 18 if big_mode else 15)
 
 	var act_btns = [btn_hint, btn_reset, btn_rewind]
-	var act_h = 54.0 if is_mob else 48.0
-	var act_font = 16 if is_mob else 14
+	var act_h = 58.0 if big_mode else 48.0
+	var act_font = 18 if big_mode else 14
 	for b in act_btns:
 		if is_instance_valid(b):
 			b.custom_minimum_size.y = act_h
 			b.add_theme_font_size_override("font_size", act_font)
 
 	if is_instance_valid(btn_next_lesson):
-		btn_next_lesson.custom_minimum_size.y = 60.0 if is_mob else 54.0
-		btn_next_lesson.add_theme_font_size_override("font_size", 19 if is_mob else 17)
+		btn_next_lesson.custom_minimum_size.y = 66.0 if big_mode else 54.0
+		btn_next_lesson.add_theme_font_size_override("font_size", 22 if big_mode else 18)
 
 	if is_instance_valid(btn_back_to_map):
-		btn_back_to_map.custom_minimum_size = Vector2(170 if is_mob else 160, 52.0 if is_mob else 46.0)
-		btn_back_to_map.add_theme_font_size_override("font_size", 16 if is_mob else 14)
+		btn_back_to_map.custom_minimum_size = Vector2(130 if big_mode else 160, 52.0 if big_mode else 46.0)
+		btn_back_to_map.add_theme_font_size_override("font_size", 18 if big_mode else 14)
 
 	if is_instance_valid(lbl_grade_title):
-		lbl_grade_title.add_theme_font_size_override("font_size", 19 if is_mob else 17)
+		lbl_grade_title.add_theme_font_size_override("font_size", 20 if big_mode else 17)
 	if is_instance_valid(lbl_lesson_title):
-		lbl_lesson_title.add_theme_font_size_override("font_size", 14 if is_mob else 13)
+		lbl_lesson_title.add_theme_font_size_override("font_size", 16 if big_mode else 13)
 
 	for star_lbl in [lbl_star_1, lbl_star_2, lbl_star_3]:
 		if is_instance_valid(star_lbl):
-			star_lbl.add_theme_font_size_override("font_size", 24 if is_mob else 20)
+			star_lbl.add_theme_font_size_override("font_size", 26 if big_mode else 20)
 
 	if is_instance_valid(btn_swap_layout_aula):
-		btn_swap_layout_aula.custom_minimum_size = Vector2(50, 50) if is_mob else Vector2(44, 44)
-		btn_swap_layout_aula.add_theme_font_size_override("font_size", 22 if is_mob else 18)
+		btn_swap_layout_aula.custom_minimum_size = Vector2(52, 52) if big_mode else Vector2(44, 44)
+		btn_swap_layout_aula.add_theme_font_size_override("font_size", 22 if big_mode else 18)
 
 func _animate_swap_slide(node_a: Control, node_b: Control, target_idx_a: int) -> void:
 	if _swap_tween and _swap_tween.is_valid():

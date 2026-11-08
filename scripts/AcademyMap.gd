@@ -42,6 +42,10 @@ func _ready() -> void:
 		if sm.has_signal("orientation_changed") and not sm.orientation_changed.is_connected(_on_orientation_changed):
 			sm.orientation_changed.connect(_on_orientation_changed)
 	
+	var vp = get_viewport()
+	if vp and not vp.size_changed.is_connected(_on_viewport_size_changed):
+		vp.size_changed.connect(_on_viewport_size_changed)
+
 	var am = _get_am()
 	if am:
 		if not am.progress_updated.is_connected(_refresh_view):
@@ -52,6 +56,16 @@ func _ready() -> void:
 	
 	_apply_safe_area()
 	_refresh_view()
+
+func _on_viewport_size_changed() -> void:
+	_apply_safe_area()
+	_refresh_view()
+
+func _is_portrait_view() -> bool:
+	var vp_size = get_viewport_rect().size
+	if vp_size.x <= 0 or vp_size.y <= 0:
+		return false
+	return (vp_size.y > vp_size.x) or (vp_size.x < 680.0)
 
 func _on_safe_area_changed(_top: float) -> void:
 	_apply_safe_area()
@@ -85,6 +99,7 @@ func _refresh_view() -> void:
 func _update_header() -> void:
 	var am = _get_am()
 	var pm = _get_pm()
+	var is_port = _is_portrait_view()
 	
 	var player_name = "Lyanna"
 	var gender_icon = "👧"
@@ -92,19 +107,39 @@ func _update_header() -> void:
 		player_name = pm.get_player_name()
 		gender_icon = pm.get_gender_icon()
 	
-	lbl_player_info.text = "%s %s" % [gender_icon, player_name]
+	if lbl_player_info:
+		lbl_player_info.text = "%s %s" % [gender_icon, player_name]
+		lbl_player_info.add_theme_font_size_override("font_size", 18 if is_port else 16)
 	
 	var total_stars = am.get_total_stars() if am else 0
-	lbl_total_stars.text = "⭐ %d" % total_stars
+	if lbl_total_stars:
+		lbl_total_stars.text = "⭐ %d" % total_stars
+		lbl_total_stars.add_theme_font_size_override("font_size", 18 if is_port else 16)
+	
+	if btn_back_to_menu:
+		btn_back_to_menu.text = "⬅️ Menú"
+		btn_back_to_menu.custom_minimum_size = Vector2(110 if is_port else 136, 52)
+		btn_back_to_menu.add_theme_font_size_override("font_size", 18 if is_port else 16)
+
+	var title_lbl = find_child("MainTitle", true, false) as Label
+	if title_lbl:
+		title_lbl.text = "🎓 Academia" if is_port else "🎓 Academia de Ajedrez"
+		title_lbl.add_theme_font_size_override("font_size", 26 if is_port else 24)
+
+	var subtitle_lbl = find_child("SubTitle", true, false) as Label
+	if subtitle_lbl:
+		subtitle_lbl.visible = not is_port
 	
 	var advice = ""
 	if current_mode == "practice":
-		advice = "¡{bienvenida/bienvenido} al Gimnasio de Movimientos, %s! Aquí tienes 70 retos para dominar cada pieza a tu ritmo." % player_name
+		advice = "¡{bienvenida/bienvenido} al Gimnasio, %s! Domina cada pieza a tu ritmo." % player_name if is_port else "¡{bienvenida/bienvenido} al Gimnasio de Movimientos, %s! Aquí tienes 70 retos para dominar cada pieza a tu ritmo." % player_name
 	else:
-		advice = "¡Hola, %s! Cada lección tiene 3 etapas progresivas. ¡Supera todos los retos para ganar tu medalla!" % player_name
+		advice = "¡Hola, %s! ¡Supera los retos para ganar tu medalla!" % player_name if is_port else "¡Hola, %s! Cada lección tiene 3 etapas progresivas. ¡Supera todos los retos para ganar tu medalla!" % player_name
 	if am:
 		advice = am.adapt_text(advice)
-	lbl_pollito_advice.text = advice
+	if lbl_pollito_advice:
+		lbl_pollito_advice.text = advice
+		lbl_pollito_advice.add_theme_font_size_override("font_size", 16 if is_port else 14)
 
 func _build_mode_buttons() -> void:
 	if not mode_selector_bar:
@@ -112,23 +147,24 @@ func _build_mode_buttons() -> void:
 	for c in mode_selector_bar.get_children():
 		c.queue_free()
 	
+	var is_port = _is_portrait_view()
 	var modes = [
-		{"id": "grades", "label": "🎓 Grados Oficiales (48 Lecc.)"},
-		{"id": "practice", "label": "🏋️ Gimnasio Táctico (70 Ejer.)"}
+		{"id": "grades", "label": "🎓 Grados" if is_port else "🎓 Grados Oficiales (48 Lecc.)"},
+		{"id": "practice", "label": "⚡ Gimnasio" if is_port else "🏋️ Gimnasio Táctico (70 Ejer.)"}
 	]
 	for m in modes:
 		var m_id: String = m.id
 		var is_sel = (current_mode == m_id)
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(0, 56)
+		btn.custom_minimum_size = Vector2(0, 60 if is_port else 56)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_font_override("font", FONT_CHERRY)
-		btn.add_theme_font_size_override("font_size", 16)
+		btn.add_theme_font_size_override("font_size", 20 if is_port else 16)
 		btn.text = m.label
 		
 		var sb = StyleBoxFlat.new()
-		sb.set_corner_radius_all(18)
+		sb.set_corner_radius_all(20)
 		sb.border_width_left = 3
 		sb.border_width_top = 3
 		sb.border_width_right = 3
@@ -181,6 +217,11 @@ func _build_grade_tabs() -> void:
 	for c in grades_tab_container.get_children():
 		c.queue_free()
 	
+	var is_port = _is_portrait_view()
+	var g_scroll = find_child("GradesScroll", true, false) as ScrollContainer
+	if g_scroll:
+		g_scroll.custom_minimum_size.y = 78.0 if is_port else 68.0
+
 	var all_grades = am.get_all_grades()
 	for g in all_grades:
 		var g_num = int(g.get("number", 1))
@@ -188,10 +229,10 @@ func _build_grade_tabs() -> void:
 		var is_selected = (g_num == current_grade_num)
 		
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(170, 56)
+		btn.custom_minimum_size = Vector2(175 if is_port else 170, 62 if is_port else 56)
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_font_override("font", FONT_CHERRY)
-		btn.add_theme_font_size_override("font_size", 16)
+		btn.add_theme_font_size_override("font_size", 19 if is_port else 16)
 		
 		var icon = g.get("badge_icon", "🎓")
 		if not is_unlocked:
@@ -200,7 +241,7 @@ func _build_grade_tabs() -> void:
 		btn.text = "%s Grado %d" % [icon, g_num]
 		
 		var sb = StyleBoxFlat.new()
-		sb.set_corner_radius_all(18)
+		sb.set_corner_radius_all(20)
 		sb.border_width_left = 3
 		sb.border_width_top = 3
 		sb.border_width_right = 3
@@ -241,6 +282,11 @@ func _build_practice_tabs() -> void:
 	for c in grades_tab_container.get_children():
 		c.queue_free()
 	
+	var is_port = _is_portrait_view()
+	var g_scroll = find_child("GradesScroll", true, false) as ScrollContainer
+	if g_scroll:
+		g_scroll.custom_minimum_size.y = 78.0 if is_port else 68.0
+
 	var packs = am.get_all_practice_packs()
 	for p in packs:
 		var p_id: String = p.get("id", "")
@@ -249,14 +295,14 @@ func _build_practice_tabs() -> void:
 		var short_name: String = p.get("name", "").replace("Gimnasio de la ", "").replace("Gimnasio del ", "").replace("Gimnasio de ", "").replace(" en 2 Jugadas", "")
 		
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(165, 56)
+		btn.custom_minimum_size = Vector2(175 if is_port else 165, 62 if is_port else 56)
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.add_theme_font_override("font", FONT_CHERRY)
-		btn.add_theme_font_size_override("font_size", 15)
+		btn.add_theme_font_size_override("font_size", 18 if is_port else 15)
 		btn.text = "%s %s" % [icon, short_name]
 		
 		var sb = StyleBoxFlat.new()
-		sb.set_corner_radius_all(18)
+		sb.set_corner_radius_all(20)
 		sb.border_width_left = 3
 		sb.border_width_top = 3
 		sb.border_width_right = 3
@@ -310,16 +356,23 @@ func _display_grade_lessons(g_num: int) -> void:
 	if g.is_empty():
 		return
 	
+	var is_port = _is_portrait_view()
 	var g_icon = g.get("badge_icon", "🎓")
 	var g_name = g.get("name", "")
 	var g_sub = g.get("subtitle", "")
-	var g_src = g.get("source", "")
 	var badge_name = g.get("badge_name", "")
 	var has_badge = am.has_medal(g.get("badge_id", ""))
 	
-	lbl_selected_grade_title.text = "%s Grado %d: %s\n%s" % [g_icon, g_num, g_name, g_sub]
+	lbl_selected_grade_title.add_theme_font_size_override("font_size", 22 if is_port else 19)
+	lbl_selected_grade_title.text = "%s Grado %d: %s" % [g_icon, g_num, g_name]
+	
+	lbl_selected_grade_source.add_theme_font_size_override("font_size", 16 if is_port else 13)
 	var badge_status = "🏅 Medalla: " + badge_name + (" (¡Conseguida! 🎉)" if has_badge else " (Completa las 8 lecciones)")
-	lbl_selected_grade_source.text = "📚 Fuente: %s\n%s" % [g_src, badge_status]
+	if is_port:
+		lbl_selected_grade_source.text = "%s\n%s" % [g_sub, badge_status]
+	else:
+		var g_src = g.get("source", "")
+		lbl_selected_grade_source.text = "%s\n📚 %s • %s" % [g_sub, g_src, badge_status]
 	
 	for c in lessons_vbox.get_children():
 		c.queue_free()
@@ -347,6 +400,7 @@ func _display_practice_exercises(pack_id: String) -> void:
 	if p.is_empty():
 		return
 	
+	var is_port = _is_portrait_view()
 	var p_icon = p.get("icon", "♟️")
 	var p_name = p.get("name", "")
 	var p_sub = p.get("subtitle", "")
@@ -356,8 +410,11 @@ func _display_practice_exercises(pack_id: String) -> void:
 		if am.is_lesson_completed(ex.get("id", "")):
 			done_count += 1
 	
+	lbl_selected_grade_title.add_theme_font_size_override("font_size", 22 if is_port else 19)
 	lbl_selected_grade_title.text = "%s %s" % [p_icon, p_name]
-	lbl_selected_grade_source.text = "🏋️ %s\n✅ Progreso: %d de %d ejercicios completados" % [p_sub, done_count, exs.size()]
+	
+	lbl_selected_grade_source.add_theme_font_size_override("font_size", 16 if is_port else 13)
+	lbl_selected_grade_source.text = "%s\n✅ Progreso: %d de %d ejercicios completados" % [p_sub, done_count, exs.size()]
 	
 	for c in lessons_vbox.get_children():
 		c.queue_free()
@@ -374,11 +431,84 @@ func _display_practice_exercises(pack_id: String) -> void:
 		var item_card = _create_lesson_card(idx, prefix, ex_data, badge_tag, true, is_completed, stars, true)
 		lessons_vbox.add_child(item_card)
 
+func _create_status_icon_panel(is_completed: bool, is_unlocked: bool, is_practice: bool, size_px: float = 54.0) -> PanelContainer:
+	var status_panel = PanelContainer.new()
+	status_panel.custom_minimum_size = Vector2(size_px, size_px)
+	status_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+
+	var status_sb = StyleBoxFlat.new()
+	status_sb.set_corner_radius_all(18)
+	status_sb.border_width_left = 2
+	status_sb.border_width_top = 2
+	status_sb.border_width_right = 2
+	status_sb.border_width_bottom = 5
+
+	if is_completed:
+		status_sb.bg_color = Color("#dcfce7")
+		status_sb.border_color = Color("#22c55e")
+	elif is_unlocked:
+		status_sb.bg_color = Color("#fce7f3") if not is_practice else Color("#f3e8ff")
+		status_sb.border_color = Color("#f472b6") if not is_practice else Color("#c084fc")
+	else:
+		status_sb.bg_color = Color("#e2e8f0")
+		status_sb.border_color = Color("#94a3b8")
+	status_panel.add_theme_stylebox_override("panel", status_sb)
+
+	var status_lbl = Label.new()
+	status_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	status_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	status_lbl.add_theme_font_size_override("font_size", int(size_px * 0.48))
+	if is_completed:
+		status_lbl.text = "🏆"
+	elif is_unlocked:
+		status_lbl.text = "🏋️" if is_practice else "♟️"
+	else:
+		status_lbl.text = "🔒"
+	status_panel.add_child(status_lbl)
+	return status_panel
+
+func _create_tag_pill(badge_tag: String, font_sz: int = 13) -> PanelContainer:
+	var tag_panel = PanelContainer.new()
+	var tag_sb = StyleBoxFlat.new()
+	tag_sb.set_corner_radius_all(10)
+	tag_sb.bg_color = Color("#f1f5f9")
+	tag_sb.border_color = Color("#cbd5e1")
+	tag_sb.border_width_left = 1
+	tag_sb.border_width_top = 1
+	tag_sb.border_width_right = 1
+	tag_sb.border_width_bottom = 2
+	tag_panel.add_theme_stylebox_override("panel", tag_sb)
+
+	var tag_margin = MarginContainer.new()
+	tag_margin.add_theme_constant_override("margin_left", 10)
+	tag_margin.add_theme_constant_override("margin_right", 10)
+	tag_margin.add_theme_constant_override("margin_top", 3)
+	tag_margin.add_theme_constant_override("margin_bottom", 3)
+	tag_panel.add_child(tag_margin)
+
+	var tag_lbl = Label.new()
+	tag_lbl.text = badge_tag
+	tag_lbl.add_theme_font_size_override("font_size", font_sz)
+	tag_lbl.add_theme_color_override("font_color", Color("#475569"))
+	tag_margin.add_child(tag_lbl)
+	return tag_panel
+
+func _create_stars_label(stars: int, is_unlocked: bool, font_sz: int = 26) -> Label:
+	var stars_lbl = Label.new()
+	var stars_text = ""
+	for s in range(3):
+		stars_text += "⭐" if s < stars else "☆"
+	stars_lbl.text = stars_text
+	stars_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	stars_lbl.add_theme_font_size_override("font_size", font_sz)
+	stars_lbl.add_theme_color_override("font_color", Color("#f59e0b") if is_unlocked else Color("#cbd5e1"))
+	return stars_lbl
+
 func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag: String, is_unlocked: bool, is_completed: bool, stars: int, is_practice: bool) -> Control:
+	var is_port = _is_portrait_view()
 	var card = PanelContainer.new()
-	card.custom_minimum_size = Vector2(0, 102)
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	var sb = StyleBoxFlat.new()
 	sb.set_corner_radius_all(24)
 	sb.border_width_left = 3
@@ -387,7 +517,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 	sb.border_width_bottom = 7
 	sb.shadow_size = 12
 	sb.shadow_offset = Vector2(0, 4)
-	
+
 	if is_completed:
 		sb.bg_color = Color("#f0fdf4")
 		sb.border_color = Color("#4ade80")
@@ -400,159 +530,205 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		sb.bg_color = Color("#f8fafc")
 		sb.border_color = Color("#cbd5e1")
 		sb.shadow_color = Color(0, 0, 0, 0.04)
-	
+
 	card.add_theme_stylebox_override("panel", sb)
-	
+
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 16)
-	margin.add_theme_constant_override("margin_right", 16)
-	margin.add_theme_constant_override("margin_top", 12)
-	margin.add_theme_constant_override("margin_bottom", 12)
+	margin.add_theme_constant_override("margin_left", 18 if is_port else 16)
+	margin.add_theme_constant_override("margin_right", 18 if is_port else 16)
+	margin.add_theme_constant_override("margin_top", 14 if is_port else 12)
+	margin.add_theme_constant_override("margin_bottom", 14 if is_port else 12)
 	card.add_child(margin)
-	
-	var hbox = HBoxContainer.new()
-	hbox.add_theme_constant_override("separation", 14)
-	margin.add_child(hbox)
-	
-	# Icono / Placa de Estado Circular 3D
-	var status_panel = PanelContainer.new()
-	status_panel.custom_minimum_size = Vector2(50, 50)
-	status_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var status_sb = StyleBoxFlat.new()
-	status_sb.set_corner_radius_all(18)
-	status_sb.border_width_left = 2
-	status_sb.border_width_top = 2
-	status_sb.border_width_right = 2
-	status_sb.border_width_bottom = 4
-	if is_completed:
-		status_sb.bg_color = Color("#dcfce7")
-		status_sb.border_color = Color("#22c55e")
-	elif is_unlocked:
-		status_sb.bg_color = Color("#fce7f3") if not is_practice else Color("#f3e8ff")
-		status_sb.border_color = Color("#f472b6") if not is_practice else Color("#c084fc")
-	else:
-		status_sb.bg_color = Color("#e2e8f0")
-		status_sb.border_color = Color("#94a3b8")
-	status_panel.add_theme_stylebox_override("panel", status_sb)
-	
-	var status_lbl = Label.new()
-	status_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	status_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	status_lbl.add_theme_font_size_override("font_size", 24)
-	if is_completed:
-		status_lbl.text = "🏆"
-	elif is_unlocked:
-		status_lbl.text = "🏋️" if is_practice else "♟️"
-	else:
-		status_lbl.text = "🔒"
-	status_panel.add_child(status_lbl)
-	hbox.add_child(status_panel)
-	
-	# Textos centrales (Título + Subtítulo + Pill de Etapas)
-	var vbox_text = VBoxContainer.new()
-	vbox_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	vbox_text.add_theme_constant_override("separation", 3)
-	
-	var header_hbox = HBoxContainer.new()
-	header_hbox.add_theme_constant_override("separation", 8)
-	vbox_text.add_child(header_hbox)
-	
-	var title_lbl = Label.new()
-	title_lbl.text = "%s %s" % [prefix, l_data.get("title", "")]
-	title_lbl.add_theme_font_override("font", FONT_CHERRY)
-	title_lbl.add_theme_font_size_override("font_size", 18)
-	title_lbl.add_theme_color_override("font_color", Color("#0f172a") if is_unlocked else Color("#94a3b8"))
-	title_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header_hbox.add_child(title_lbl)
-	
-	# Tag / Píldora de etapas
-	var tag_panel = PanelContainer.new()
-	var tag_sb = StyleBoxFlat.new()
-	tag_sb.set_corner_radius_all(10)
-	tag_sb.bg_color = Color("#f1f5f9")
-	tag_sb.border_color = Color("#cbd5e1")
-	tag_sb.border_width_left = 1
-	tag_sb.border_width_top = 1
-	tag_sb.border_width_right = 1
-	tag_sb.border_width_bottom = 2
-	tag_panel.add_theme_stylebox_override("panel", tag_sb)
-	
-	var tag_margin = MarginContainer.new()
-	tag_margin.add_theme_constant_override("margin_left", 8)
-	tag_margin.add_theme_constant_override("margin_right", 8)
-	tag_margin.add_theme_constant_override("margin_top", 2)
-	tag_margin.add_theme_constant_override("margin_bottom", 2)
-	tag_panel.add_child(tag_margin)
-	
-	var tag_lbl = Label.new()
-	tag_lbl.text = badge_tag
-	tag_lbl.add_theme_font_size_override("font_size", 11)
-	tag_lbl.add_theme_color_override("font_color", Color("#475569"))
-	tag_margin.add_child(tag_lbl)
-	header_hbox.add_child(tag_panel)
-	
-	var sub_lbl = Label.new()
-	sub_lbl.text = l_data.get("subtitle", "")
-	sub_lbl.add_theme_font_size_override("font_size", 13)
-	sub_lbl.add_theme_color_override("font_color", Color("#475569") if is_unlocked else Color("#94a3b8"))
-	sub_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	vbox_text.add_child(sub_lbl)
-	
-	hbox.add_child(vbox_text)
-	
-	# Estrellas
-	var stars_lbl = Label.new()
-	var stars_text = ""
-	for s in range(3):
-		stars_text += "⭐" if s < stars else "☆"
-	stars_lbl.text = stars_text
-	stars_lbl.add_theme_font_size_override("font_size", 22)
-	stars_lbl.add_theme_color_override("font_color", Color("#f59e0b") if is_unlocked else Color("#cbd5e1"))
-	hbox.add_child(stars_lbl)
-	
-	# Botón de Acción 3D Grueso
-	if is_unlocked:
-		var btn_play = Button.new()
-		btn_play.custom_minimum_size = Vector2(136, 52)
-		btn_play.focus_mode = Control.FOCUS_NONE
-		btn_play.add_theme_font_override("font", FONT_CHERRY)
-		btn_play.add_theme_font_size_override("font_size", 15)
-		btn_play.text = "¡JUGAR! ▶" if not is_completed else "REPETIR 🔄"
-		
-		var btn_sb = StyleBoxFlat.new()
-		btn_sb.set_corner_radius_all(18)
-		btn_sb.border_width_left = 2
-		btn_sb.border_width_top = 2
-		btn_sb.border_width_right = 2
-		btn_sb.border_width_bottom = 5
-		btn_sb.shadow_size = 8
-		btn_sb.shadow_offset = Vector2(0, 3)
-		
-		if is_completed:
-			btn_sb.bg_color = Color("#0284c7")
-			btn_sb.border_color = Color("#0369a1")
-			btn_sb.shadow_color = Color(0.01, 0.41, 0.63, 0.25)
-		elif is_practice:
-			btn_sb.bg_color = Color("#7c3aed")
-			btn_sb.border_color = Color("#5b21b6")
-			btn_sb.shadow_color = Color(0.48, 0.22, 0.93, 0.25)
+
+	if is_port:
+		# DISPOSICIÓN MÓVIL VERTICAL: Espaciosa, letras grandes y botón ancho táctil
+		card.custom_minimum_size = Vector2(0, 160)
+		var main_vbox = VBoxContainer.new()
+		main_vbox.add_theme_constant_override("separation", 10)
+		margin.add_child(main_vbox)
+
+		# Fila 1: Icono circular + Título + Píldora de Etapas + Estrellas
+		var top_hbox = HBoxContainer.new()
+		top_hbox.add_theme_constant_override("separation", 12)
+		main_vbox.add_child(top_hbox)
+
+		var status_panel = _create_status_icon_panel(is_completed, is_unlocked, is_practice, 54)
+		top_hbox.add_child(status_panel)
+
+		var title_vbox = VBoxContainer.new()
+		title_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		title_vbox.add_theme_constant_override("separation", 3)
+		top_hbox.add_child(title_vbox)
+
+		var title_lbl = Label.new()
+		title_lbl.text = "%s %s" % [prefix, l_data.get("title", "")]
+		title_lbl.add_theme_font_override("font", FONT_CHERRY)
+		title_lbl.add_theme_font_size_override("font_size", 21)
+		title_lbl.add_theme_color_override("font_color", Color("#0f172a") if is_unlocked else Color("#94a3b8"))
+		title_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		title_vbox.add_child(title_lbl)
+
+		var tag_panel = _create_tag_pill(badge_tag, 13)
+		tag_panel.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		title_vbox.add_child(tag_panel)
+
+		var stars_lbl = _create_stars_label(stars, is_unlocked, 26)
+		top_hbox.add_child(stars_lbl)
+
+		# Fila 2: Descripción clara y grande
+		var sub_text = l_data.get("subtitle", "")
+		if not sub_text.is_empty():
+			var sub_lbl = Label.new()
+			sub_lbl.text = sub_text
+			sub_lbl.add_theme_font_size_override("font_size", 16)
+			sub_lbl.add_theme_color_override("font_color", Color("#334155") if is_unlocked else Color("#94a3b8"))
+			sub_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			main_vbox.add_child(sub_lbl)
+
+		# Fila 3: Botón de acción ancho (si está desbloqueado) o Barra de bloqueo
+		if is_unlocked:
+			var btn_action = Button.new()
+			btn_action.custom_minimum_size = Vector2(0, 56)
+			btn_action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			btn_action.focus_mode = Control.FOCUS_NONE
+			btn_action.add_theme_font_override("font", FONT_CHERRY)
+			btn_action.add_theme_font_size_override("font_size", 19)
+
+			var btn_sb = StyleBoxFlat.new()
+			btn_sb.set_corner_radius_all(18)
+			btn_sb.border_width_left = 3
+			btn_sb.border_width_top = 3
+			btn_sb.border_width_right = 3
+			btn_sb.border_width_bottom = 6
+			btn_sb.shadow_size = 10
+			btn_sb.shadow_offset = Vector2(0, 4)
+
+			if is_completed:
+				btn_sb.bg_color = Color("#0284c7")
+				btn_sb.border_color = Color("#0369a1")
+				btn_sb.shadow_color = Color(0.01, 0.41, 0.63, 0.25)
+				btn_action.text = "⭐ ¡COMPLETADA! (Repetir 🔄)"
+			elif is_practice:
+				btn_sb.bg_color = Color("#7c3aed")
+				btn_sb.border_color = Color("#5b21b6")
+				btn_sb.shadow_color = Color(0.48, 0.22, 0.93, 0.25)
+				btn_action.text = "⚡ ¡ENTRENAR EJERCICIO! ▶"
+			else:
+				btn_sb.bg_color = Color("#10b981")
+				btn_sb.border_color = Color("#047857")
+				btn_sb.shadow_color = Color(0.06, 0.72, 0.5, 0.25)
+				btn_action.text = "🎮 ¡JUGAR ESTA LECCIÓN! ▶"
+
+			btn_action.add_theme_color_override("font_color", Color.WHITE)
+			btn_action.add_theme_stylebox_override("normal", btn_sb)
+			btn_action.add_theme_stylebox_override("hover", btn_sb)
+			btn_action.add_theme_stylebox_override("pressed", btn_sb)
+
+			if is_practice:
+				btn_action.pressed.connect(func(): _start_practice_exercise(idx))
+			else:
+				btn_action.pressed.connect(func(): _start_lesson(idx))
+			main_vbox.add_child(btn_action)
 		else:
-			btn_sb.bg_color = Color("#10b981")
-			btn_sb.border_color = Color("#047857")
-			btn_sb.shadow_color = Color(0.06, 0.72, 0.5, 0.25)
-		
-		btn_play.add_theme_stylebox_override("normal", btn_sb)
-		btn_play.add_theme_stylebox_override("hover", btn_sb)
-		btn_play.add_theme_stylebox_override("pressed", btn_sb)
-		btn_play.add_theme_color_override("font_color", Color.WHITE)
-		
-		if is_practice:
-			btn_play.pressed.connect(func(): _start_practice_exercise(idx))
-		else:
-			btn_play.pressed.connect(func(): _start_lesson(idx))
-		hbox.add_child(btn_play)
-	
+			var lock_banner = PanelContainer.new()
+			lock_banner.custom_minimum_size = Vector2(0, 48)
+			var l_sb = StyleBoxFlat.new()
+			l_sb.set_corner_radius_all(14)
+			l_sb.bg_color = Color("#f1f5f9")
+			l_sb.border_width_left = 1
+			l_sb.border_width_top = 1
+			l_sb.border_width_right = 1
+			l_sb.border_width_bottom = 2
+			l_sb.border_color = Color("#cbd5e1")
+			lock_banner.add_theme_stylebox_override("panel", l_sb)
+
+			var l_lbl = Label.new()
+			l_lbl.text = "🔒 Bloqueada • Supera el reto anterior para abrirla"
+			l_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			l_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			l_lbl.add_theme_font_size_override("font_size", 15)
+			l_lbl.add_theme_color_override("font_color", Color("#64748b"))
+			lock_banner.add_child(l_lbl)
+			main_vbox.add_child(lock_banner)
+	else:
+		# DISPOSICIÓN ESCRITORIO / TABLET HORIZONTAL
+		card.custom_minimum_size = Vector2(0, 108)
+		var hbox = HBoxContainer.new()
+		hbox.add_theme_constant_override("separation", 16)
+		margin.add_child(hbox)
+
+		var status_panel = _create_status_icon_panel(is_completed, is_unlocked, is_practice, 54)
+		hbox.add_child(status_panel)
+
+		var vbox_text = VBoxContainer.new()
+		vbox_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		vbox_text.add_theme_constant_override("separation", 4)
+
+		var header_hbox = HBoxContainer.new()
+		header_hbox.add_theme_constant_override("separation", 10)
+		vbox_text.add_child(header_hbox)
+
+		var title_lbl = Label.new()
+		title_lbl.text = "%s %s" % [prefix, l_data.get("title", "")]
+		title_lbl.add_theme_font_override("font", FONT_CHERRY)
+		title_lbl.add_theme_font_size_override("font_size", 20)
+		title_lbl.add_theme_color_override("font_color", Color("#0f172a") if is_unlocked else Color("#94a3b8"))
+		title_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		header_hbox.add_child(title_lbl)
+
+		var tag_panel = _create_tag_pill(badge_tag, 12)
+		header_hbox.add_child(tag_panel)
+
+		var sub_lbl = Label.new()
+		sub_lbl.text = l_data.get("subtitle", "")
+		sub_lbl.add_theme_font_size_override("font_size", 15)
+		sub_lbl.add_theme_color_override("font_color", Color("#334155") if is_unlocked else Color("#94a3b8"))
+		sub_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		vbox_text.add_child(sub_lbl)
+		hbox.add_child(vbox_text)
+
+		var stars_lbl = _create_stars_label(stars, is_unlocked, 24)
+		hbox.add_child(stars_lbl)
+
+		if is_unlocked:
+			var btn_play = Button.new()
+			btn_play.custom_minimum_size = Vector2(148, 54)
+			btn_play.focus_mode = Control.FOCUS_NONE
+			btn_play.add_theme_font_override("font", FONT_CHERRY)
+			btn_play.add_theme_font_size_override("font_size", 16)
+			btn_play.text = "¡JUGAR! ▶" if not is_completed else "REPETIR 🔄"
+
+			var btn_sb = StyleBoxFlat.new()
+			btn_sb.set_corner_radius_all(18)
+			btn_sb.border_width_left = 3
+			btn_sb.border_width_top = 3
+			btn_sb.border_width_right = 3
+			btn_sb.border_width_bottom = 6
+			btn_sb.shadow_size = 8
+			btn_sb.shadow_offset = Vector2(0, 3)
+
+			if is_completed:
+				btn_sb.bg_color = Color("#0284c7")
+				btn_sb.border_color = Color("#0369a1")
+			elif is_practice:
+				btn_sb.bg_color = Color("#7c3aed")
+				btn_sb.border_color = Color("#5b21b6")
+			else:
+				btn_sb.bg_color = Color("#10b981")
+				btn_sb.border_color = Color("#047857")
+
+			btn_play.add_theme_stylebox_override("normal", btn_sb)
+			btn_play.add_theme_stylebox_override("hover", btn_sb)
+			btn_play.add_theme_stylebox_override("pressed", btn_sb)
+			btn_play.add_theme_color_override("font_color", Color.WHITE)
+
+			if is_practice:
+				btn_play.pressed.connect(func(): _start_practice_exercise(idx))
+			else:
+				btn_play.pressed.connect(func(): _start_lesson(idx))
+			hbox.add_child(btn_play)
+
 	return card
 
 func _start_lesson(lesson_idx: int) -> void:
