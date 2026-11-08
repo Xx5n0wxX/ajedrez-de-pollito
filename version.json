@@ -1,8 +1,8 @@
 {
-  "version_code": 13,
-  "version_name": "1.1.2",
+  "version_code": 14,
+  "version_name": "1.1.3",
   "release_date": "2026-11-08",
-  "notes": "Soporte táctil nativo con inercia cinética en el Historial de Partidas y selector de perfiles para Android, con bloqueo de toques accidentales en botones mientras se desliza la lista.",
+  "notes": "Correccion definitiva de desplazamiento tactil en el Historial de Partidas y selector de perfiles: soporte directo gui_input en tarjetas y botones con inercia cinetica y proteccion contra toques accidentales.",
   "pck_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck",
   "pck_win_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck",
   "apk_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk",

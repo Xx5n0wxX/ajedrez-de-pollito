@@ -624,6 +624,7 @@ horizontal_alignment = 1
 [node name="ProfilesScroll" type="ScrollContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 180)
+horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -1255,8 +1256,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 custom_minimum_size = Vector2(0, 320)
+horizontal_scroll_mode = 0
 
 [node name="HistoryContent" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/HistoryScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
