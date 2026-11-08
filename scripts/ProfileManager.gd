@@ -44,7 +44,9 @@ func _load_profiles() -> void:
 		var default_prof = {
 			"id": "profile_init_temp",
 			"name": "",
-			"gender": "f" # "f": Niña / "m": Niño
+			"gender": "f", # "f": Niña / "m": Niño
+			"category": "child", # "child" | "adult"
+			"is_adult": false
 		}
 		profiles.append(default_prof)
 		active_profile_id = "profile_init_temp"
@@ -77,19 +79,29 @@ func get_active_profile() -> Dictionary:
 			return p
 	if not profiles.is_empty() and profiles[0] is Dictionary:
 		return profiles[0]
-	return {"id": "default", "name": "Jugador", "gender": "f"}
+	return {"id": "default", "name": "Jugador", "gender": "f", "category": "child", "is_adult": false}
+
+func is_adult() -> bool:
+	var prof = get_active_profile()
+	var cat = str(prof.get("category", "child")).to_lower()
+	return cat in ["adult", "adulto", "adulta"] or prof.get("is_adult", false) == true
+
+func get_player_category() -> String:
+	return "adult" if is_adult() else "child"
 
 func get_player_name() -> String:
 	var prof = get_active_profile()
 	var n = str(prof.get("name", "")).strip_edges()
 	if n.is_empty():
+		if is_adult():
+			return "Adulta" if is_female() else "Adulto"
 		return "Jugadora" if is_female() else "Jugador"
 	return n
 
 func get_player_gender() -> String:
 	var prof = get_active_profile()
 	var g = str(prof.get("gender", "f")).to_lower()
-	return "m" if g in ["m", "niño", "nino", "chico"] else "f"
+	return "m" if g in ["m", "niño", "nino", "chico", "adulto", "hombre"] else "f"
 
 func is_female() -> bool:
 	return get_player_gender() == "f"
@@ -98,9 +110,13 @@ func is_male() -> bool:
 	return get_player_gender() == "m"
 
 func get_gender_label() -> String:
+	if is_adult():
+		return "Adulta" if is_female() else "Adulto"
 	return "Niña" if is_female() else "Niño"
 
 func get_gender_icon() -> String:
+	if is_adult():
+		return "👩" if is_female() else "👨"
 	return "👧" if is_female() else "👦"
 
 func get_all_profiles() -> Array:
@@ -115,16 +131,23 @@ func set_active_profile_by_id(p_id: String) -> bool:
 			return true
 	return false
 
-func create_profile(p_name: String, p_gender: String) -> Dictionary:
+func create_profile(p_name: String, p_gender: String, p_category: String = "child") -> Dictionary:
+	var clean_cat = "adult" if p_category.to_lower() in ["adult", "adulto", "adulta"] else "child"
+	var is_ad = (clean_cat == "adult")
 	var clean_name = p_name.strip_edges()
-	var clean_gender = "m" if p_gender.to_lower() in ["m", "niño", "nino", "chico"] else "f"
+	var clean_gender = "m" if p_gender.to_lower() in ["m", "niño", "nino", "chico", "adulto", "hombre"] else "f"
 	if clean_name.is_empty():
-		clean_name = "Niño" if clean_gender == "m" else "Niña"
+		if is_ad:
+			clean_name = "Adulta" if clean_gender == "f" else "Adulto"
+		else:
+			clean_name = "Niño" if clean_gender == "m" else "Niña"
 	var new_id = "profile_%d_%d" % [int(Time.get_unix_time_from_system()), randi() % 1000]
 	var new_prof = {
 		"id": new_id,
 		"name": clean_name,
-		"gender": clean_gender
+		"gender": clean_gender,
+		"category": clean_cat,
+		"is_adult": is_ad
 	}
 	if is_first_time:
 		profiles.clear()
@@ -136,15 +159,27 @@ func create_profile(p_name: String, p_gender: String) -> Dictionary:
 	active_profile_changed.emit(new_prof)
 	return new_prof
 
-func update_profile(p_id: String, new_name: String, new_gender: String) -> bool:
+func update_profile(p_id: String, new_name: String, new_gender: String, new_category: String = "") -> bool:
 	for i in range(profiles.size()):
 		if profiles[i] is Dictionary and profiles[i].get("id", "") == p_id:
 			var clean_name = new_name.strip_edges()
-			var clean_gender = "m" if new_gender.to_lower() in ["m", "niño", "nino", "chico"] else "f"
+			var clean_gender = "m" if new_gender.to_lower() in ["m", "niño", "nino", "chico", "adulto", "hombre"] else "f"
+			var cur_cat = str(profiles[i].get("category", "child"))
+			var clean_cat = new_category.to_lower() if not new_category.is_empty() else cur_cat
+			if clean_cat not in ["adult", "adulto", "adulta", "child"]:
+				clean_cat = "child"
+			if clean_cat in ["adult", "adulto", "adulta"]:
+				clean_cat = "adult"
+			var is_ad = (clean_cat == "adult")
 			if clean_name.is_empty():
-				clean_name = "Niño" if clean_gender == "m" else "Niña"
+				if is_ad:
+					clean_name = "Adulta" if clean_gender == "f" else "Adulto"
+				else:
+					clean_name = "Niño" if clean_gender == "m" else "Niña"
 			profiles[i]["name"] = clean_name
 			profiles[i]["gender"] = clean_gender
+			profiles[i]["category"] = clean_cat
+			profiles[i]["is_adult"] = is_ad
 			if is_first_time:
 				is_first_time = false
 			_save_profiles()
@@ -277,6 +312,23 @@ func adapt_text(text: String) -> String:
 		res = res.replace("lista para jugar", "listo para jugar")
 		res = res.replace("lista para empezar", "listo para empezar")
 
+	# 4. Adaptaciones específicas para perfil de Adulto
+	if is_adult():
+		# Reemplazar diminutivos infantiles por trato respetuoso de ajedrecista
+		res = res.replace("pequeña campeona", "gran campeona" if fem else "gran campeón")
+		res = res.replace("pequeño campeón", "gran campeón")
+		res = res.replace("pequeña amiga", "amiga mía" if fem else "amigo mío")
+		res = res.replace("pequeño amigo", "amigo mío")
+		res = res.replace("mi pequeña amiga", "mi estimada colega" if fem else "mi estimado colega")
+		res = res.replace("mi pequeño amigo", "mi estimado colega")
+		res = res.replace("mi pequeña alumna", "mi estimada alumna")
+		res = res.replace("mi pequeño alumno", "mi estimado alumno")
+		res = res.replace("mi pequeña", "mi colega")
+		res = res.replace("mi pequeño", "mi colega")
+		res = res.replace("¡Hola peque!", "¡Hola!")
+		res = res.replace("hola peque", "hola")
+		res = res.replace("Hola peque", "Hola")
+
 	return res
 
 # Métodos estáticos de conveniencia
@@ -289,6 +341,11 @@ static func is_girl() -> bool:
 	if instance:
 		return instance.is_female()
 	return true
+
+static func is_adult_player() -> bool:
+	if instance:
+		return instance.is_adult()
+	return false
 
 static func format_dialogue(text: String) -> String:
 	if instance:

@@ -52,6 +52,8 @@ var _current_history_filter: String = "all"
 @onready var edit_name_input: LineEdit = %EditNameInput if has_node("%EditNameInput") else find_child("EditNameInput", true, false)
 @onready var btn_gender_girl: Button = %BtnGenderGirl if has_node("%BtnGenderGirl") else find_child("BtnGenderGirl", true, false)
 @onready var btn_gender_boy: Button = %BtnGenderBoy if has_node("%BtnGenderBoy") else find_child("BtnGenderBoy", true, false)
+@onready var btn_adult_female: Button = %BtnAdultFemale if has_node("%BtnAdultFemale") else find_child("BtnAdultFemale", true, false)
+@onready var btn_adult_male: Button = %BtnAdultMale if has_node("%BtnAdultMale") else find_child("BtnAdultMale", true, false)
 @onready var btn_save_profile: Button = %BtnSaveProfile if has_node("%BtnSaveProfile") else find_child("BtnSaveProfile", true, false)
 @onready var btn_cancel_edit_profile: Button = %BtnCancelEditProfile if has_node("%BtnCancelEditProfile") else find_child("BtnCancelEditProfile", true, false)
 @onready var btn_delete_profile: Button = %BtnDeleteProfile if has_node("%BtnDeleteProfile") else find_child("BtnDeleteProfile", true, false)
@@ -94,7 +96,8 @@ var _current_history_filter: String = "all"
 
 var _is_editing_existing: bool = false
 var _target_edit_profile_id: String = ""
-var _selected_gender: String = "f" # "f": Niña / "m": Niño
+var _selected_gender: String = "f" # "f": Femenino / "m": Masculino
+var _selected_category: String = "child" # "child": Infantil / "adult": Adulto
 var _selected_online_color: String = "white"
 var _selected_online_time: int = 5
 var _current_lobby_tab: String = "create"
@@ -359,10 +362,14 @@ func _setup_profile_ui() -> void:
 		btn_close_select_modal.pressed.connect(_close_select_modal)
 
 	# Botones de modal editor
-	if btn_gender_girl and not btn_gender_girl.pressed.is_connected(func(): _set_modal_gender("f")):
-		btn_gender_girl.pressed.connect(func(): _set_modal_gender("f"))
-	if btn_gender_boy and not btn_gender_boy.pressed.is_connected(func(): _set_modal_gender("m")):
-		btn_gender_boy.pressed.connect(func(): _set_modal_gender("m"))
+	if btn_gender_girl and not btn_gender_girl.pressed.is_connected(func(): _set_modal_archetype("f", "child")):
+		btn_gender_girl.pressed.connect(func(): _set_modal_archetype("f", "child"))
+	if btn_gender_boy and not btn_gender_boy.pressed.is_connected(func(): _set_modal_archetype("m", "child")):
+		btn_gender_boy.pressed.connect(func(): _set_modal_archetype("m", "child"))
+	if btn_adult_female and not btn_adult_female.pressed.is_connected(func(): _set_modal_archetype("f", "adult")):
+		btn_adult_female.pressed.connect(func(): _set_modal_archetype("f", "adult"))
+	if btn_adult_male and not btn_adult_male.pressed.is_connected(func(): _set_modal_archetype("m", "adult")):
+		btn_adult_male.pressed.connect(func(): _set_modal_archetype("m", "adult"))
 	if btn_save_profile and not btn_save_profile.pressed.is_connected(_on_save_profile_pressed):
 		btn_save_profile.pressed.connect(_on_save_profile_pressed)
 	if btn_cancel_edit_profile and not btn_cancel_edit_profile.pressed.is_connected(_close_edit_modal):
@@ -611,12 +618,14 @@ func _update_active_profile_display() -> void:
 	var prof = pm.get_active_profile()
 	var p_name = prof.get("name", "")
 	var is_fem = (str(prof.get("gender", "f")).to_lower() == "f")
-	var icon = "👧" if is_fem else "👦"
-	var tag = "Niña" if is_fem else "Niño"
-	var color_code = "#db2777" if is_fem else "#2563eb" # Rosa para niña, Azul para niño
+	var cat = str(prof.get("category", "child")).to_lower()
+	var is_ad = (cat in ["adult", "adulto", "adulta"] or prof.get("is_adult", false) == true)
+	var icon = ("👩" if is_fem else "👨") if is_ad else ("👧" if is_fem else "👦")
+	var tag = ("Adulta" if is_fem else "Adulto") if is_ad else ("Niña" if is_fem else "Niño")
+	var color_code = ("#7c3aed" if is_fem else "#059669") if is_ad else ("#db2777" if is_fem else "#2563eb")
 
 	if p_name.strip_edges().is_empty():
-		p_name = "Nuevo Perfil"
+		p_name = ("Adulta" if is_fem else "Adulto") if is_ad else ("Niña" if is_fem else "Niño")
 
 	if active_profile_name:
 		active_profile_name.text = "%s %s (%s)" % [icon, p_name, tag]
@@ -670,8 +679,10 @@ func _populate_select_list() -> void:
 		var p_id = p.get("id", "")
 		var p_name = p.get("name", "Jugador")
 		var is_fem = (str(p.get("gender", "f")).to_lower() == "f")
-		var icon = "👧" if is_fem else "👦"
-		var gender_label = "Niña" if is_fem else "Niño"
+		var cat = str(p.get("category", "child")).to_lower()
+		var is_ad = (cat in ["adult", "adulto", "adulta"] or p.get("is_adult", false) == true)
+		var icon = ("👩" if is_fem else "👨") if is_ad else ("👧" if is_fem else "👦")
+		var gender_label = ("Adulta" if is_fem else "Adulto") if is_ad else ("Niña" if is_fem else "Niño")
 		var is_active = (p_id == active_id)
 
 		var card = PanelContainer.new()
@@ -700,7 +711,7 @@ func _populate_select_list() -> void:
 
 		var info_label = Label.new()
 		info_label.text = "%s %s  (%s)" % [icon, p_name, gender_label]
-		var col = Color("#DB2777") if is_fem else Color("#2563EB")
+		var col = (Color("#7C3AED") if is_fem else Color("#059669")) if is_ad else (Color("#DB2777") if is_fem else Color("#2563EB"))
 		info_label.add_theme_color_override("font_color", col)
 		info_label.add_theme_font_size_override("font_size", 20 if is_mob else 16)
 		info_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -767,7 +778,8 @@ func _populate_select_list() -> void:
 func _open_create_new_profile() -> void:
 	_is_editing_existing = false
 	_target_edit_profile_id = ""
-	_selected_gender = "f" # Predeterminado niña
+	_selected_gender = "f" # Predeterminado femenina
+	_selected_category = "child" # Predeterminado infantil
 
 	if edit_modal_title:
 		edit_modal_title.text = "🌟 Crear Nuevo Perfil"
@@ -827,6 +839,8 @@ func _open_edit_specific_profile(p_id: String) -> void:
 	_is_editing_existing = true
 	_target_edit_profile_id = p_id
 	_selected_gender = str(target_prof.get("gender", "f")).to_lower()
+	var cat = str(target_prof.get("category", "child")).to_lower()
+	_selected_category = "adult" if (cat in ["adult", "adulto", "adulta"] or target_prof.get("is_adult", false) == true) else "child"
 
 	if edit_modal_title:
 		edit_modal_title.text = "✏️ Editar Perfil de %s" % target_prof.get("name", "")
@@ -848,89 +862,59 @@ func _open_edit_specific_profile(p_id: String) -> void:
 	if edit_name_input:
 		edit_name_input.grab_focus()
 
-func _set_modal_gender(g: String) -> void:
+func _set_modal_archetype(g: String, cat: String) -> void:
 	_selected_gender = g
+	_selected_category = cat
 	_refresh_gender_buttons_ui()
 
+func _set_modal_gender(g: String) -> void:
+	_set_modal_archetype(g, _selected_category)
+
 func _refresh_gender_buttons_ui() -> void:
-	var is_fem = (_selected_gender == "f")
+	var is_girl_sel = (_selected_gender == "f" and _selected_category == "child")
+	var is_boy_sel = (_selected_gender == "m" and _selected_category == "child")
+	var is_adult_f_sel = (_selected_gender == "f" and _selected_category == "adult")
+	var is_adult_m_sel = (_selected_gender == "m" and _selected_category == "adult")
 
-	var girl_style = StyleBoxFlat.new()
-	girl_style.set_corner_radius_all(18)
-	girl_style.anti_aliasing = true
+	_style_archetype_button(btn_gender_girl, "👧 Niña", is_girl_sel, Color("#FDF2F8"), Color("#EC4899"), Color("#BE185D"))
+	_style_archetype_button(btn_gender_boy, "👦 Niño", is_boy_sel, Color("#EFF6FF"), Color("#3B82F6"), Color("#1D4ED8"))
+	_style_archetype_button(btn_adult_female, "👩 Adulta", is_adult_f_sel, Color("#FAF5FF"), Color("#8B5CF6"), Color("#6D28D9"))
+	_style_archetype_button(btn_adult_male, "👨 Adulto", is_adult_m_sel, Color("#ECFDF5"), Color("#10B981"), Color("#047857"))
 
-	var boy_style = StyleBoxFlat.new()
-	boy_style.set_corner_radius_all(18)
-	boy_style.anti_aliasing = true
+func _style_archetype_button(btn: Button, base_text: String, is_selected: bool, bg_col: Color, border_col: Color, text_col: Color) -> void:
+	if not btn:
+		return
+	btn.custom_minimum_size = Vector2(160, 48)
 
-	if is_fem:
-		girl_style.bg_color = Color("#FDF2F8") # Soft pink
-		girl_style.border_width_left = 3
-		girl_style.border_width_top = 3
-		girl_style.border_width_right = 3
-		girl_style.border_width_bottom = 6
-		girl_style.border_color = Color("#EC4899")
-		if btn_gender_girl:
-			btn_gender_girl.text = "👧 Niña  ✓"
-			btn_gender_girl.add_theme_color_override("font_color", Color("#BE185D"))
-			btn_gender_girl.add_theme_font_size_override("font_size", 18)
+	var sb := StyleBoxFlat.new()
+	sb.set_corner_radius_all(16)
+	sb.anti_aliasing = true
 
-		boy_style.bg_color = Color("#F8FAFC") # Soft gray
-		boy_style.border_width_left = 1
-		boy_style.border_width_top = 1
-		boy_style.border_width_right = 1
-		boy_style.border_width_bottom = 3
-		boy_style.border_color = Color("#CBD5E1")
-		if btn_gender_boy:
-			btn_gender_boy.text = "👦 Niño"
-			btn_gender_boy.add_theme_color_override("font_color", Color("#64748B"))
-			btn_gender_boy.add_theme_font_size_override("font_size", 16)
+	if is_selected:
+		sb.bg_color = bg_col
+		sb.border_width_left = 3
+		sb.border_width_top = 3
+		sb.border_width_right = 3
+		sb.border_width_bottom = 6
+		sb.border_color = border_col
+		btn.text = "%s  ✓" % base_text
+		btn.add_theme_color_override("font_color", text_col)
+		btn.add_theme_font_size_override("font_size", 16)
 	else:
-		girl_style.bg_color = Color("#F8FAFC")
-		girl_style.border_width_left = 1
-		girl_style.border_width_top = 1
-		girl_style.border_width_right = 1
-		girl_style.border_width_bottom = 3
-		girl_style.border_color = Color("#CBD5E1")
-		if btn_gender_girl:
-			btn_gender_girl.text = "👧 Niña"
-			btn_gender_girl.add_theme_color_override("font_color", Color("#64748B"))
-			btn_gender_girl.add_theme_font_size_override("font_size", 16)
+		sb.bg_color = Color("#F8FAFC")
+		sb.border_width_left = 1
+		sb.border_width_top = 1
+		sb.border_width_right = 1
+		sb.border_width_bottom = 3
+		sb.border_color = Color("#CBD5E1")
+		btn.text = base_text
+		btn.add_theme_color_override("font_color", Color("#64748B"))
+		btn.add_theme_font_size_override("font_size", 15)
 
-		boy_style.bg_color = Color("#EFF6FF") # Soft blue
-		boy_style.border_width_left = 3
-		boy_style.border_width_top = 3
-		boy_style.border_width_right = 3
-		boy_style.border_width_bottom = 6
-		boy_style.border_color = Color("#3B82F6")
-		if btn_gender_boy:
-			btn_gender_boy.text = "👦 Niño  ✓"
-			btn_gender_boy.add_theme_color_override("font_color", Color("#1D4ED8"))
-			btn_gender_boy.add_theme_font_size_override("font_size", 18)
-
-	for b in [btn_gender_girl, btn_gender_boy]:
-		if b:
-			b.custom_minimum_size = Vector2(160, 52)
-	if btn_gender_girl:
-		btn_gender_girl.add_theme_stylebox_override("normal", girl_style)
-		btn_gender_girl.add_theme_stylebox_override("hover", girl_style)
-		btn_gender_girl.add_theme_stylebox_override("pressed", girl_style)
-	if btn_gender_boy:
-		btn_gender_boy.add_theme_stylebox_override("normal", boy_style)
-		btn_gender_boy.add_theme_stylebox_override("hover", boy_style)
-		btn_gender_boy.add_theme_stylebox_override("pressed", boy_style)
-		if btn_gender_boy:
-			btn_gender_boy.text = "👦 Niño  ✓"
-			btn_gender_boy.add_theme_color_override("font_color", Color("#1D4ED8"))
-
-	if btn_gender_girl:
-		btn_gender_girl.add_theme_stylebox_override("normal", girl_style)
-		btn_gender_girl.add_theme_stylebox_override("hover", girl_style)
-		btn_gender_girl.add_theme_stylebox_override("pressed", girl_style)
-	if btn_gender_boy:
-		btn_gender_boy.add_theme_stylebox_override("normal", boy_style)
-		btn_gender_boy.add_theme_stylebox_override("hover", boy_style)
-		btn_gender_boy.add_theme_stylebox_override("pressed", boy_style)
+	var sb_hov = sb.duplicate()
+	btn.add_theme_stylebox_override("normal", sb)
+	btn.add_theme_stylebox_override("hover", sb_hov)
+	btn.add_theme_stylebox_override("pressed", sb)
 
 func _on_save_profile_pressed() -> void:
 	var pm = _get_pm()
@@ -942,12 +926,15 @@ func _on_save_profile_pressed() -> void:
 		entered_name = edit_name_input.text.strip_edges()
 
 	if entered_name.is_empty():
-		entered_name = "Niña" if _selected_gender == "f" else "Niño"
+		if _selected_category == "adult":
+			entered_name = "Adulta" if _selected_gender == "f" else "Adulto"
+		else:
+			entered_name = "Niña" if _selected_gender == "f" else "Niño"
 
 	if _is_editing_existing:
-		pm.update_profile(_target_edit_profile_id, entered_name, _selected_gender)
+		pm.update_profile(_target_edit_profile_id, entered_name, _selected_gender, _selected_category)
 	else:
-		pm.create_profile(entered_name, _selected_gender)
+		pm.create_profile(entered_name, _selected_gender, _selected_category)
 
 	if btn_cancel_edit_profile:
 		btn_cancel_edit_profile.visible = true
@@ -2247,11 +2234,15 @@ func _update_mobile_profile_and_stats() -> void:
 	if pm and _mob_lbl_player_name:
 		var prof = pm.get_active_profile()
 		var p_name: String = str(prof.get("name", "")).strip_edges()
-		if p_name.is_empty():
-			p_name = "Jugador"
 		var is_fem: bool = (str(prof.get("gender", "f")).to_lower() == "f")
-		_mob_lbl_player_name.text = p_name
-		_mob_lbl_player_name.add_theme_color_override("font_color", Color("#DB2777") if is_fem else Color("#2563EB"))
+		var cat: String = str(prof.get("category", "child")).to_lower()
+		var is_ad: bool = (cat in ["adult", "adulto", "adulta"] or prof.get("is_adult", false) == true)
+		var icon: String = ("👩" if is_fem else "👨") if is_ad else ("👧" if is_fem else "👦")
+		if p_name.is_empty():
+			p_name = ("Adulta" if is_fem else "Adulto") if is_ad else ("Niña" if is_fem else "Niño")
+		_mob_lbl_player_name.text = "%s %s" % [icon, p_name]
+		var col = ("#7C3AED" if is_fem else "#059669") if is_ad else ("#DB2777" if is_fem else "#2563EB")
+		_mob_lbl_player_name.add_theme_color_override("font_color", Color(col))
 
 	if _mob_lbl_stars:
 		var total_stars: int = 0

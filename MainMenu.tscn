@@ -682,7 +682,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="EditCard" type="PanelContainer" parent="ProfileEditOverlay/Center"]
-custom_minimum_size = Vector2(430, 400)
+custom_minimum_size = Vector2(440, 460)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
 
@@ -732,14 +732,14 @@ theme_override_constants/separation = 6
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
 theme_override_font_sizes/font_size = 13
-text = "¿Eres Niño o Niña? (Para que Pollito te hable bien):"
+text = "¿Quién jugará? (Elige tu avatar y estilo):"
 
-[node name="GenderHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
+[node name="ChildRowHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="BtnGenderGirl" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/GenderHBox"]
+[node name="BtnGenderGirl" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/ChildRowHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 46)
 layout_mode = 2
@@ -748,7 +748,7 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 15
 text = "👧 Niña"
 
-[node name="BtnGenderBoy" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/GenderHBox"]
+[node name="BtnGenderBoy" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/ChildRowHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 46)
 layout_mode = 2
@@ -756,6 +756,29 @@ size_flags_horizontal = 3
 focus_mode = 0
 theme_override_font_sizes/font_size = 15
 text = "👦 Niño"
+
+[node name="AdultRowHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnAdultFemale" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/AdultRowHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "👩 Adulta"
+
+[node name="BtnAdultMale" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/AdultRowHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "👨 Adulto"
 
 [node name="EditButtonsVBox" type="VBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox"]
 layout_mode = 2
