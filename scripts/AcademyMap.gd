@@ -16,9 +16,11 @@ const FONT_CHERRY = preload("res://assets/fonts/CherryBombOne-Regular.ttf")
 @onready var lbl_player_info: Label = %LblPlayerInfo
 @onready var lbl_total_stars: Label = %LblTotalStars
 @onready var mode_selector_bar: HBoxContainer = %ModeSelectorBar
+@onready var grades_scroll: ScrollContainer = %GradesScroll if has_node("%GradesScroll") else find_child("GradesScroll", true, false)
 @onready var grades_tab_container: HBoxContainer = %GradesTabContainer
 @onready var lbl_selected_grade_title: Label = %LblSelectedGradeTitle
 @onready var lbl_selected_grade_source: Label = %LblSelectedGradeSource
+@onready var lessons_scroll: ScrollContainer = %LessonsScroll if has_node("%LessonsScroll") else find_child("LessonsScroll", true, false)
 @onready var lessons_vbox: VBoxContainer = %LessonsVBox
 @onready var lbl_pollito_advice: Label = %LblPollitoAdvice
 
@@ -27,12 +29,31 @@ var current_grade_num: int = 1
 var current_pack_id: String = "pack_torre"
 var audio_player: AudioStreamPlayer = null
 
+# Sistema de Desplazamiento Táctil Nativo (Touch Drag & Kinetic Momentum)
+var _touch_scroll_active: ScrollContainer = null
+var _touch_scroll_axis: String = "" # "h" o "v"
+var _touch_start_pos: Vector2 = Vector2.ZERO
+var _touch_last_pos: Vector2 = Vector2.ZERO
+var _touch_start_scroll_val: int = 0
+var _is_touch_dragging: bool = false
+var _drag_threshold: float = 12.0 # Píxeles necesarios para diferenciar tap rápido de arrastre
+var _touch_last_time_ms: int = 0
+var _scroll_velocity: float = 0.0 # Velocidad inercial en píxeles/segundo
+var _momentum_target: ScrollContainer = null
+var _momentum_axis: String = ""
+
 func _ready() -> void:
 	audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 	
 	if btn_back_to_menu and not btn_back_to_menu.pressed.is_connected(_on_back_to_menu_pressed):
 		btn_back_to_menu.pressed.connect(_on_back_to_menu_pressed)
+	
+	# Asegurar que los contenedores no intercepten eventos táctiles del ScrollContainer
+	if grades_tab_container:
+		grades_tab_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if lessons_vbox:
+		lessons_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	# Conexión con ScreenManager para Notch / Safe Area y rotación
 	if has_node("/root/ScreenManager"):
@@ -56,6 +77,140 @@ func _ready() -> void:
 	
 	_apply_safe_area()
 	_refresh_view()
+
+func _process(delta: float) -> void:
+	if _momentum_target and is_instance_valid(_momentum_target) and abs(_scroll_velocity) > 10.0:
+		if _momentum_axis == "h":
+			var hbar = _momentum_target.get_h_scroll_bar()
+			var max_val = max(0, int(hbar.max_value - hbar.page))
+			var new_val = clamp(int(_momentum_target.scroll_horizontal + _scroll_velocity * delta), 0, max_val)
+			if new_val == _momentum_target.scroll_horizontal or new_val == 0 or new_val == max_val:
+				_scroll_velocity = 0.0
+				_momentum_target = null
+			else:
+				_momentum_target.scroll_horizontal = new_val
+				_scroll_velocity = lerp(_scroll_velocity, 0.0, delta * 7.0)
+		elif _momentum_axis == "v":
+			var vbar = _momentum_target.get_v_scroll_bar()
+			var max_val = max(0, int(vbar.max_value - vbar.page))
+			var new_val = clamp(int(_momentum_target.scroll_vertical + _scroll_velocity * delta), 0, max_val)
+			if new_val == _momentum_target.scroll_vertical or new_val == 0 or new_val == max_val:
+				_scroll_velocity = 0.0
+				_momentum_target = null
+			else:
+				_momentum_target.scroll_vertical = new_val
+				_scroll_velocity = lerp(_scroll_velocity, 0.0, delta * 7.0)
+	else:
+		_scroll_velocity = 0.0
+		_momentum_target = null
+
+func _input(event: InputEvent) -> void:
+	var is_down = false
+	var is_up = false
+	var is_drag = false
+	var ev_pos = Vector2.ZERO
+
+	if event is InputEventScreenTouch:
+		ev_pos = event.position
+		if event.pressed:
+			is_down = true
+		else:
+			is_up = true
+	elif event is InputEventScreenDrag:
+		ev_pos = event.position
+		is_drag = true
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		ev_pos = event.position
+		if event.pressed:
+			is_down = true
+		else:
+			is_up = true
+	elif event is InputEventMouseMotion and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+		ev_pos = event.position
+		is_drag = true
+	else:
+		return
+
+	if is_down:
+		_scroll_velocity = 0.0
+		_momentum_target = null
+		_touch_scroll_active = null
+		_is_touch_dragging = false
+
+		if grades_scroll and grades_scroll.is_visible_in_tree():
+			var local_g = grades_scroll.make_input_local(event)
+			if Rect2(Vector2.ZERO, grades_scroll.size).has_point(local_g.position):
+				_touch_scroll_active = grades_scroll
+				_touch_scroll_axis = "h"
+				_touch_start_pos = ev_pos
+				_touch_last_pos = ev_pos
+				_touch_start_scroll_val = grades_scroll.scroll_horizontal
+				_touch_last_time_ms = Time.get_ticks_msec()
+				return
+
+		if lessons_scroll and lessons_scroll.is_visible_in_tree():
+			var local_l = lessons_scroll.make_input_local(event)
+			if Rect2(Vector2.ZERO, lessons_scroll.size).has_point(local_l.position):
+				_touch_scroll_active = lessons_scroll
+				_touch_scroll_axis = "v"
+				_touch_start_pos = ev_pos
+				_touch_last_pos = ev_pos
+				_touch_start_scroll_val = lessons_scroll.scroll_vertical
+				_touch_last_time_ms = Time.get_ticks_msec()
+				return
+
+	elif is_drag and _touch_scroll_active != null:
+		var now = Time.get_ticks_msec()
+		var dt = (now - _touch_last_time_ms) / 1000.0
+		_touch_last_time_ms = now
+
+		if _touch_scroll_axis == "h":
+			var delta_x = ev_pos.x - _touch_start_pos.x
+			if abs(delta_x) > _drag_threshold or _is_touch_dragging:
+				_is_touch_dragging = true
+				var hbar = _touch_scroll_active.get_h_scroll_bar()
+				var max_val = max(0, int(hbar.max_value - hbar.page))
+				var target_val = clamp(int(_touch_start_scroll_val - delta_x), 0, max_val)
+				_touch_scroll_active.scroll_horizontal = target_val
+
+				var move_dx = ev_pos.x - _touch_last_pos.x
+				if dt > 0.001:
+					_scroll_velocity = -move_dx / dt
+				_touch_last_pos = ev_pos
+				get_viewport().set_input_as_handled()
+
+		elif _touch_scroll_axis == "v":
+			var delta_y = ev_pos.y - _touch_start_pos.y
+			if abs(delta_y) > _drag_threshold or _is_touch_dragging:
+				_is_touch_dragging = true
+				var vbar = _touch_scroll_active.get_v_scroll_bar()
+				var max_val = max(0, int(vbar.max_value - vbar.page))
+				var target_val = clamp(int(_touch_start_scroll_val - delta_y), 0, max_val)
+				_touch_scroll_active.scroll_vertical = target_val
+
+				var move_dy = ev_pos.y - _touch_last_pos.y
+				if dt > 0.001:
+					_scroll_velocity = -move_dy / dt
+				_touch_last_pos = ev_pos
+				get_viewport().set_input_as_handled()
+
+	elif is_up:
+		if _touch_scroll_active != null:
+			if _is_touch_dragging:
+				var now = Time.get_ticks_msec()
+				var dt = (now - _touch_last_time_ms) / 1000.0
+				if dt < 0.12 and abs(_scroll_velocity) > 60.0:
+					_momentum_target = _touch_scroll_active
+					_momentum_axis = _touch_scroll_axis
+				else:
+					_scroll_velocity = 0.0
+					_momentum_target = null
+
+				# Consumir el evento para que los botones debajo no ejecuten click accidental tras arrastrar
+				get_viewport().set_input_as_handled()
+
+			_touch_scroll_active = null
+			_is_touch_dragging = false
 
 func _on_viewport_size_changed() -> void:
 	_apply_safe_area()
@@ -207,6 +362,10 @@ func _select_mode(m_id: String) -> void:
 	var am = _get_am()
 	if am:
 		am.current_mode = m_id
+	if lessons_scroll:
+		lessons_scroll.scroll_vertical = 0
+	if grades_scroll:
+		grades_scroll.scroll_horizontal = 0
 	_refresh_view()
 
 func _build_grade_tabs() -> void:
@@ -335,6 +494,8 @@ func _select_grade(g_num: int) -> void:
 	var am = _get_am()
 	if am:
 		am.current_grade_num = g_num
+	if lessons_scroll:
+		lessons_scroll.scroll_vertical = 0
 	_refresh_view()
 
 func _select_practice_pack(p_id: String) -> void:
@@ -345,6 +506,8 @@ func _select_practice_pack(p_id: String) -> void:
 	var am = _get_am()
 	if am:
 		am.current_pack_id = p_id
+	if lessons_scroll:
+		lessons_scroll.scroll_vertical = 0
 	_refresh_view()
 
 func _display_grade_lessons(g_num: int) -> void:
@@ -433,6 +596,7 @@ func _display_practice_exercises(pack_id: String) -> void:
 
 func _create_status_icon_panel(is_completed: bool, is_unlocked: bool, is_practice: bool, size_px: float = 54.0) -> PanelContainer:
 	var status_panel = PanelContainer.new()
+	status_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	status_panel.custom_minimum_size = Vector2(size_px, size_px)
 	status_panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
@@ -455,6 +619,7 @@ func _create_status_icon_panel(is_completed: bool, is_unlocked: bool, is_practic
 	status_panel.add_theme_stylebox_override("panel", status_sb)
 
 	var status_lbl = Label.new()
+	status_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	status_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	status_lbl.add_theme_font_size_override("font_size", int(size_px * 0.48))
@@ -469,6 +634,7 @@ func _create_status_icon_panel(is_completed: bool, is_unlocked: bool, is_practic
 
 func _create_tag_pill(badge_tag: String, font_sz: int = 13) -> PanelContainer:
 	var tag_panel = PanelContainer.new()
+	tag_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var tag_sb = StyleBoxFlat.new()
 	tag_sb.set_corner_radius_all(10)
 	tag_sb.bg_color = Color("#f1f5f9")
@@ -480,6 +646,7 @@ func _create_tag_pill(badge_tag: String, font_sz: int = 13) -> PanelContainer:
 	tag_panel.add_theme_stylebox_override("panel", tag_sb)
 
 	var tag_margin = MarginContainer.new()
+	tag_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tag_margin.add_theme_constant_override("margin_left", 10)
 	tag_margin.add_theme_constant_override("margin_right", 10)
 	tag_margin.add_theme_constant_override("margin_top", 3)
@@ -487,6 +654,7 @@ func _create_tag_pill(badge_tag: String, font_sz: int = 13) -> PanelContainer:
 	tag_panel.add_child(tag_margin)
 
 	var tag_lbl = Label.new()
+	tag_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tag_lbl.text = badge_tag
 	tag_lbl.add_theme_font_size_override("font_size", font_sz)
 	tag_lbl.add_theme_color_override("font_color", Color("#475569"))
@@ -495,6 +663,7 @@ func _create_tag_pill(badge_tag: String, font_sz: int = 13) -> PanelContainer:
 
 func _create_stars_label(stars: int, is_unlocked: bool, font_sz: int = 26) -> Label:
 	var stars_lbl = Label.new()
+	stars_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var stars_text = ""
 	for s in range(3):
 		stars_text += "⭐" if s < stars else "☆"
@@ -507,6 +676,7 @@ func _create_stars_label(stars: int, is_unlocked: bool, font_sz: int = 26) -> La
 func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag: String, is_unlocked: bool, is_completed: bool, stars: int, is_practice: bool) -> Control:
 	var is_port = _is_portrait_view()
 	var card = PanelContainer.new()
+	card.mouse_filter = Control.MOUSE_FILTER_PASS
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var sb = StyleBoxFlat.new()
@@ -534,6 +704,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 	card.add_theme_stylebox_override("panel", sb)
 
 	var margin = MarginContainer.new()
+	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin.add_theme_constant_override("margin_left", 18 if is_port else 16)
 	margin.add_theme_constant_override("margin_right", 18 if is_port else 16)
 	margin.add_theme_constant_override("margin_top", 14 if is_port else 12)
@@ -544,11 +715,13 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		# DISPOSICIÓN MÓVIL VERTICAL: Espaciosa, letras grandes y botón ancho táctil
 		card.custom_minimum_size = Vector2(0, 160)
 		var main_vbox = VBoxContainer.new()
+		main_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		main_vbox.add_theme_constant_override("separation", 10)
 		margin.add_child(main_vbox)
 
 		# Fila 1: Icono circular + Título + Píldora de Etapas + Estrellas
 		var top_hbox = HBoxContainer.new()
+		top_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		top_hbox.add_theme_constant_override("separation", 12)
 		main_vbox.add_child(top_hbox)
 
@@ -556,11 +729,13 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		top_hbox.add_child(status_panel)
 
 		var title_vbox = VBoxContainer.new()
+		title_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		title_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		title_vbox.add_theme_constant_override("separation", 3)
 		top_hbox.add_child(title_vbox)
 
 		var title_lbl = Label.new()
+		title_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		title_lbl.text = "%s %s" % [prefix, l_data.get("title", "")]
 		title_lbl.add_theme_font_override("font", FONT_CHERRY)
 		title_lbl.add_theme_font_size_override("font_size", 21)
@@ -579,6 +754,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		var sub_text = l_data.get("subtitle", "")
 		if not sub_text.is_empty():
 			var sub_lbl = Label.new()
+			sub_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			sub_lbl.text = sub_text
 			sub_lbl.add_theme_font_size_override("font_size", 16)
 			sub_lbl.add_theme_color_override("font_color", Color("#334155") if is_unlocked else Color("#94a3b8"))
@@ -631,6 +807,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 			main_vbox.add_child(btn_action)
 		else:
 			var lock_banner = PanelContainer.new()
+			lock_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			lock_banner.custom_minimum_size = Vector2(0, 48)
 			var l_sb = StyleBoxFlat.new()
 			l_sb.set_corner_radius_all(14)
@@ -643,6 +820,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 			lock_banner.add_theme_stylebox_override("panel", l_sb)
 
 			var l_lbl = Label.new()
+			l_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			l_lbl.text = "🔒 Bloqueada • Supera el reto anterior para abrirla"
 			l_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			l_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -654,6 +832,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		# DISPOSICIÓN ESCRITORIO / TABLET HORIZONTAL
 		card.custom_minimum_size = Vector2(0, 108)
 		var hbox = HBoxContainer.new()
+		hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		hbox.add_theme_constant_override("separation", 16)
 		margin.add_child(hbox)
 
@@ -661,14 +840,17 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		hbox.add_child(status_panel)
 
 		var vbox_text = VBoxContainer.new()
+		vbox_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		vbox_text.add_theme_constant_override("separation", 4)
 
 		var header_hbox = HBoxContainer.new()
+		header_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		header_hbox.add_theme_constant_override("separation", 10)
 		vbox_text.add_child(header_hbox)
 
 		var title_lbl = Label.new()
+		title_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		title_lbl.text = "%s %s" % [prefix, l_data.get("title", "")]
 		title_lbl.add_theme_font_override("font", FONT_CHERRY)
 		title_lbl.add_theme_font_size_override("font_size", 20)
@@ -681,6 +863,7 @@ func _create_lesson_card(idx: int, prefix: String, l_data: Dictionary, badge_tag
 		header_hbox.add_child(tag_panel)
 
 		var sub_lbl = Label.new()
+		sub_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		sub_lbl.text = l_data.get("subtitle", "")
 		sub_lbl.add_theme_font_size_override("font_size", 15)
 		sub_lbl.add_theme_color_override("font_color", Color("#334155") if is_unlocked else Color("#94a3b8"))
