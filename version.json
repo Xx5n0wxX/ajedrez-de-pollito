@@ -1,8 +1,8 @@
 {
-  "version_code": 11,
-  "version_name": "1.1.0",
+  "version_code": 12,
+  "version_name": "1.1.1",
   "release_date": "2026-11-07",
-  "notes": "Rediseño del panel en el aula de la Academia: Objetivo arriba del todo, globo de diálogo de ancho completo y Pollito grande ocupando todo el espacio restante.",
+  "notes": "Tamaño de Pollito fijado permanentemente en la Academia (escala 0.65x): ahora se mantiene grande y constante, sin achicarse ni agrandarse ante cambios dinámicos de texto, pistas o paneles de retroalimentación.",
   "pck_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck",
   "pck_win_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck",
   "apk_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk",

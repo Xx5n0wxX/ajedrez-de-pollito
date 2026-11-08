@@ -333,6 +333,7 @@ texture = ExtResource("4_pollito")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("5_avatar")
+fixed_scale = 0.65
 
 [node name="FeedbackPanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 unique_name_in_owner = true

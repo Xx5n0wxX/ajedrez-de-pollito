@@ -12,6 +12,10 @@ const GALLO_PROFE_SCENE: PackedScene = preload("res://scenes/GalloProfe.tscn")
 
 var visual_sprite: TextureRect
 var gallo_puppet: GalloProfe
+@export var fixed_scale: float = 0.0
+@export var prevent_shrink: bool = true
+
+var _max_seen_scale: float = 0.0
 var current_expression: String = ""
 var current_tween: Tween
 
@@ -90,8 +94,19 @@ func _on_parent_resized() -> void:
 	if visual_sprite:
 		visual_sprite.pivot_offset = size / 2.0
 	if gallo_puppet:
-		var target_dim: float = min(size.x, size.y)
-		var s: float = target_dim / 420.0
+		var s: float = 0.0
+		if fixed_scale > 0.0:
+			s = fixed_scale
+		else:
+			var target_dim: float = min(size.x, size.y)
+			var calc_s: float = target_dim / 420.0
+			if prevent_shrink:
+				if calc_s > _max_seen_scale:
+					_max_seen_scale = calc_s
+				s = _max_seen_scale if _max_seen_scale > 0.0 else calc_s
+			else:
+				s = calc_s
+
 		gallo_puppet.scale = Vector2(s, s)
 		# Centrado visual exacto del cuerpo (439x437 px) evitando cualquier recorte
 		gallo_puppet.position = Vector2(size.x * 0.5 + 5.0 * s, size.y * 0.5 + 206.0 * s)
