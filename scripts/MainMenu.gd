@@ -564,30 +564,47 @@ func _open_styled_popup(overlay: Control, card: Control) -> void:
 	overlay.z_index = 1000
 	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
 
+	var vp_sz = get_viewport().get_visible_rect().size
+	var is_mob: bool = false
+	var safe_top: float = 0.0
+	var safe_bottom: float = 0.0
+	if has_node("/root/ScreenManager"):
+		var sm = get_node("/root/ScreenManager")
+		if sm.has_method("is_mobile"):
+			is_mob = sm.is_mobile()
+		safe_top = sm.get_safe_top_margin()
+		safe_bottom = sm.get_safe_bottom_margin()
+
+	# Configurar el CenterContainer para que respete exactamente el área segura de la pantalla
+	var center_node: CenterContainer = null
+	for child in overlay.get_children():
+		if child is CenterContainer:
+			center_node = child
+			break
+	if center_node:
+		center_node.offset_top = maxf(safe_top, 16.0)
+		center_node.offset_bottom = -maxf(safe_bottom, 16.0)
+		center_node.offset_left = 12.0
+		center_node.offset_right = -12.0
+
 	if card:
-		var is_mob: bool = false
-		if has_node("/root/ScreenManager"):
-			var sm = get_node("/root/ScreenManager")
-			if sm.has_method("is_mobile"):
-				is_mob = sm.is_mobile()
+		# En móviles asegurar que el ancho mínimo quepa holgadamente en el ancho visible
+		if is_mob and card.custom_minimum_size.x > (vp_sz.x - 24.0):
+			card.custom_minimum_size.x = maxf(vp_sz.x - 24.0, 300.0)
 
-		var vp_sz = get_viewport().get_visible_rect().size
-		var is_portrait = (vp_sz.x < vp_sz.y)
-		var target_scale = Vector2.ONE
-		if is_mob and is_portrait:
-			var s: float = clampf((vp_sz.x * 0.92) / maxf(card.custom_minimum_size.x, 440.0), 0.95, 1.15)
-			target_scale = Vector2(s, s)
+		# Animación pop-in suave y centrada hacia scale 1.0 (Vector2.ONE exacto)
+		card.scale = Vector2(0.92, 0.92)
 
-		card.pivot_offset = card.size * 0.5
-		card.scale = target_scale * 0.85
-		var safe_top: float = 0.0
-		if has_node("/root/ScreenManager"):
-			safe_top = get_node("/root/ScreenManager").get_safe_top_margin()
-		if safe_top > 0.0 and card.global_position.y < safe_top:
-			card.position.y += (safe_top - card.global_position.y) + 8.0
+		# Calcular pivot en base a dimensiones sensatas para no desfasar la animación
+		var card_sz = card.size
+		if card_sz.y <= 0 or card_sz.y > vp_sz.y:
+			card_sz = card.get_combined_minimum_size()
+		if card_sz.y > vp_sz.y:
+			card_sz.y = minf(vp_sz.y * 0.8, 500.0)
+		card.pivot_offset = card_sz * 0.5
 
 		var tw := create_tween()
-		tw.tween_property(card, "scale", target_scale, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.tween_property(card, "scale", Vector2.ONE, 0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _setup_profile_ui() -> void:
 	var pm = _get_pm()
@@ -3160,12 +3177,14 @@ func _build_update_popup_ui() -> void:
 	_update_popup_overlay.add_child(dimmer)
 
 	var center := CenterContainer.new()
+	center.name = "UpdateCenterContainer"
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_update_popup_overlay.add_child(center)
 
 	_update_popup_card = PanelContainer.new()
-	_update_popup_card.custom_minimum_size = Vector2(540, 400)
+	_update_popup_card.name = "UpdatePopupCard"
+	_update_popup_card.custom_minimum_size = Vector2(500, 0)
 	var card_sb := StyleBoxFlat.new()
 	card_sb.bg_color = Color("#FFF9FB")
 	card_sb.border_width_left = 5
@@ -3174,10 +3193,10 @@ func _build_update_popup_ui() -> void:
 	card_sb.border_width_bottom = 10
 	card_sb.border_color = Color("#F472B6")
 	card_sb.set_corner_radius_all(34)
-	card_sb.content_margin_left = 28
-	card_sb.content_margin_right = 28
-	card_sb.content_margin_top = 22
-	card_sb.content_margin_bottom = 26
+	card_sb.content_margin_left = 24
+	card_sb.content_margin_right = 24
+	card_sb.content_margin_top = 20
+	card_sb.content_margin_bottom = 24
 	card_sb.shadow_color = Color(0.0, 0.0, 0.0, 0.38)
 	card_sb.shadow_size = 24
 	card_sb.shadow_offset = Vector2(0, 10)
@@ -3185,7 +3204,7 @@ func _build_update_popup_ui() -> void:
 	center.add_child(_update_popup_card)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 16)
+	vbox.add_theme_constant_override("separation", 14)
 	_update_popup_card.add_child(vbox)
 
 	# Cabecera
@@ -3202,7 +3221,7 @@ func _build_update_popup_ui() -> void:
 	title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title_lbl.add_theme_font_override("font", CHERRY_FONT_MOB)
-	title_lbl.add_theme_font_size_override("font_size", 34)
+	title_lbl.add_theme_font_size_override("font_size", 32)
 	title_lbl.add_theme_color_override("font_color", Color("#BE185D"))
 	title_lbl.add_theme_color_override("font_outline_color", Color.WHITE)
 	title_lbl.add_theme_constant_override("outline_size", 8)
@@ -3210,7 +3229,7 @@ func _build_update_popup_ui() -> void:
 
 	var btn_close := Button.new()
 	btn_close.text = "✕"
-	btn_close.custom_minimum_size = Vector2(50, 50)
+	btn_close.custom_minimum_size = Vector2(46, 46)
 	btn_close.focus_mode = Control.FOCUS_NONE
 	btn_close.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	btn_close.add_theme_font_size_override("font_size", 22)
@@ -3222,7 +3241,7 @@ func _build_update_popup_ui() -> void:
 	close_sb.border_width_right = 3
 	close_sb.border_width_bottom = 5
 	close_sb.border_color = Color("#B91C1C")
-	close_sb.set_corner_radius_all(25)
+	close_sb.set_corner_radius_all(23)
 	btn_close.add_theme_stylebox_override("normal", close_sb)
 	btn_close.add_theme_stylebox_override("hover", close_sb)
 	btn_close.add_theme_stylebox_override("pressed", close_sb)
@@ -3234,12 +3253,13 @@ func _build_update_popup_ui() -> void:
 	_upd_lbl_status.text = "Buscando actualizaciones en GitHub..."
 	_upd_lbl_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_upd_lbl_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_upd_lbl_status.custom_minimum_size = Vector2(440, 0)
 	_upd_lbl_status.add_theme_font_override("font", CHERRY_FONT_MOB)
-	_upd_lbl_status.add_theme_font_size_override("font_size", 24)
+	_upd_lbl_status.add_theme_font_size_override("font_size", 22)
 	_upd_lbl_status.add_theme_color_override("font_color", Color("#9D174D"))
 	vbox.add_child(_upd_lbl_status)
 
-	# Caja de notas de versión
+	# Caja de notas de versión con ScrollContainer para evitar desbordamientos verticales
 	var notes_panel := PanelContainer.new()
 	var notes_sb := StyleBoxFlat.new()
 	notes_sb.bg_color = Color("#FFF0F6")
@@ -3249,20 +3269,29 @@ func _build_update_popup_ui() -> void:
 	notes_sb.border_width_bottom = 3
 	notes_sb.border_color = Color("#FBCFE8")
 	notes_sb.set_corner_radius_all(18)
-	notes_sb.content_margin_left = 18
-	notes_sb.content_margin_right = 18
-	notes_sb.content_margin_top = 14
-	notes_sb.content_margin_bottom = 14
+	notes_sb.content_margin_left = 16
+	notes_sb.content_margin_right = 16
+	notes_sb.content_margin_top = 10
+	notes_sb.content_margin_bottom = 10
 	notes_panel.add_theme_stylebox_override("panel", notes_sb)
 	vbox.add_child(notes_panel)
 
+	var notes_scroll := ScrollContainer.new()
+	notes_scroll.custom_minimum_size = Vector2(0, 110)
+	notes_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	notes_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	notes_panel.add_child(notes_scroll)
+
 	_upd_lbl_notes = Label.new()
+	_upd_lbl_notes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_upd_lbl_notes.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_upd_lbl_notes.custom_minimum_size = Vector2(400, 0)
 	_upd_lbl_notes.text = "Consultando el repositorio Xx5n0wxX/ajedrez-de-pollito..."
 	_upd_lbl_notes.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_upd_lbl_notes.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_upd_lbl_notes.add_theme_font_size_override("font_size", 18)
+	_upd_lbl_notes.add_theme_font_size_override("font_size", 16)
 	_upd_lbl_notes.add_theme_color_override("font_color", Color("#475569"))
-	notes_panel.add_child(_upd_lbl_notes)
+	notes_scroll.add_child(_upd_lbl_notes)
 
 	# Barra de progreso de descarga
 	_upd_progress_box = VBoxContainer.new()
@@ -3442,6 +3471,21 @@ func _on_update_button_pressed() -> void:
 func _open_update_popup() -> void:
 	if not _update_popup_overlay:
 		return
+	var vp_sz: Vector2 = get_viewport().get_visible_rect().size
+	var is_mob: bool = false
+	if has_node("/root/ScreenManager"):
+		var sm = get_node("/root/ScreenManager")
+		if sm.has_method("is_mobile"):
+			is_mob = sm.is_mobile()
+
+	if _update_popup_card:
+		var target_w: float = minf(vp_sz.x - 32.0, 500.0) if is_mob else 540.0
+		_update_popup_card.custom_minimum_size = Vector2(target_w, 0)
+		if _upd_lbl_status:
+			_upd_lbl_status.custom_minimum_size = Vector2(target_w - 48.0, 0)
+		if _upd_lbl_notes:
+			_upd_lbl_notes.custom_minimum_size = Vector2(target_w - 80.0, 0)
+
 	_open_styled_popup(_update_popup_overlay, _update_popup_card)
 
 func _close_update_popup() -> void:
