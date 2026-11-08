@@ -682,7 +682,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="EditCard" type="PanelContainer" parent="ProfileEditOverlay/Center"]
-custom_minimum_size = Vector2(440, 460)
+custom_minimum_size = Vector2(440, 520)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal_card")
 
@@ -728,11 +728,40 @@ max_length = 20
 layout_mode = 2
 theme_override_constants/separation = 6
 
+[node name="CategoryPrompt" type="Label" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "1. Tipo de Jugador (Elige si es Niño o Adulto):"
+
+[node name="CategoryHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnCatChild" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/CategoryHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "🧒 Modo Infantil"
+
+[node name="BtnCatAdult" type="Button" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection/CategoryHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 15
+text = "🧑 Modo Adulto"
+
 [node name="GenderPrompt" type="Label" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.48, 0.55, 1)
 theme_override_font_sizes/font_size = 13
-text = "¿Quién jugará? (Elige tu avatar y estilo):"
+text = "2. Avatar y cómo te hablará Pollito:"
 
 [node name="ChildRowHBox" type="HBoxContainer" parent="ProfileEditOverlay/Center/EditCard/Margin/VBox/GenderSection"]
 layout_mode = 2

@@ -270,6 +270,16 @@ func _on_download_request_completed(result: int, response_code: int, _headers: P
 	has_pending_update = false
 
 	_reload_updated_scripts_in_cache()
+	
+	# Recargar script del autoload ProfileManager en memoria si existe
+	if is_inside_tree() and get_tree().root.has_node("ProfileManager"):
+		var pm = get_tree().root.get_node("ProfileManager")
+		var pm_script = ResourceLoader.load("res://scripts/ProfileManager.gd", "", ResourceLoader.CACHE_MODE_REPLACE)
+		if pm_script:
+			pm.set_script(pm_script)
+			if pm.has_method("_load_profiles"):
+				pm._load_profiles()
+
 	download_progress_updated.emit(100.0, float(file_len) / (1024.0 * 1024.0), float(file_len) / (1024.0 * 1024.0))
 	update_installed_successfully.emit(current_version_name)
 
@@ -279,6 +289,7 @@ func _on_download_request_completed(result: int, response_code: int, _headers: P
 
 func _reload_updated_scripts_in_cache() -> void:
 	var scripts_to_refresh: Array[String] = [
+		"res://scripts/ProfileManager.gd",
 		"res://scripts/MainMenu.gd",
 		"res://scripts/SplashScreen.gd",
 		"res://scripts/GameController.gd",

@@ -86,6 +86,9 @@ func is_adult() -> bool:
 	var cat = str(prof.get("category", "child")).to_lower()
 	return cat in ["adult", "adulto", "adulta"] or prof.get("is_adult", false) == true
 
+func is_adult_profile() -> bool:
+	return is_adult()
+
 func get_player_category() -> String:
 	return "adult" if is_adult() else "child"
 

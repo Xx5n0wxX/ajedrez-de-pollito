@@ -50,6 +50,10 @@ var _current_history_filter: String = "all"
 @onready var edit_card: Control = %EditCard if has_node("%EditCard") else (profile_edit_overlay.find_child("EditCard", true, false) if profile_edit_overlay else null)
 @onready var edit_modal_title: Label = %EditModalTitle if has_node("%EditModalTitle") else find_child("EditModalTitle", true, false)
 @onready var edit_name_input: LineEdit = %EditNameInput if has_node("%EditNameInput") else find_child("EditNameInput", true, false)
+@onready var btn_cat_child: Button = %BtnCatChild if has_node("%BtnCatChild") else find_child("BtnCatChild", true, false)
+@onready var btn_cat_adult: Button = %BtnCatAdult if has_node("%BtnCatAdult") else find_child("BtnCatAdult", true, false)
+@onready var child_row_hbox: HBoxContainer = %ChildRowHBox if has_node("%ChildRowHBox") else find_child("ChildRowHBox", true, false)
+@onready var adult_row_hbox: HBoxContainer = %AdultRowHBox if has_node("%AdultRowHBox") else find_child("AdultRowHBox", true, false)
 @onready var btn_gender_girl: Button = %BtnGenderGirl if has_node("%BtnGenderGirl") else find_child("BtnGenderGirl", true, false)
 @onready var btn_gender_boy: Button = %BtnGenderBoy if has_node("%BtnGenderBoy") else find_child("BtnGenderBoy", true, false)
 @onready var btn_adult_female: Button = %BtnAdultFemale if has_node("%BtnAdultFemale") else find_child("BtnAdultFemale", true, false)
@@ -164,8 +168,7 @@ func _ready() -> void:
 	var pm = _get_pm()
 	if pm and pm.is_first_time:
 		call_deferred("_open_first_time_profile_modal")
-	else:
-		call_deferred("_trigger_auto_update_check")
+	call_deferred("_trigger_auto_update_check")
 
 func _process(delta: float) -> void:
 	if _mobile_root and _mobile_root.visible and _mobile_bg_canvas:
@@ -218,11 +221,19 @@ func _on_practice_bot_pressed() -> void:
 # =========================================================================
 
 func _get_pm() -> Node:
+	var pm: Node = null
 	if has_node("/root/ProfileManager"):
-		return get_node("/root/ProfileManager")
-	if ProfileManagerScript.instance:
-		return ProfileManagerScript.instance
-	return null
+		pm = get_node("/root/ProfileManager")
+	elif ProfileManagerScript.instance:
+		pm = ProfileManagerScript.instance
+	if pm:
+		if not pm.has_method("is_adult"):
+			var new_script = ResourceLoader.load("res://scripts/ProfileManager.gd", "", ResourceLoader.CACHE_MODE_REPLACE)
+			if new_script:
+				pm.set_script(new_script)
+				if pm.has_method("_load_profiles"):
+					pm._load_profiles()
+	return pm
 
 # =========================================================================
 # ESTILOS Y HELPERS UNIFICADOS DE POPUPS (ESTILO NUEVA PARTIDA / TOY 3D)
@@ -362,14 +373,8 @@ func _setup_profile_ui() -> void:
 		btn_close_select_modal.pressed.connect(_close_select_modal)
 
 	# Botones de modal editor
-	if btn_gender_girl and not btn_gender_girl.pressed.is_connected(func(): _set_modal_archetype("f", "child")):
-		btn_gender_girl.pressed.connect(func(): _set_modal_archetype("f", "child"))
-	if btn_gender_boy and not btn_gender_boy.pressed.is_connected(func(): _set_modal_archetype("m", "child")):
-		btn_gender_boy.pressed.connect(func(): _set_modal_archetype("m", "child"))
-	if btn_adult_female and not btn_adult_female.pressed.is_connected(func(): _set_modal_archetype("f", "adult")):
-		btn_adult_female.pressed.connect(func(): _set_modal_archetype("f", "adult"))
-	if btn_adult_male and not btn_adult_male.pressed.is_connected(func(): _set_modal_archetype("m", "adult")):
-		btn_adult_male.pressed.connect(func(): _set_modal_archetype("m", "adult"))
+	_ensure_archetype_buttons_exist()
+
 	if btn_save_profile and not btn_save_profile.pressed.is_connected(_on_save_profile_pressed):
 		btn_save_profile.pressed.connect(_on_save_profile_pressed)
 	if btn_cancel_edit_profile and not btn_cancel_edit_profile.pressed.is_connected(_close_edit_modal):
@@ -791,6 +796,7 @@ func _open_create_new_profile() -> void:
 	if btn_cancel_edit_profile:
 		btn_cancel_edit_profile.visible = true
 
+	_ensure_archetype_buttons_exist()
 	_refresh_gender_buttons_ui()
 
 	if profile_edit_overlay:
@@ -851,6 +857,7 @@ func _open_edit_specific_profile(p_id: String) -> void:
 		# Solo mostrar botón eliminar si hay más de 1 perfil en total
 		btn_delete_profile.visible = (pm.get_all_profiles().size() > 1)
 
+	_ensure_archetype_buttons_exist()
 	_refresh_gender_buttons_ui()
 
 	if profile_edit_overlay:
@@ -862,6 +869,138 @@ func _open_edit_specific_profile(p_id: String) -> void:
 	if edit_name_input:
 		edit_name_input.grab_focus()
 
+func _ensure_archetype_buttons_exist() -> void:
+	if not profile_edit_overlay:
+		return
+	var gender_sec = profile_edit_overlay.find_child("GenderSection", true, false)
+	if not gender_sec:
+		return
+
+	# 1. Asegurar categoría (Niño vs Adulto)
+	var cat_hbox = gender_sec.find_child("CategoryHBox", true, false)
+	if not cat_hbox:
+		var cat_prompt = Label.new()
+		cat_prompt.name = "CategoryPrompt"
+		cat_prompt.text = "1. Tipo de Jugador (Elige si es Niño o Adulto):"
+		cat_prompt.add_theme_color_override("font_color", Color(0.45, 0.48, 0.55, 1))
+		cat_prompt.add_theme_font_size_override("font_size", 13)
+		gender_sec.add_child(cat_prompt)
+		gender_sec.move_child(cat_prompt, 0)
+
+		cat_hbox = HBoxContainer.new()
+		cat_hbox.name = "CategoryHBox"
+		cat_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		cat_hbox.add_theme_constant_override("separation", 12)
+		gender_sec.add_child(cat_hbox)
+		gender_sec.move_child(cat_hbox, 1)
+
+		var b_child = Button.new()
+		b_child.name = "BtnCatChild"
+		b_child.custom_minimum_size = Vector2(160, 46)
+		b_child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b_child.focus_mode = Control.FOCUS_NONE
+		b_child.text = "🧒 Modo Infantil"
+		cat_hbox.add_child(b_child)
+		btn_cat_child = b_child
+
+		var b_adult = Button.new()
+		b_adult.name = "BtnCatAdult"
+		b_adult.custom_minimum_size = Vector2(160, 46)
+		b_adult.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b_adult.focus_mode = Control.FOCUS_NONE
+		b_adult.text = "🧑 Modo Adulto"
+		cat_hbox.add_child(b_adult)
+		btn_cat_adult = b_adult
+	else:
+		if not btn_cat_child:
+			btn_cat_child = cat_hbox.find_child("BtnCatChild", true, false)
+		if not btn_cat_adult:
+			btn_cat_adult = cat_hbox.find_child("BtnCatAdult", true, false)
+
+	# 2. Asegurar filas de avatares (ChildRowHBox y AdultRowHBox)
+	if not child_row_hbox:
+		child_row_hbox = gender_sec.find_child("ChildRowHBox", true, false)
+	if not adult_row_hbox:
+		adult_row_hbox = gender_sec.find_child("AdultRowHBox", true, false)
+
+	if not adult_row_hbox:
+		adult_row_hbox = HBoxContainer.new()
+		adult_row_hbox.name = "AdultRowHBox"
+		adult_row_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		adult_row_hbox.add_theme_constant_override("separation", 12)
+		gender_sec.add_child(adult_row_hbox)
+
+		var b_af = Button.new()
+		b_af.name = "BtnAdultFemale"
+		b_af.custom_minimum_size = Vector2(160, 46)
+		b_af.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b_af.focus_mode = Control.FOCUS_NONE
+		b_af.text = "👩 Adulta"
+		adult_row_hbox.add_child(b_af)
+		btn_adult_female = b_af
+
+		var b_am = Button.new()
+		b_am.name = "BtnAdultMale"
+		b_am.custom_minimum_size = Vector2(160, 46)
+		b_am.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b_am.focus_mode = Control.FOCUS_NONE
+		b_am.text = "👨 Adulto"
+		adult_row_hbox.add_child(b_am)
+		btn_adult_male = b_am
+	else:
+		if not btn_adult_female:
+			btn_adult_female = adult_row_hbox.find_child("BtnAdultFemale", true, false)
+		if not btn_adult_male:
+			btn_adult_male = adult_row_hbox.find_child("BtnAdultMale", true, false)
+
+	if child_row_hbox:
+		if not btn_gender_girl:
+			btn_gender_girl = child_row_hbox.find_child("BtnGenderGirl", true, false)
+		if not btn_gender_boy:
+			btn_gender_boy = child_row_hbox.find_child("BtnGenderBoy", true, false)
+
+	# 3. Conectar señales si no están conectadas
+	if btn_cat_child and not btn_cat_child.pressed.is_connected(_on_category_child_pressed):
+		btn_cat_child.pressed.connect(_on_category_child_pressed)
+	if btn_cat_adult and not btn_cat_adult.pressed.is_connected(_on_category_adult_pressed):
+		btn_cat_adult.pressed.connect(_on_category_adult_pressed)
+	if btn_gender_girl and not btn_gender_girl.pressed.is_connected(_on_select_girl_pressed):
+		btn_gender_girl.pressed.connect(_on_select_girl_pressed)
+	if btn_gender_boy and not btn_gender_boy.pressed.is_connected(_on_select_boy_pressed):
+		btn_gender_boy.pressed.connect(_on_select_boy_pressed)
+	if btn_adult_female and not btn_adult_female.pressed.is_connected(_on_select_adult_female_pressed):
+		btn_adult_female.pressed.connect(_on_select_adult_female_pressed)
+	if btn_adult_male and not btn_adult_male.pressed.is_connected(_on_select_adult_male_pressed):
+		btn_adult_male.pressed.connect(_on_select_adult_male_pressed)
+
+func _on_category_child_pressed() -> void:
+	_selected_category = "child"
+	_refresh_gender_buttons_ui()
+
+func _on_category_adult_pressed() -> void:
+	_selected_category = "adult"
+	_refresh_gender_buttons_ui()
+
+func _on_select_girl_pressed() -> void:
+	_selected_gender = "f"
+	_selected_category = "child"
+	_refresh_gender_buttons_ui()
+
+func _on_select_boy_pressed() -> void:
+	_selected_gender = "m"
+	_selected_category = "child"
+	_refresh_gender_buttons_ui()
+
+func _on_select_adult_female_pressed() -> void:
+	_selected_gender = "f"
+	_selected_category = "adult"
+	_refresh_gender_buttons_ui()
+
+func _on_select_adult_male_pressed() -> void:
+	_selected_gender = "m"
+	_selected_category = "adult"
+	_refresh_gender_buttons_ui()
+
 func _set_modal_archetype(g: String, cat: String) -> void:
 	_selected_gender = g
 	_selected_category = cat
@@ -871,15 +1010,61 @@ func _set_modal_gender(g: String) -> void:
 	_set_modal_archetype(g, _selected_category)
 
 func _refresh_gender_buttons_ui() -> void:
-	var is_girl_sel = (_selected_gender == "f" and _selected_category == "child")
-	var is_boy_sel = (_selected_gender == "m" and _selected_category == "child")
-	var is_adult_f_sel = (_selected_gender == "f" and _selected_category == "adult")
-	var is_adult_m_sel = (_selected_gender == "m" and _selected_category == "adult")
+	var is_child_cat = (_selected_category != "adult")
+	var is_adult_cat = (_selected_category == "adult")
+
+	_style_category_button(btn_cat_child, "🧒 Modo Infantil", is_child_cat, Color("#EFF6FF"), Color("#3B82F6"), Color("#1D4ED8"))
+	_style_category_button(btn_cat_adult, "🧑 Modo Adulto", is_adult_cat, Color("#FAF5FF"), Color("#8B5CF6"), Color("#6D28D9"))
+
+	if child_row_hbox:
+		child_row_hbox.visible = is_child_cat
+	if adult_row_hbox:
+		adult_row_hbox.visible = is_adult_cat
+
+	var is_girl_sel = (_selected_gender == "f" and is_child_cat)
+	var is_boy_sel = (_selected_gender == "m" and is_child_cat)
+	var is_adult_f_sel = (_selected_gender == "f" and is_adult_cat)
+	var is_adult_m_sel = (_selected_gender == "m" and is_adult_cat)
 
 	_style_archetype_button(btn_gender_girl, "👧 Niña", is_girl_sel, Color("#FDF2F8"), Color("#EC4899"), Color("#BE185D"))
 	_style_archetype_button(btn_gender_boy, "👦 Niño", is_boy_sel, Color("#EFF6FF"), Color("#3B82F6"), Color("#1D4ED8"))
 	_style_archetype_button(btn_adult_female, "👩 Adulta", is_adult_f_sel, Color("#FAF5FF"), Color("#8B5CF6"), Color("#6D28D9"))
 	_style_archetype_button(btn_adult_male, "👨 Adulto", is_adult_m_sel, Color("#ECFDF5"), Color("#10B981"), Color("#047857"))
+
+func _style_category_button(btn: Button, base_text: String, is_selected: bool, bg_col: Color, border_col: Color, text_col: Color) -> void:
+	if not btn:
+		return
+	btn.custom_minimum_size = Vector2(160, 48)
+
+	var sb := StyleBoxFlat.new()
+	sb.set_corner_radius_all(14)
+	sb.anti_aliasing = true
+
+	if is_selected:
+		sb.bg_color = bg_col
+		sb.border_width_left = 3
+		sb.border_width_top = 3
+		sb.border_width_right = 3
+		sb.border_width_bottom = 6
+		sb.border_color = border_col
+		btn.text = "%s  ✓" % base_text
+		btn.add_theme_color_override("font_color", text_col)
+		btn.add_theme_font_size_override("font_size", 15)
+	else:
+		sb.bg_color = Color("#F1F5F9")
+		sb.border_width_left = 1
+		sb.border_width_top = 1
+		sb.border_width_right = 1
+		sb.border_width_bottom = 3
+		sb.border_color = Color("#CBD5E1")
+		btn.text = base_text
+		btn.add_theme_color_override("font_color", Color("#64748B"))
+		btn.add_theme_font_size_override("font_size", 14)
+
+	var sb_hov = sb.duplicate()
+	btn.add_theme_stylebox_override("normal", sb)
+	btn.add_theme_stylebox_override("hover", sb_hov)
+	btn.add_theme_stylebox_override("pressed", sb)
 
 func _style_archetype_button(btn: Button, base_text: String, is_selected: bool, bg_col: Color, border_col: Color, text_col: Color) -> void:
 	if not btn:
