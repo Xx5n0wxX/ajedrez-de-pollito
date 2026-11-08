@@ -12,10 +12,12 @@ signal update_failed(error_message: String)
 
 const GITHUB_OWNER: String = "Xx5n0wxX"
 const GITHUB_REPO: String = "ajedrez-de-pollito"
-const REMOTE_VERSION_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/version.json"
-const RAW_FALLBACK_URL: String = "https://raw.githubusercontent.com/Xx5n0wxX/ajedrez-de-pollito/main/version.json"
-const DEFAULT_PCK_ANDROID_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck"
-const DEFAULT_PCK_WIN_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck"
+const REMOTE_VERSION_URL: String = "https://raw.githubusercontent.com/Xx5n0wxX/ajedrez-de-pollito/main/version.json"
+const GITHUB_RELEASE_VERSION_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/version.json"
+const DEFAULT_PCK_ANDROID_URL: String = "https://raw.githubusercontent.com/Xx5n0wxX/ajedrez-de-pollito/main/updates/update_android.pck"
+const DEFAULT_PCK_WIN_URL: String = "https://raw.githubusercontent.com/Xx5n0wxX/ajedrez-de-pollito/main/updates/update_windows.pck"
+const RELEASE_PCK_ANDROID_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck"
+const RELEASE_PCK_WIN_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck"
 const DEFAULT_APK_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk"
 const DEFAULT_EXE_URL: String = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.exe"
 
@@ -39,6 +41,9 @@ var _auto_checked_this_session: bool = false
 var _last_check_manual: bool = false
 var _tried_fallback_url: bool = false
 
+var _ota_download_urls: Array[String] = []
+var _ota_url_index: int = 0
+
 var _http_checker: HTTPRequest = null
 var _http_downloader: HTTPRequest = null
 
@@ -49,14 +54,14 @@ func _init() -> void:
 func _ready() -> void:
 	_http_checker = HTTPRequest.new()
 	_http_checker.name = "VersionCheckerHTTP"
-	_http_checker.timeout = 12.0
+	_http_checker.timeout = 6.0
 	_http_checker.use_threads = true
 	_http_checker.request_completed.connect(_on_check_request_completed)
 	add_child(_http_checker)
 
 	_http_downloader = HTTPRequest.new()
 	_http_downloader.name = "PackDownloaderHTTP"
-	_http_downloader.timeout = 120.0
+	_http_downloader.timeout = 45.0
 	_http_downloader.use_threads = true
 	_http_downloader.request_completed.connect(_on_download_request_completed)
 	add_child(_http_downloader)
@@ -155,7 +160,7 @@ func _on_check_request_completed(result: int, response_code: int, _headers: Pack
 				"Cache-Control: no-cache",
 				"User-Agent: AjedrezDePollito-Updater/1.0"
 			])
-			var err := _http_checker.request(RAW_FALLBACK_URL + cache_buster, headers)
+			var err := _http_checker.request(GITHUB_RELEASE_VERSION_URL + cache_buster, headers)
 			if err == OK:
 				return
 		is_checking = false
@@ -182,17 +187,47 @@ func _on_check_request_completed(result: int, response_code: int, _headers: Pack
 func start_ota_download() -> void:
 	if is_downloading:
 		return
-	var target_url: String = DEFAULT_PCK_ANDROID_URL
-	if OS.get_name() == "Windows":
-		target_url = str(remote_version_info.get("pck_win_url", DEFAULT_PCK_WIN_URL))
-	else:
-		target_url = str(remote_version_info.get("pck_url", DEFAULT_PCK_ANDROID_URL))
+
+	_ota_download_urls.clear()
+	_ota_url_index = 0
+
+	var is_win: bool = (OS.get_name() == "Windows")
+	var primary_url: String = str(remote_version_info.get("pck_win_url" if is_win else "pck_url", ""))
+	var mirror_url: String = str(remote_version_info.get("pck_win_mirror_url" if is_win else "pck_mirror_url", ""))
+	var default_raw_url: String = DEFAULT_PCK_WIN_URL if is_win else DEFAULT_PCK_ANDROID_URL
+	var release_url: String = RELEASE_PCK_WIN_URL if is_win else RELEASE_PCK_ANDROID_URL
+
+	# Prioridad de descarga con respaldo automático:
+	# 1. URL indicada en el JSON (CDN raw.githubusercontent.com)
+	# 2. URL raw directa por defecto
+	# 3. Mirror alternativo
+	# 4. URL de descarga de Release
+	for candidate in [primary_url, default_raw_url, mirror_url, release_url]:
+		if not candidate.is_empty() and not _ota_download_urls.has(candidate):
+			_ota_download_urls.append(candidate)
+
+	if _ota_download_urls.is_empty():
+		update_failed.emit("No se encontró ninguna dirección para descargar la actualización.")
+		return
+
+	is_downloading = true
+	_execute_next_ota_download()
+
+func _execute_next_ota_download() -> void:
+	if _ota_url_index >= _ota_download_urls.size():
+		is_downloading = false
+		_http_downloader.download_file = ""
+		update_failed.emit("No se pudo descargar la actualización desde ningún servidor.")
+		return
+
+	var target_url: String = _ota_download_urls[_ota_url_index]
+	print("[UpdateManager] Descargando actualización OTA (%d/%d): %s" % [_ota_url_index + 1, _ota_download_urls.size(), target_url])
 
 	if FileAccess.file_exists(OTA_TMP_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(OTA_TMP_PATH))
 
-	is_downloading = true
 	_http_downloader.download_file = OTA_TMP_PATH
+	_http_downloader.timeout = 40.0
 	var cache_buster: String = "?t=" + str(int(Time.get_unix_time_from_system()))
 	var headers := PackedStringArray([
 		"Cache-Control: no-cache",
@@ -200,20 +235,33 @@ func start_ota_download() -> void:
 	])
 	var err := _http_downloader.request(target_url + cache_buster, headers)
 	if err != OK:
-		is_downloading = false
-		update_failed.emit("No se pudo iniciar la descarga del paquete de actualización.")
+		print("[UpdateManager] Falló inicio de request a %s. Probando siguiente servidor..." % target_url)
+		_ota_url_index += 1
+		_execute_next_ota_download()
 
 func _on_download_request_completed(result: int, response_code: int, _headers: PackedStringArray, _body: PackedByteArray) -> void:
-	is_downloading = false
-	_http_downloader.download_file = ""
-
 	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
+		print("[UpdateManager] Falló descarga con código HTTP %d / result %d en %s" % [response_code, result, _ota_download_urls[_ota_url_index]])
 		if FileAccess.file_exists(OTA_TMP_PATH):
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(OTA_TMP_PATH))
+		_ota_url_index += 1
+		if _ota_url_index < _ota_download_urls.size():
+			print("[UpdateManager] Reintentando descarga con servidor de respaldo...")
+			_execute_next_ota_download()
+			return
+
+		is_downloading = false
+		_http_downloader.download_file = ""
 		update_failed.emit("Error al descargar la actualización (Código %d)." % response_code)
 		return
 
 	if not FileAccess.file_exists(OTA_TMP_PATH):
+		_ota_url_index += 1
+		if _ota_url_index < _ota_download_urls.size():
+			_execute_next_ota_download()
+			return
+		is_downloading = false
+		_http_downloader.download_file = ""
 		update_failed.emit("El archivo descargado no se encontró en el dispositivo.")
 		return
 
@@ -223,9 +271,20 @@ func _on_download_request_completed(result: int, response_code: int, _headers: P
 		f_check.close()
 
 	if file_len < 50000:
-		DirAccess.remove_absolute(ProjectSettings.globalize_path(OTA_TMP_PATH))
+		print("[UpdateManager] Paquete recibido demasiado pequeño (%d bytes). Probando siguiente servidor..." % file_len)
+		if FileAccess.file_exists(OTA_TMP_PATH):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(OTA_TMP_PATH))
+		_ota_url_index += 1
+		if _ota_url_index < _ota_download_urls.size():
+			_execute_next_ota_download()
+			return
+		is_downloading = false
+		_http_downloader.download_file = ""
 		update_failed.emit("El paquete descargado está incompleto (%d bytes)." % file_len)
 		return
+
+	is_downloading = false
+	_http_downloader.download_file = ""
 
 	# Reemplazar user://ota_update.pck con el nuevo paquete descargado
 	var abs_tmp := ProjectSettings.globalize_path(OTA_TMP_PATH)

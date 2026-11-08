@@ -86,8 +86,10 @@ $versionData.version_code = $VersionCode
 $versionData.version_name = $VersionName
 $versionData.release_date = (Get-Date -Format "yyyy-MM-dd")
 $versionData.notes = $Notes
-$versionData.pck_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck"
-$versionData.pck_win_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck"
+$versionData.pck_url = "https://raw.githubusercontent.com/Xx5n0wxX/ajedrez-de-pollito/main/updates/update_android.pck"
+$versionData.pck_win_url = "https://raw.githubusercontent.com/Xx5n0wxX/ajedrez-de-pollito/main/updates/update_windows.pck"
+$versionData.pck_mirror_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck"
+$versionData.pck_win_mirror_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck"
 $versionData.apk_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk"
 $versionData.exe_url = "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.exe"
 
@@ -128,6 +130,15 @@ Write-Host "[PACK] Compilando paquete OTA para Windows (update_windows.pck)..." 
 if (-not (Test-Path $PckWindows)) { throw "Error al compilar $PckWindows" }
 $pckWinSizeMB = [math]::Round((Get-Item $PckWindows).Length / 1MB, 2)
 Write-Host "[OK] Windows PCK listo: $PckWindows ($pckWinSizeMB MB)" -ForegroundColor Green
+
+# Copiar paquetes OTA a la carpeta updates/ para servirlos directamente via CDN de raw.githubusercontent.com
+$UpdatesDir = Join-Path $ProjectPath "updates"
+if (-not (Test-Path $UpdatesDir)) {
+    New-Item -ItemType Directory -Path $UpdatesDir -Force | Out-Null
+}
+Copy-Item $PckAndroid (Join-Path $UpdatesDir "update_android.pck") -Force
+Copy-Item $PckWindows (Join-Path $UpdatesDir "update_windows.pck") -Force
+Write-Host "[OK] Paquetes OTA copiados a la carpeta updates/ para entrega CDN rapida." -ForegroundColor Green
 
 if (-not $OnlyPck) {
     Write-Host "`n[APK] Compilando APK completo de Android (Ajedrez_de_Pollito.apk)..." -ForegroundColor Cyan
