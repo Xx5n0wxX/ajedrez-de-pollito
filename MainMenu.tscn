@@ -621,12 +621,13 @@ theme_override_font_sizes/font_size = 12
 text = "Elige con qué perfil jugarás para que Pollito te salude:"
 horizontal_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
+[node name="ProfilesScroll" type="ScrollContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ProfilesListVBox" type="VBoxContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox/Scroll"]
+[node name="ProfilesListVBox" type="VBoxContainer" parent="ProfileSelectOverlay/Center/SelectCard/Margin/VBox/ProfilesScroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1249,18 +1250,19 @@ text = "🌐 Versus (0)"
 [node name="HSeparator" type="HSeparator" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+[node name="HistoryScrollContainer" type="ScrollContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 custom_minimum_size = Vector2(0, 320)
 
-[node name="HistoryContent" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/ScrollContainer"]
+[node name="HistoryContent" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/HistoryScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="EmptyHistoryLabel" type="Label" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/ScrollContainer/HistoryContent"]
+[node name="EmptyHistoryLabel" type="Label" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/HistoryScrollContainer/HistoryContent"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
@@ -1272,7 +1274,7 @@ text = "Aún no tienes partidas registradas en el historial.
 y se guardará automáticamente aquí para revisarla!"
 horizontal_alignment = 1
 
-[node name="HistoryListVBox" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/ScrollContainer/HistoryContent"]
+[node name="HistoryListVBox" type="VBoxContainer" parent="MatchHistoryOverlay/Center/HistoryCard/Margin/VBox/HistoryScrollContainer/HistoryContent"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

@@ -21,6 +21,7 @@ func _get_mhm() -> Node:
 # Modal de Historial de Partidas
 @onready var match_history_overlay: Control = %MatchHistoryOverlay if has_node("%MatchHistoryOverlay") else find_child("MatchHistoryOverlay", true, false)
 @onready var history_card: Control = %HistoryCard if has_node("%HistoryCard") else find_child("HistoryCard", true, false)
+@onready var history_scroll_container: ScrollContainer = %HistoryScrollContainer if has_node("%HistoryScrollContainer") else find_child("HistoryScrollContainer", true, false)
 @onready var btn_close_history_modal: Button = %BtnCloseHistoryModal if has_node("%BtnCloseHistoryModal") else find_child("BtnCloseHistoryModal", true, false)
 @onready var btn_clear_all_history: Button = %BtnClearAllHistory if has_node("%BtnClearAllHistory") else find_child("BtnClearAllHistory", true, false)
 @onready var btn_filter_all: Button = %BtnFilterAll if has_node("%BtnFilterAll") else find_child("BtnFilterAll", true, false)
@@ -31,7 +32,6 @@ func _get_mhm() -> Node:
 
 var _current_history_filter: String = "all"
 
-
 # Tarjeta de Perfil Activo
 @onready var active_profile_name: Label = %ActiveProfileName if has_node("%ActiveProfileName") else find_child("ActiveProfileName", true, false)
 @onready var btn_change_profile: Button = %BtnChangeProfile if has_node("%BtnChangeProfile") else find_child("BtnChangeProfile", true, false)
@@ -41,9 +41,23 @@ var _current_history_filter: String = "all"
 # Modal de Selección de Perfil
 @onready var profile_select_overlay: Control = %ProfileSelectOverlay if has_node("%ProfileSelectOverlay") else find_child("ProfileSelectOverlay", true, false)
 @onready var select_card: Control = %SelectCard if has_node("%SelectCard") else (profile_select_overlay.find_child("SelectCard", true, false) if profile_select_overlay else null)
+@onready var profiles_scroll: ScrollContainer = %ProfilesScroll if has_node("%ProfilesScroll") else find_child("ProfilesScroll", true, false)
 @onready var profiles_list_vbox: VBoxContainer = %ProfilesListVBox if has_node("%ProfilesListVBox") else find_child("ProfilesListVBox", true, false)
 @onready var btn_modal_new_profile: Button = %BtnModalNewProfile if has_node("%BtnModalNewProfile") else find_child("BtnModalNewProfile", true, false)
 @onready var btn_close_select_modal: Button = %BtnCloseSelectModal if has_node("%BtnCloseSelectModal") else find_child("BtnCloseSelectModal", true, false)
+
+# Sistema de Desplazamiento Táctil Nativo para Modales (Historial y Perfiles)
+var _touch_scroll_modal: ScrollContainer = null
+var _touch_modal_start_pos: Vector2 = Vector2.ZERO
+var _touch_modal_last_pos: Vector2 = Vector2.ZERO
+var _touch_modal_start_scroll_val: int = 0
+var _is_touch_modal_dragging: bool = false
+var _touch_modal_drag_threshold: float = 6.0
+var _touch_modal_total_drag_dist: float = 0.0
+var _touch_modal_last_time_ms: int = 0
+var _last_modal_scroll_time_ms: int = 0
+var _modal_scroll_velocity: float = 0.0
+var _modal_momentum_target: ScrollContainer = null
 
 # Modal de Edición / Creación de Perfil
 @onready var profile_edit_overlay: Control = %ProfileEditOverlay if has_node("%ProfileEditOverlay") else find_child("ProfileEditOverlay", true, false)
@@ -175,6 +189,22 @@ func _process(delta: float) -> void:
 		_mob_cloud_time += delta
 		_mobile_bg_canvas.queue_redraw()
 
+	# Inercia cinética para ScrollContainers de modales (Historial y Perfiles)
+	if _modal_momentum_target and is_instance_valid(_modal_momentum_target) and abs(_modal_scroll_velocity) > 10.0:
+		_last_modal_scroll_time_ms = Time.get_ticks_msec()
+		var vbar = _modal_momentum_target.get_v_scroll_bar()
+		var max_val = max(0, int(vbar.max_value - vbar.page))
+		var new_val = clamp(int(_modal_momentum_target.scroll_vertical + _modal_scroll_velocity * delta), 0, max_val)
+		if new_val == _modal_momentum_target.scroll_vertical or new_val == 0 or new_val == max_val:
+			_modal_scroll_velocity = 0.0
+			_modal_momentum_target = null
+		else:
+			_modal_momentum_target.scroll_vertical = new_val
+			_modal_scroll_velocity = lerp(_modal_scroll_velocity, 0.0, delta * 7.0)
+	else:
+		_modal_scroll_velocity = 0.0
+		_modal_momentum_target = null
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		if _handle_back_or_escape():
@@ -204,11 +234,133 @@ func _handle_back_or_escape() -> bool:
 		return true
 	return false
 
+func _can_interact_modal_buttons() -> bool:
+	if _is_touch_modal_dragging:
+		return false
+	if _touch_modal_total_drag_dist > 6.0:
+		return false
+	if abs(_modal_scroll_velocity) > 15.0:
+		return false
+	if (Time.get_ticks_msec() - _last_modal_scroll_time_ms) < 350:
+		return false
+	return true
+
+func _on_modal_scroll_value_changed(_val: float) -> void:
+	_last_modal_scroll_time_ms = Time.get_ticks_msec()
+
+func _reset_modal_drag_flag() -> void:
+	_is_touch_modal_dragging = false
+	_touch_modal_total_drag_dist = 0.0
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
 			if _handle_back_or_escape():
 				get_viewport().set_input_as_handled()
+				return
+
+	_handle_modal_scroll_input(event)
+
+func _handle_modal_scroll_input(event: InputEvent) -> void:
+	var is_down = false
+	var is_up = false
+	var is_drag = false
+	var ev_pos = Vector2.ZERO
+
+	if event is InputEventScreenTouch:
+		ev_pos = event.position
+		if event.pressed:
+			is_down = true
+		else:
+			is_up = true
+	elif event is InputEventScreenDrag:
+		ev_pos = event.position
+		is_drag = true
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		ev_pos = event.position
+		if event.pressed:
+			is_down = true
+		else:
+			is_up = true
+	elif event is InputEventMouseMotion and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+		ev_pos = event.position
+		is_drag = true
+	else:
+		return
+
+	if is_down:
+		var was_moving = (abs(_modal_scroll_velocity) > 15.0) or ((Time.get_ticks_msec() - _last_modal_scroll_time_ms) < 250)
+		_modal_scroll_velocity = 0.0
+		_modal_momentum_target = null
+		_touch_scroll_modal = null
+		_is_touch_modal_dragging = false
+		_touch_modal_total_drag_dist = 0.0
+
+		if was_moving:
+			_last_modal_scroll_time_ms = Time.get_ticks_msec()
+
+		# 1. Comprobar si se tocó dentro del Historial de Partidas
+		if match_history_overlay and match_history_overlay.is_visible_in_tree() and history_scroll_container and history_scroll_container.is_visible_in_tree():
+			var local_pos = history_scroll_container.make_input_local(event)
+			if Rect2(Vector2.ZERO, history_scroll_container.size).has_point(local_pos.position):
+				_touch_scroll_modal = history_scroll_container
+				_touch_modal_start_pos = ev_pos
+				_touch_modal_last_pos = ev_pos
+				_touch_modal_start_scroll_val = history_scroll_container.scroll_vertical
+				_touch_modal_last_time_ms = Time.get_ticks_msec()
+				return
+
+		# 2. Comprobar si se tocó dentro de Selección de Perfil
+		if profile_select_overlay and profile_select_overlay.is_visible_in_tree() and profiles_scroll and profiles_scroll.is_visible_in_tree():
+			var local_pos = profiles_scroll.make_input_local(event)
+			if Rect2(Vector2.ZERO, profiles_scroll.size).has_point(local_pos.position):
+				_touch_scroll_modal = profiles_scroll
+				_touch_modal_start_pos = ev_pos
+				_touch_modal_last_pos = ev_pos
+				_touch_modal_start_scroll_val = profiles_scroll.scroll_vertical
+				_touch_modal_last_time_ms = Time.get_ticks_msec()
+				return
+
+	elif is_drag and _touch_scroll_modal != null:
+		var now = Time.get_ticks_msec()
+		var dt = (now - _touch_modal_last_time_ms) / 1000.0
+		_touch_modal_last_time_ms = now
+
+		var total_delta = (ev_pos - _touch_modal_start_pos).length()
+		_touch_modal_total_drag_dist = max(_touch_modal_total_drag_dist, total_delta)
+
+		var delta_y = ev_pos.y - _touch_modal_start_pos.y
+		if abs(delta_y) > _touch_modal_drag_threshold or _is_touch_modal_dragging or _touch_modal_total_drag_dist > 6.0:
+			_is_touch_modal_dragging = true
+			_last_modal_scroll_time_ms = now
+			var vbar = _touch_scroll_modal.get_v_scroll_bar()
+			var max_val = max(0, int(vbar.max_value - vbar.page))
+			var target_val = clamp(int(_touch_modal_start_scroll_val - delta_y), 0, max_val)
+			_touch_scroll_modal.scroll_vertical = target_val
+
+			if dt > 0.001:
+				var instant_v = -(ev_pos.y - _touch_modal_last_pos.y) / dt
+				_modal_scroll_velocity = lerp(_modal_scroll_velocity, instant_v, 0.4)
+			_touch_modal_last_pos = ev_pos
+
+	elif is_up and _touch_scroll_modal != null:
+		var now = Time.get_ticks_msec()
+		var time_since_last_drag = (now - _touch_modal_last_time_ms) / 1000.0
+		if time_since_last_drag > 0.15:
+			_modal_scroll_velocity = 0.0
+
+		if abs(_modal_scroll_velocity) > 60.0:
+			_modal_momentum_target = _touch_scroll_modal
+			_last_modal_scroll_time_ms = now
+		else:
+			_modal_scroll_velocity = 0.0
+			_modal_momentum_target = null
+
+		_touch_scroll_modal = null
+
+		if _is_touch_modal_dragging or _touch_modal_total_drag_dist > 6.0:
+			get_viewport().set_input_as_handled()
+		call_deferred("_reset_modal_drag_flag")
 
 func _on_academy_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/AcademyMap.tscn")
@@ -371,6 +523,10 @@ func _setup_profile_ui() -> void:
 		btn_modal_new_profile.pressed.connect(_open_create_new_profile)
 	if btn_close_select_modal and not btn_close_select_modal.pressed.is_connected(_close_select_modal):
 		btn_close_select_modal.pressed.connect(_close_select_modal)
+	if profiles_scroll:
+		var vbar = profiles_scroll.get_v_scroll_bar()
+		if vbar and not vbar.value_changed.is_connected(_on_modal_scroll_value_changed):
+			vbar.value_changed.connect(_on_modal_scroll_value_changed)
 
 	# Botones de modal editor
 	_ensure_archetype_buttons_exist()
@@ -691,6 +847,7 @@ func _populate_select_list() -> void:
 		var is_active = (p_id == active_id)
 
 		var card = PanelContainer.new()
+		card.mouse_filter = Control.MOUSE_FILTER_PASS
 		var card_style = StyleBoxFlat.new()
 		card_style.bg_color = Color("#FFF0F6") if is_active else Color("#FFFFFF")
 		card_style.border_width_left = 3 if is_active else 2
@@ -703,6 +860,7 @@ func _populate_select_list() -> void:
 		card.add_theme_stylebox_override("panel", card_style)
 
 		var margin = MarginContainer.new()
+		margin.mouse_filter = Control.MOUSE_FILTER_PASS
 		margin.add_theme_constant_override("margin_left", 16 if is_mob else 14)
 		margin.add_theme_constant_override("margin_top", 12 if is_mob else 10)
 		margin.add_theme_constant_override("margin_right", 16 if is_mob else 14)
@@ -710,6 +868,7 @@ func _populate_select_list() -> void:
 		card.add_child(margin)
 
 		var row = HBoxContainer.new()
+		row.mouse_filter = Control.MOUSE_FILTER_PASS
 		row.add_theme_constant_override("separation", 14 if is_mob else 12)
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		margin.add_child(row)
@@ -747,6 +906,8 @@ func _populate_select_list() -> void:
 			btn_select.add_theme_color_override("font_color", Color.WHITE)
 			var cur_id = p_id
 			btn_select.pressed.connect(func():
+				if not _can_interact_modal_buttons():
+					return
 				pm.set_active_profile_by_id(cur_id)
 				_close_select_modal()
 			)
@@ -770,6 +931,8 @@ func _populate_select_list() -> void:
 		btn_edit.add_theme_stylebox_override("pressed", edit_sb)
 		var edit_id = p_id
 		btn_edit.pressed.connect(func():
+			if not _can_interact_modal_buttons():
+				return
 			_open_edit_specific_profile(edit_id)
 		)
 		row.add_child(btn_edit)
@@ -1469,6 +1632,11 @@ func _setup_match_history_ui() -> void:
 	if btn_filter_versus and not btn_filter_versus.pressed.is_connected(_on_filter_versus_pressed):
 		btn_filter_versus.pressed.connect(_on_filter_versus_pressed)
 
+	if history_scroll_container:
+		var vbar = history_scroll_container.get_v_scroll_bar()
+		if vbar and not vbar.value_changed.is_connected(_on_modal_scroll_value_changed):
+			vbar.value_changed.connect(_on_modal_scroll_value_changed)
+
 func _on_filter_all_pressed() -> void:
 	_set_history_filter("all")
 
@@ -1603,6 +1771,7 @@ func _create_match_card(m: Dictionary) -> Control:
 			is_mob = sm.is_mobile()
 
 	var panel = PanelContainer.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_PASS
 	var card_style = StyleBoxFlat.new()
 	card_style.bg_color = Color("#ffffff")
 	card_style.set_border_width_all(1)
@@ -1618,17 +1787,20 @@ func _create_match_card(m: Dictionary) -> Control:
 	panel.add_theme_stylebox_override("panel", card_style)
 
 	var hbox = HBoxContainer.new()
+	hbox.mouse_filter = Control.MOUSE_FILTER_PASS
 	hbox.add_theme_constant_override("separation", 12)
 	panel.add_child(hbox)
 
 	# Columna Izquierda: Datos de la partida
 	var vbox = VBoxContainer.new()
+	vbox.mouse_filter = Control.MOUSE_FILTER_PASS
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.add_theme_constant_override("separation", 4)
 	hbox.add_child(vbox)
 
 	# Fila 1: Badges y Fecha
 	var row1 = HBoxContainer.new()
+	row1.mouse_filter = Control.MOUSE_FILTER_PASS
 	row1.add_theme_constant_override("separation", 8)
 	vbox.add_child(row1)
 
@@ -1706,6 +1878,7 @@ func _create_match_card(m: Dictionary) -> Control:
 
 	# Columna Derecha: Botón Revisar y Botón Eliminar
 	var actions_vbox = VBoxContainer.new()
+	actions_vbox.mouse_filter = Control.MOUSE_FILTER_PASS
 	actions_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	actions_vbox.add_theme_constant_override("separation", 6)
 	hbox.add_child(actions_vbox)
@@ -1716,7 +1889,11 @@ func _create_match_card(m: Dictionary) -> Control:
 	var rev_style = _create_style_box(Color("#6366f1"), Color("#4338ca"), 0, 3, 8)
 	_apply_btn_style(btn_rev, rev_style, Color.WHITE)
 	btn_rev.add_theme_font_size_override("font_size", 15 if is_mob else 13)
-	btn_rev.pressed.connect(func(): _review_saved_match(m))
+	btn_rev.pressed.connect(func():
+		if not _can_interact_modal_buttons():
+			return
+		_review_saved_match(m)
+	)
 	actions_vbox.add_child(btn_rev)
 
 	var btn_del = Button.new()
@@ -1726,7 +1903,11 @@ func _create_match_card(m: Dictionary) -> Control:
 	_apply_btn_style(btn_del, del_style, Color("#64748b"))
 	btn_del.add_theme_font_size_override("font_size", 13 if is_mob else 11)
 	var match_id = str(m.get("id", ""))
-	btn_del.pressed.connect(func(): _delete_saved_match(match_id))
+	btn_del.pressed.connect(func():
+		if not _can_interact_modal_buttons():
+			return
+		_delete_saved_match(match_id)
+	)
 	actions_vbox.add_child(btn_del)
 
 	return panel

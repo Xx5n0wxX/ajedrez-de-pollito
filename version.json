@@ -1,8 +1,8 @@
 {
-  "version_code": 12,
-  "version_name": "1.1.1",
-  "release_date": "2026-11-07",
-  "notes": "Tamaño de Pollito fijado permanentemente en la Academia (escala 0.65x): ahora se mantiene grande y constante, sin achicarse ni agrandarse ante cambios dinámicos de texto, pistas o paneles de retroalimentación.",
+  "version_code": 13,
+  "version_name": "1.1.2",
+  "release_date": "2026-11-08",
+  "notes": "Soporte táctil nativo con inercia cinética en el Historial de Partidas y selector de perfiles para Android, con bloqueo de toques accidentales en botones mientras se desliza la lista.",
   "pck_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck",
   "pck_win_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck",
   "apk_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk",
