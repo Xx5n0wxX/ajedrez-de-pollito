@@ -279,41 +279,8 @@ theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContent" type="VBoxContainer" parent="MainLayout/RightColumn/RightMargin"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 12
-
-[node name="HeaderHBox" type="HBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
-layout_mode = 2
-theme_override_constants/separation = 14
-
-[node name="PollitoAvatar" type="TextureRect" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(110, 110)
-layout_mode = 2
-texture = ExtResource("4_pollito")
-expand_mode = 1
-stretch_mode = 5
-script = ExtResource("5_avatar")
-
-[node name="BubblePanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
-
-[node name="BubbleMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox/BubblePanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 14
-theme_override_constants/margin_bottom = 12
-
-[node name="LblDialogue" type="RichTextLabel" parent="MainLayout/RightColumn/RightMargin/VBoxContent/HeaderHBox/BubblePanel/BubbleMargin"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/default_color = Color(0.12, 0.16, 0.24, 1)
-theme_override_font_sizes/normal_font_size = 16
-bbcode_enabled = true
-text = "¡Hola! ¡Te doy la bienvenida oficial a la Academia de Ajedrez!"
-fit_content = true
 
 [node name="ObjectivePanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 layout_mode = 2
@@ -334,6 +301,38 @@ theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 16
 text = "🎯 OBJETIVO: Mueve tu pieza al lugar correcto."
 autowrap_mode = 2
+
+[node name="BubblePanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
+
+[node name="BubbleMargin" type="MarginContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent/BubblePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="LblDialogue" type="RichTextLabel" parent="MainLayout/RightColumn/RightMargin/VBoxContent/BubblePanel/BubbleMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/default_color = Color(0.12, 0.16, 0.24, 1)
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "¡Hola! ¡Te doy la bienvenida oficial a la Academia de Ajedrez!"
+fit_content = true
+
+[node name="PollitoAvatar" type="TextureRect" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_pollito")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("5_avatar")
 
 [node name="FeedbackPanel" type="PanelContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 unique_name_in_owner = true
@@ -372,10 +371,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_rewind")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_rewind")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_rewind")
 text = "⏪ Rebobinar Jugada"
-
-[node name="Spacer" type="Control" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="ActionsHBox" type="HBoxContainer" parent="MainLayout/RightColumn/RightMargin/VBoxContent"]
 layout_mode = 2

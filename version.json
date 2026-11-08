@@ -1,8 +1,8 @@
 {
-  "version_code": 10,
-  "version_name": "1.0.9",
+  "version_code": 11,
+  "version_name": "1.1.0",
   "release_date": "2026-11-07",
-  "notes": "Protección inteligente contra clics accidentales al hacer scroll en Android: los botones de lecciones, gimnasio y grados se bloquean automáticamente si el usuario está deslizando la pantalla.",
+  "notes": "Rediseño del panel en el aula de la Academia: Objetivo arriba del todo, globo de diálogo de ancho completo y Pollito grande ocupando todo el espacio restante.",
   "pck_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_android.pck",
   "pck_win_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/update_windows.pck",
   "apk_url": "https://github.com/Xx5n0wxX/ajedrez-de-pollito/releases/latest/download/Ajedrez_de_Pollito.apk",

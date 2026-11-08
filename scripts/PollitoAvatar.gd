@@ -91,7 +91,7 @@ func _on_parent_resized() -> void:
 		visual_sprite.pivot_offset = size / 2.0
 	if gallo_puppet:
 		var target_dim: float = min(size.x, size.y)
-		var s: float = target_dim / 500.0
+		var s: float = target_dim / 420.0
 		gallo_puppet.scale = Vector2(s, s)
 		# Centrado visual exacto del cuerpo (439x437 px) evitando cualquier recorte
 		gallo_puppet.position = Vector2(size.x * 0.5 + 5.0 * s, size.y * 0.5 + 206.0 * s)
