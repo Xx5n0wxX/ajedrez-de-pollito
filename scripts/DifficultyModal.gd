@@ -11,8 +11,12 @@ var selected_level: int = 3
 
 var overlay: ColorRect
 var modal_card: PanelContainer
+var cards_scroll: ScrollContainer
 var cards_vbox: VBoxContainer
 var card_panels: Array[PanelContainer] = []
+var header_avatar: TextureRect
+var header_title: Label
+var header_subtitle: Label
 var confirm_btn: Button
 var cancel_btn: Button
 
@@ -160,6 +164,7 @@ func _build_ui() -> void:
 	av.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	av.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	header_hbox.add_child(av)
+	header_avatar = av
 
 	var title_vbox = VBoxContainer.new()
 	title_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -174,6 +179,7 @@ func _build_ui() -> void:
 	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", Color("#be185d"))
 	title_vbox.add_child(title)
+	header_title = title
 
 	var subtitle = Label.new()
 	subtitle.name = "ModalSubtitle"
@@ -181,16 +187,25 @@ func _build_ui() -> void:
 	subtitle.add_theme_font_size_override("font_size", 14)
 	subtitle.add_theme_color_override("font_color", Color("#64748b"))
 	title_vbox.add_child(subtitle)
+	header_subtitle = subtitle
 
 	vbox.add_child(HSeparator.new())
 
-	# --- 2. Container de Tarjetas ---
+	# --- 2. Container de Tarjetas con Scroll ---
+	cards_scroll = ScrollContainer.new()
+	cards_scroll.name = "CardsScroll"
+	cards_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cards_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	cards_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	cards_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	vbox.add_child(cards_scroll)
+
 	cards_vbox = VBoxContainer.new()
 	cards_vbox.name = "CardsVBox"
 	cards_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	cards_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	cards_vbox.add_theme_constant_override("separation", 8)
-	vbox.add_child(cards_vbox)
+	cards_scroll.add_child(cards_vbox)
 
 	for d in DIFF_DATA:
 		var d_id: int = d["id"]
@@ -205,6 +220,7 @@ func _build_ui() -> void:
 		var click_btn = Button.new()
 		click_btn.flat = true
 		click_btn.focus_mode = Control.FOCUS_NONE
+		click_btn.mouse_filter = Control.MOUSE_FILTER_PASS
 		click_btn.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		click_btn.pressed.connect(func(): _on_card_clicked(d_id))
 		d_card.add_child(click_btn)
@@ -345,8 +361,10 @@ func _update_cards_state() -> void:
 
 func _apply_responsive_sizing(is_mob: bool) -> void:
 	var vp_size = get_viewport().get_visible_rect().size
-	if is_mob:
-		# Móvil Vertical: ocupa el 96% de la pantalla (516x930 sobre 540x960)
+	var is_portrait: bool = vp_size.y > vp_size.x
+
+	if is_portrait:
+		# Modo Vertical (Móvil vertical o ventana vertical)
 		modal_card.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		modal_card.offset_left = 12
 		modal_card.offset_right = -12
@@ -355,18 +373,28 @@ func _apply_responsive_sizing(is_mob: bool) -> void:
 		modal_card.custom_minimum_size = Vector2(0, 0)
 		modal_card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
+		if is_instance_valid(header_avatar):
+			header_avatar.custom_minimum_size = Vector2(68, 68)
+		if is_instance_valid(header_title):
+			header_title.add_theme_font_size_override("font_size", 28)
+		if is_instance_valid(header_subtitle):
+			header_subtitle.add_theme_font_size_override("font_size", 14)
+
 		cancel_btn.custom_minimum_size = Vector2(0, 56)
 		cancel_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		confirm_btn.custom_minimum_size = Vector2(0, 56)
 		confirm_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 		for card in card_panels:
-			card.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			card.custom_minimum_size = Vector2(0, 114)
+			card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			card.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			card.custom_minimum_size = Vector2(0, 108)
 	else:
-		# Desktop: Centrado horizontal y verticalmente, ancho fijo de 620px
-		var card_w: float = 620.0
-		var card_h: float = minf(680.0, vp_size.y * 0.94)
+		# Modo Landscape / Horizontal (Desktop y Móvil horizontal)
+		var is_compact_landscape: bool = vp_size.y < 540.0
+		var card_w: float = minf(vp_size.x - 32.0, 700.0 if not is_compact_landscape else 640.0)
+		var card_h: float = minf(vp_size.y - (16.0 if is_compact_landscape else 28.0), 620.0)
+
 		modal_card.anchor_left = 0.5
 		modal_card.anchor_right = 0.5
 		modal_card.anchor_top = 0.5
@@ -378,11 +406,20 @@ func _apply_responsive_sizing(is_mob: bool) -> void:
 		modal_card.custom_minimum_size = Vector2(card_w, card_h)
 		modal_card.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
-		cancel_btn.custom_minimum_size = Vector2(160, 44)
+		if is_instance_valid(header_avatar):
+			header_avatar.custom_minimum_size = Vector2(44, 44) if is_compact_landscape else Vector2(58, 58)
+		if is_instance_valid(header_title):
+			header_title.add_theme_font_size_override("font_size", 22 if is_compact_landscape else 26)
+		if is_instance_valid(header_subtitle):
+			header_subtitle.add_theme_font_size_override("font_size", 12 if is_compact_landscape else 13)
+
+		var btn_h = 42.0 if is_compact_landscape else 48.0
+		cancel_btn.custom_minimum_size = Vector2(160, btn_h)
 		cancel_btn.size_flags_horizontal = Control.SIZE_SHRINK_END
-		confirm_btn.custom_minimum_size = Vector2(220, 44)
+		confirm_btn.custom_minimum_size = Vector2(230, btn_h)
 		confirm_btn.size_flags_horizontal = Control.SIZE_SHRINK_END
 
 		for card in card_panels:
-			card.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			card.custom_minimum_size = Vector2(0, 80)
+			card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			card.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			card.custom_minimum_size = Vector2(0, 74 if is_compact_landscape else 84)

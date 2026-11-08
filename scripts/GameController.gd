@@ -809,9 +809,7 @@ func _process(delta: float) -> void:
 		return
 
 	if game_mode == "free_play":
-
-		if chess_clock and chess_clock.is_enabled and is_match_started:
-
+		if chess_clock and chess_clock.is_enabled and not is_in_review_mode:
 			chess_clock.update(delta)
 
 		if is_match_timer_active and not is_in_review_mode:
@@ -1988,16 +1986,18 @@ func _enter_review_mode() -> void:
 
 	if is_instance_valid(history_title):
 		history_title.text = "🔍 MODO REVISIÓN"
-		history_title.add_theme_font_size_override("font_size", 20 if is_mob_rev else 16)
+		history_title.add_theme_font_size_override("font_size", 26 if is_mob_rev else 22)
 		history_title.add_theme_color_override("font_color", Color("#db2777"))
 
 	if is_instance_valid(history_review_hint):
 		history_review_hint.visible = true
 		history_review_hint.text = "Jugada %d / %d" % [review_move_index, move_history.size()]
-		history_review_hint.add_theme_font_size_override("font_size", 16 if is_mob_rev else 13)
+		history_review_hint.add_theme_font_size_override("font_size", 20 if is_mob_rev else 17)
 
 	if is_instance_valid(btn_exit_review):
 		btn_exit_review.visible = true
+		btn_exit_review.custom_minimum_size = Vector2(0, 56 if is_mob_rev else 48)
+		btn_exit_review.add_theme_font_size_override("font_size", 20 if is_mob_rev else 17)
 		if _get_history_mgr() and _get_history_mgr().open_history_on_main_menu:
 			btn_exit_review.text = "🔙 Volver al Historial"
 		else:
@@ -2005,19 +2005,19 @@ func _enter_review_mode() -> void:
 
 	# 4. Agrandar fuente del texto del historial para ocupar cómodamente el espacio
 	if is_instance_valid(move_history_label):
-		move_history_label.add_theme_font_size_override("normal_font_size", 20 if is_mob_rev else 16)
+		move_history_label.add_theme_font_size_override("normal_font_size", 24 if is_mob_rev else 20)
 
 	# 5. Agrandar barra de controles de reproducción y botones
 	if is_instance_valid(replay_controls_bar):
 		replay_controls_bar.visible = true
-		replay_controls_bar.custom_minimum_size = Vector2(0, 48)
+		replay_controls_bar.custom_minimum_size = Vector2(0, 60 if is_mob_rev else 52)
 		for btn in [replay_first_btn, replay_prev_btn, replay_next_btn, replay_last_btn]:
 			if is_instance_valid(btn):
-				btn.custom_minimum_size = Vector2(52, 44)
-				btn.add_theme_font_size_override("font_size", 18)
+				btn.custom_minimum_size = Vector2(64, 54) if is_mob_rev else Vector2(56, 46)
+				btn.add_theme_font_size_override("font_size", 24 if is_mob_rev else 22)
 		if is_instance_valid(replay_play_btn):
-			replay_play_btn.custom_minimum_size = Vector2(100, 44)
-			replay_play_btn.add_theme_font_size_override("font_size", 14)
+			replay_play_btn.custom_minimum_size = Vector2(145, 54) if is_mob_rev else Vector2(130, 46)
+			replay_play_btn.add_theme_font_size_override("font_size", 18 if is_mob_rev else 16)
 
 	_update_review_buttons_state()
 	_rebuild_history_ui()
@@ -2903,10 +2903,7 @@ func _on_clock_toggle_changed(toggled_on: bool) -> void:
 	if toggled_on:
 		chess_clock.reset(selected_clock_duration)
 		chess_clock.set_turn(chess_board.rules.white_to_move if (chess_board and chess_board.rules) else true)
-		if is_match_started:
-			chess_clock.start()
-		else:
-			chess_clock.pause()
+		chess_clock.start()
 		var mins_label = "%d min" % int(round(selected_clock_duration / 60.0))
 		set_dialogue("[color=#db2777][b]Profe Pollito:[/b][/color] ⏱️ ¡Modo Reloj activado! Tienen %s por jugador. ¡Piensa rápido y diviértete!" % mins_label)
 		last_speech_text = "¡Modo reloj activado! Tienes %s." % mins_label
@@ -3197,7 +3194,7 @@ func start_new_free_play_game() -> void:
 		if clock_toggle and clock_toggle.button_pressed:
 			chess_clock.is_enabled = true
 			chess_clock.set_turn(true)
-			chess_clock.pause()
+			chess_clock.start()
 		else:
 			chess_clock.is_enabled = false
 		_update_active_clock_style()
@@ -3671,9 +3668,10 @@ func _on_free_play_turn_completed(move_info: Dictionary, game_state: String) -> 
 
 
 	# Iniciar cronómetro de partida y actualizar estadísticas de material y capturas
-
 	is_match_timer_active = true
-
+	if chess_clock and chess_clock.is_enabled and not chess_clock.has_ended:
+		if not chess_clock.is_running:
+			chess_clock.start()
 	_update_material_and_captures_ui()
 
 
@@ -3995,13 +3993,15 @@ func _on_player_clock_pressed() -> void:
 
 
 func _on_white_clock_gui_input(event: InputEvent) -> void:
+	var is_press: bool = false
+	if event is InputEventScreenTouch and event.pressed:
+		is_press = true
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		is_press = true
 
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-
+	if is_press:
 		if is_waiting_for_clock_press and not is_game_paused and (confirm_modal_overlay == null or not confirm_modal_overlay.visible):
-
 			_on_player_clock_pressed()
-
 			get_viewport().set_input_as_handled()
 
 
@@ -5563,13 +5563,18 @@ func _apply_mobile_scaling(is_mob: bool) -> void:
 			tb.add_theme_font_size_override("font_size", top_font)
 
 	# Botones de revisión
-	var rev_btns = [replay_first_btn, replay_prev_btn, replay_play_btn, replay_next_btn, replay_last_btn, btn_exit_review]
-	var rev_h = 48.0 if is_mob else 38.0
-	var rev_font = 16 if is_mob else 14
+	var rev_btns = [replay_first_btn, replay_prev_btn, replay_next_btn, replay_last_btn]
+	var rev_font = (24 if is_mob else 22) if is_in_review_mode else (16 if is_mob else 14)
 	for rb in rev_btns:
 		if is_instance_valid(rb):
-			rb.custom_minimum_size.y = rev_h
+			rb.custom_minimum_size = Vector2(64, 54) if is_mob else Vector2(56, 46)
 			rb.add_theme_font_size_override("font_size", rev_font)
+	if is_instance_valid(replay_play_btn):
+		replay_play_btn.custom_minimum_size = Vector2(145, 54) if is_mob else Vector2(130, 46)
+		replay_play_btn.add_theme_font_size_override("font_size", (18 if is_mob else 16) if is_in_review_mode else 14)
+	if is_instance_valid(btn_exit_review):
+		btn_exit_review.custom_minimum_size.y = 56.0 if is_mob else 48.0
+		btn_exit_review.add_theme_font_size_override("font_size", 20 if is_mob else 17)
 
 	# Reloj de Ajedrez y tiempo
 	var time_font = 24 if is_mob else 20
@@ -5597,13 +5602,13 @@ func _apply_mobile_scaling(is_mob: bool) -> void:
 
 	# Historial de jugadas
 	if is_instance_valid(move_history_label):
-		var hist_font = (20 if is_mob else 16) if is_in_review_mode else (16 if is_mob else 12)
+		var hist_font = (24 if is_mob else 20) if is_in_review_mode else (16 if is_mob else 12)
 		move_history_label.add_theme_font_size_override("normal_font_size", hist_font)
 	if is_instance_valid(history_title):
-		var title_font = (20 if is_mob else 16) if is_in_review_mode else (15 if is_mob else 11)
+		var title_font = (26 if is_mob else 22) if is_in_review_mode else (15 if is_mob else 11)
 		history_title.add_theme_font_size_override("font_size", title_font)
 	if is_instance_valid(history_review_hint):
-		history_review_hint.add_theme_font_size_override("font_size", 16 if is_mob else 13)
+		history_review_hint.add_theme_font_size_override("font_size", 20 if is_mob else 17)
 
 	# Puntuación y estadísticas (MatchStatsSection)
 	var score_font = 16 if is_mob else 11

@@ -647,11 +647,18 @@ func _apply_mobile_scaling(is_mob: bool) -> void:
 		chat_send_btn.add_theme_font_size_override("font_size", 15 if is_mob else 13)
 
 	# Controles de revisión
-	var rev_btns = [btn_review_first, btn_review_prev, btn_review_play, btn_review_next, btn_review_last, btn_exit_review_online]
+	var rev_btns = [btn_review_first, btn_review_prev, btn_review_next, btn_review_last]
+	var rev_font = (24 if is_mob else 22) if is_in_review_mode else (16 if is_mob else 13)
 	for rb in rev_btns:
 		if is_instance_valid(rb):
-			rb.custom_minimum_size.y = 44.0 if is_mob else 30.0
-			rb.add_theme_font_size_override("font_size", 16 if is_mob else 13)
+			rb.custom_minimum_size = Vector2(64, 54) if is_mob else Vector2(56, 46)
+			rb.add_theme_font_size_override("font_size", rev_font)
+	if is_instance_valid(btn_review_play):
+		btn_review_play.custom_minimum_size = Vector2(145, 54) if is_mob else Vector2(130, 46)
+		btn_review_play.add_theme_font_size_override("font_size", (18 if is_mob else 16) if is_in_review_mode else 13)
+	if is_instance_valid(btn_exit_review_online):
+		btn_exit_review_online.custom_minimum_size.y = 56.0 if is_mob else 48.0
+		btn_exit_review_online.add_theme_font_size_override("font_size", 20 if is_mob else 17)
 
 	# Relojes
 	var clock_font = 28 if is_mob else 20
@@ -666,13 +673,13 @@ func _apply_mobile_scaling(is_mob: bool) -> void:
 
 	# Historial de jugadas
 	if is_instance_valid(move_history_label):
-		var hist_font = (20 if is_mob else 16) if is_in_review_mode else (16 if is_mob else 12)
+		var hist_font = (24 if is_mob else 20) if is_in_review_mode else (16 if is_mob else 12)
 		move_history_label.add_theme_font_size_override("normal_font_size", hist_font)
 	if is_instance_valid(review_title):
-		var title_font = (20 if is_mob else 16) if is_in_review_mode else (16 if is_mob else 12)
+		var title_font = (26 if is_mob else 22) if is_in_review_mode else (16 if is_mob else 12)
 		review_title.add_theme_font_size_override("font_size", title_font)
 	if is_instance_valid(review_status_label):
-		review_status_label.add_theme_font_size_override("font_size", 16 if is_mob else 12)
+		review_status_label.add_theme_font_size_override("font_size", 20 if is_mob else 17)
 
 	# Puntuación y ventaja de material
 	var score_font = 20 if is_mob else 14
@@ -1539,16 +1546,18 @@ func _enter_versus_review_mode() -> void:
 
 	if review_title:
 		review_title.text = "🔍 MODO REVISIÓN"
-		review_title.add_theme_font_size_override("font_size", 20 if is_mob_rev else 16)
+		review_title.add_theme_font_size_override("font_size", 26 if is_mob_rev else 22)
 		review_title.add_theme_color_override("font_color", Color("#db2777"))
 
 	if review_status_label:
 		review_status_label.visible = true
 		review_status_label.text = "Jugada %d / %d" % [review_move_index, match_moves.size()]
-		review_status_label.add_theme_font_size_override("font_size", 16 if is_mob_rev else 13)
+		review_status_label.add_theme_font_size_override("font_size", 20 if is_mob_rev else 17)
 
 	if btn_exit_review_online:
 		btn_exit_review_online.visible = true
+		btn_exit_review_online.custom_minimum_size = Vector2(0, 56 if is_mob_rev else 48)
+		btn_exit_review_online.add_theme_font_size_override("font_size", 20 if is_mob_rev else 17)
 		var mhm = _get_history_mgr()
 		if mhm and mhm.open_history_on_main_menu:
 			btn_exit_review_online.text = "🔙 Volver al Historial"
@@ -1559,10 +1568,18 @@ func _enter_versus_review_mode() -> void:
 		btn_swap_layout_review_online.visible = true
 
 	if move_history_label:
-		move_history_label.add_theme_font_size_override("normal_font_size", 20 if is_mob_rev else 16)
+		move_history_label.add_theme_font_size_override("normal_font_size", 24 if is_mob_rev else 20)
 
 	if review_controls_bar:
 		review_controls_bar.visible = true
+		review_controls_bar.custom_minimum_size = Vector2(0, 60 if is_mob_rev else 52)
+		for btn in [btn_review_first, btn_review_prev, btn_review_next, btn_review_last]:
+			if is_instance_valid(btn):
+				btn.custom_minimum_size = Vector2(64, 54) if is_mob_rev else Vector2(56, 46)
+				btn.add_theme_font_size_override("font_size", 24 if is_mob_rev else 22)
+		if is_instance_valid(btn_review_play):
+			btn_review_play.custom_minimum_size = Vector2(145, 54) if is_mob_rev else Vector2(130, 46)
+			btn_review_play.add_theme_font_size_override("font_size", 18 if is_mob_rev else 16)
 
 	_update_versus_review_buttons_state()
 	_render_move_history()
